@@ -1,0 +1,12 @@
+form .error {
+    font-weight: bold;
+    color: #ff6666;
+}
+
+body.error {
+    text-align: center;
+}
+
+p.quote {
+    font-style: italic;
+}

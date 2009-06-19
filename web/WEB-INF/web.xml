@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+        version="2.5">
+
+    <context-param>
+        <param-name>database.driver.class</param-name>
+        <param-value>org.hsqldb.jdbcDriver</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>database.driver.url</param-name>
+        <param-value>jdbc:hsqldb:mem:webapp-template</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>database.driver.username</param-name>
+        <param-value>sa</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>database.driver.password</param-name>
+        <param-value />
+    </context-param>
+
+    <context-param>
+        <param-name>hibernate.dialect</param-name>
+        <param-value>org.hibernate.dialect.HSQLDialect</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>hibernate.cache.provider_class</param-name>
+        <param-value>org.hibernate.cache.NoCacheProvider</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>hibernate.hbm2ddl.auto</param-name>
+        <param-value>create</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>index</filter-name>
+        <filter-class>example.web.RedirectFilter</filter-class>
+        <init-param>
+            <param-name>redirectPath</param-name>
+            <param-value>/page/forms</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>sitemesh</filter-name>
+        <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>index</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>sitemesh</servlet-name>
+        <servlet-class>example.spring.template.StringTemplateDecoratorServlet</servlet-class>
+        <init-param>
+            <param-name>rootDir</param-name>
+            <param-value>/decorators</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/page/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>sitemesh</servlet-name>
+        <url-pattern>*.st</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.html</location>
+    </error-page>
+
+</web-app>

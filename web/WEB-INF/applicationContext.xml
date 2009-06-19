@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <context:annotation-config />
+    <context:component-scan base-package="example.domain" />
+
+    <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" lazy-init="true" destroy-method="close">
+        <property name="driverClassName" value="${database.driver.class}" />
+        <property name="username" value="${database.driver.username}" />
+        <property name="password" value="${database.driver.password}" />
+        <property name="url" value="${database.driver.url}" />
+    </bean>
+
+    <bean id="sessionFactorySource" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" lazy-init="true">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mappingResources">
+            <list>
+                <value>example/domain/hibernate/Document.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetClass" value="org.hibernate.SessionFactory" />
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="sessionFactorySource" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <constructor-arg ref="transactionManager" />
+    </bean>
+
+    <bean id="hibernateOperations" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <constructor-arg ref="sessionFactory" />
+    </bean>
+
+</beans>

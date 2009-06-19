@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="example" default="build" basedir=".">
+
+    <property name="src.dir" location="src/main"/>
+    <property name="test.dir" location="src/test"/>
+
+    <property name="build.dir" location="build"/>
+    <property name="compile.dir" location="${build.dir}/compile"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+
+    <path id="classpath">
+        <fileset dir="${compile.dir}"/>
+        <fileset dir="lib/buildtime"/>
+        <fileset dir="lib/runtime"/>
+    </path>
+
+    <macrodef name="compile">
+        <attribute name="srcdir"/>
+        <attribute name="jarfile"/>
+        <sequential>
+            <mkdir dir="${compile.dir}/classes"/>
+            <javac srcdir="@{srcdir}" destdir="${compile.dir}/classes" classpathref="classpath" debug="yes"/>
+            <copy todir="${compile.dir}/classes" includeemptydirs="no">
+                <fileset dir="@{srcdir}" excludes="**/*.java"/>
+            </copy>
+            <jar jarfile="${compile.dir}/@{jarfile}" basedir="${compile.dir}/classes"/>
+            <delete dir="${compile.dir}/classes"/>
+        </sequential>
+    </macrodef>
+
+    <target name="build" depends="clean,make-jars,run-tests,make-war" description="Main target to create WAR file."/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="make-jars">
+        <compile srcdir="${src.dir}" jarfile="${ant.project.name}.jar"/>
+        <compile srcdir="${test.dir}" jarfile="${ant.project.name}-test.jar"/>
+    </target>
+
+    <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
+        <junit fork="yes" forkmode="once" haltonfailure="no" failureproperty="unit.tests.failed">
+            <classpath refid="classpath"/>
+            <formatter type="brief" usefile="no"/>
+            <batchtest if="testcase">
+                <fileset dir="${test.dir}">
+                    <include name="**/${testcase}.java"/>
+                </fileset>
+            </batchtest>
+            <batchtest unless="testcase">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Tests.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail if="unit.tests.failed" message="One or more tests failed. Please check the logs for more info."/>
+    </target>
+
+    <target name="make-war">
+        <mkdir dir="${dist.dir}"/>
+        <war warfile="${dist.dir}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
+            <fileset dir="web" excludes="**/web.xml"/>
+            <lib dir="${compile.dir}" excludes="*-test.jar"/>
+            <lib dir="lib/runtime"/>
+        </war>
+    </target>
+
+    <target name="run-jetty" depends="clean,make-jars" description="Run application in Jetty.">
+        <java classname="example.jetty.WebServer" classpathref="classpath" fork="true" failonerror="true"/>
+    </target>
+
+    <target name="package-src" depends="clean" description="Create zip of the source code for distribution">
+        <mkdir dir="${build.dir}"/>
+        <zip basedir="${basedir}" destfile="${build.dir}/${ant.project.name}.zip">
+            <exclude name="**/.DS_Store"/>
+            <exclude name="build/"/>
+            <exclude name="*.iws"/>
+            <exclude name=".git/"/>
+            <exclude name="out/"/>
+        </zip>
+    </target>
+
+</project>

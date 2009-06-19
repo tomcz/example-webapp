@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field">
+    <class name="example.domain.Document" table="document">
+
+        <id name="identity" column="document_id" type="example.domain.hibernate.IdentityUserType">
+            <generator class="assigned" />
+        </id>
+
+        <map name="properties" table="document_properties" lazy="false" cascade="all">
+            <key column="document_id" />
+            <map-key column="field_key" type="example.domain.hibernate.DocumentFieldUserType" />
+            <composite-element class="example.domain.Property">
+                <property name="value" column="field_value" type="string" />
+                <property name="message" column="field_message" type="string" />
+            </composite-element>
+        </map>
+
+        <property name="createdDateTime" column="created_timestamp"
+                  type="example.domain.hibernate.LocalDateTimeUserType" />
+
+        <property name="updatedDateTime" column="updated_timestamp"
+                  type="example.domain.hibernate.LocalDateTimeUserType" />
+
+    </class>
+</hibernate-mapping>
