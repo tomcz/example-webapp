@@ -6,7 +6,7 @@ public interface TemplateView extends View {
 
     void set(String name, Object value);
 
-    void setSpec(String aggrSpec, Object... values);
+    void setAggregate(String aggrSpec, Object... values);
 
     void setContentType(String contentType, String charset);
 

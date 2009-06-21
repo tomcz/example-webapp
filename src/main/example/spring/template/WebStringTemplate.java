@@ -7,7 +7,7 @@ public class WebStringTemplate extends StringTemplate {
 
     private WebFormat defaultFormat = WebFormat.HTML;
 
-    public void setAttributeSpec(String aggrSpec, Object... values) {
+    public void setAggregate(String aggrSpec, Object... values) {
         super.setAttribute(aggrSpec, values);
     }
 

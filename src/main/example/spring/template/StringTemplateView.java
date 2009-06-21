@@ -39,8 +39,8 @@ public class StringTemplateView implements TemplateView {
         template.setAttribute(name, value);
     }
 
-    public void setSpec(String aggrSpec, Object... values) {
-        template.setAttributeSpec(aggrSpec, values);
+    public void setAggregate(String aggrSpec, Object... values) {
+        template.setAggregate(aggrSpec, values);
     }
 
     public void registerRenderer(Renderer renderer) {
