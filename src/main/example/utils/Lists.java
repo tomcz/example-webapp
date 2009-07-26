@@ -42,6 +42,15 @@ public class Lists {
         }
     }
 
+    public static <T> boolean contains(Iterable<T> items, Matcher<T> matcher) {
+        for (T item : items) {
+            if (matcher.matches(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static <T> List<T> select(Iterable<T> items, Matcher<T> matcher) {
         List<T> result = create();
         for (T item : items) {
@@ -76,5 +85,17 @@ public class Lists {
             result = reducer.reduce(item, result);
         }
         return result;
+    }
+
+    public static <T> boolean contains(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
+        return contains(items, new HamcrestMatcher<T>(matcher));
+    }
+
+    public static <T> List<T> select(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
+        return select(items, new HamcrestMatcher<T>(matcher));
+    }
+
+    public static <T> List<T> reject(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
+        return reject(items, new HamcrestMatcher<T>(matcher));
     }
 }
