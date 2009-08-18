@@ -19,14 +19,14 @@ public class RequestMappingPathBuilderTests {
 
     @Test
     public void shouldCreateGetLinkForGetHandler() throws Exception {
-        String link = new RequestMappingPathBuilder().httpGet(GetHandler.class, "documentId", "new");
-        assertThat(link, is("/new/success.go"));
+        Path path = new RequestMappingPathBuilder().httpGet(GetHandler.class, "documentId", "new");
+        assertThat(path.getUri(), is("/new/success.go"));
     }
 
     @Test
     public void shouldPrependServletPathToLink() throws Exception {
-        String link = new RequestMappingPathBuilder("/test").httpGet(GetHandler.class, "documentId", "new");
-        assertThat(link, is("/test/new/success.go"));
+        Path path = new RequestMappingPathBuilder("/test").httpGet(GetHandler.class, "documentId", "new");
+        assertThat(path.getUri(), is("/test/new/success.go"));
     }
 
     @Test
@@ -37,15 +37,15 @@ public class RequestMappingPathBuilderTests {
 
     @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
-        String link = new RequestMappingPathBuilder().httpPost(PostHandler.class, "documentId", "old");
-        assertThat(link, is("/old/error.go"));
+        Path path = new RequestMappingPathBuilder().httpPost(PostHandler.class, "documentId", "old");
+        assertThat(path.getUri(), is("/old/error.go"));
     }
 
     @Test
     public void shouldCreateLinkToNamedMethod() throws Exception {
         Map<String, String> params = Maps.create("documentId", "old");
-        String link = new RequestMappingPathBuilder().build(PostHandler.class, "handlePostRequest", params);
-        assertThat(link, is("/old/error.go"));
+        Path path = new RequestMappingPathBuilder().build(PostHandler.class, "handlePostRequest", params);
+        assertThat(path.getUri(), is("/old/error.go"));
     }
 
     @RequestMapping("/{documentId}/success.go")

@@ -44,7 +44,7 @@ public class StringTemplateView implements TemplateView {
     }
 
     public void registerRenderer(Renderer renderer) {
-        template.registerRenderer(renderer.getTypeToRender(), new RendererAdaptor(renderer));
+        template.registerRenderer(renderer);
     }
 
     public void setDefaultFormat(WebFormat defaultFormat) {
@@ -60,6 +60,7 @@ public class StringTemplateView implements TemplateView {
         template.setAttribute("model", model);
         template.setAttribute("base", request.getContextPath());
         template.setAttribute("request", createMapOfRequestAttributes(request));
+        template.registerRenderer(new PathRenderer(request));
 
         template.write(new NoIndentWriter(response.getWriter()));
     }

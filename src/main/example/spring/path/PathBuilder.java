@@ -6,25 +6,26 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.Map;
 
 public interface PathBuilder {
+
     RedirectView redirectTo(Class handlerClass);
 
     RedirectView redirectTo(Class handlerClass, String paramName, Object paramValue);
 
     RedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables);
 
-    String httpGet(Class handlerClass);
+    Path httpGet(Class handlerClass);
 
-    String httpGet(Class handlerClass, String paramName, Object paramValue);
+    Path httpGet(Class handlerClass, String paramName, Object paramValue);
 
-    String httpGet(Class handlerClass, Map<String, String> pathVariables);
+    Path httpGet(Class handlerClass, Map<String, String> pathVariables);
 
-    String httpPost(Class handlerClass);
+    Path httpPost(Class handlerClass);
 
-    String httpPost(Class handlerClass, String paramName, Object paramValue);
+    Path httpPost(Class handlerClass, String paramName, Object paramValue);
 
-    String httpPost(Class handlerClass, Map<String, String> pathVariables);
+    Path httpPost(Class handlerClass, Map<String, String> pathVariables);
 
-    String build(RequestMethod method, Class handlerClass, Map<String, String> pathVariables);
+    Path build(RequestMethod method, Class handlerClass, Map<String, String> pathVariables);
 
-    String build(Class handlerClass, String methodName, Map<String, String> pathVariables);
+    Path build(Class handlerClass, String methodName, Map<String, String> pathVariables);
 }

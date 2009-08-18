@@ -6,12 +6,12 @@
 $if(!mappings.empty)$
 <ul>
 $mappings:{ mapping |
-    <li><a href="$base$$mapping.value$">$mapping.key$</a></li>
+    <li><a href="$mapping.value$">$mapping.key$</a></li>
 }$
 </ul>
 $endif$
 <p>
-    Click <a href="$base$$newForm$">here</a> for a new form.
+    Click <a href="$newForm$">here</a> for a new form.
 </p>
 </body>
 </html>

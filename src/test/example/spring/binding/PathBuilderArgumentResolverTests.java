@@ -28,7 +28,7 @@ public class PathBuilderArgumentResolverTests {
         Object arg = resolver.resolveArgument(new MethodParameter(testMethod, 1), new ServletWebRequest(request));
         PathBuilder builder = (PathBuilder) arg;
 
-        assertThat(builder.httpGet(GetHandler.class), is("/success.go"));
+        assertThat(builder.httpGet(GetHandler.class).getUri(), is("/success.go"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class PathBuilderArgumentResolverTests {
         Object arg = resolver.resolveArgument(new MethodParameter(testMethod, 1), new ServletWebRequest(request));
         PathBuilder builder = (PathBuilder) arg;
 
-        assertThat(builder.httpGet(GetHandler.class), is("/test/success.go"));
+        assertThat(builder.httpGet(GetHandler.class).getUri(), is("/test/success.go"));
     }
 
     @Test

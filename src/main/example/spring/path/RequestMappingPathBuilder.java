@@ -35,42 +35,42 @@ public class RequestMappingPathBuilder implements PathBuilder {
     }
 
     public RedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables) {
-        String uri = httpGet(handlerClass, pathVariables);
-        return new RedirectView(uri, true, true, false);
+        Path path = httpGet(handlerClass, pathVariables);
+        return new RedirectView(path.getUri(), path.isContextRelative(), true, false);
     }
 
-    public String httpGet(Class handlerClass) {
+    public Path httpGet(Class handlerClass) {
         return httpGet(handlerClass, Collections.<String, String>emptyMap());
     }
 
-    public String httpGet(Class handlerClass, String paramName, Object paramValue) {
+    public Path httpGet(Class handlerClass, String paramName, Object paramValue) {
         return httpGet(handlerClass, Maps.create(paramName, paramValue.toString()));
     }
 
-    public String httpGet(Class handlerClass, Map<String, String> pathVariables) {
+    public Path httpGet(Class handlerClass, Map<String, String> pathVariables) {
         return build(RequestMethod.GET, handlerClass, pathVariables);
     }
 
-    public String httpPost(Class handlerClass) {
+    public Path httpPost(Class handlerClass) {
         return httpPost(handlerClass, Collections.<String, String>emptyMap());
     }
 
-    public String httpPost(Class handlerClass, String paramName, Object paramValue) {
+    public Path httpPost(Class handlerClass, String paramName, Object paramValue) {
         return httpPost(handlerClass, Maps.create(paramName, paramValue.toString()));
     }
 
-    public String httpPost(Class handlerClass, Map<String, String> pathVariables) {
+    public Path httpPost(Class handlerClass, Map<String, String> pathVariables) {
         return build(RequestMethod.POST, handlerClass, pathVariables);
     }
 
-    public String build(RequestMethod method, Class handlerClass, Map<String, String> pathVariables) {
+    public Path build(RequestMethod method, Class handlerClass, Map<String, String> pathVariables) {
         String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, method);
-        return servletPath + expandPathVariables(url, pathVariables);
+        return new Path(servletPath + expandPathVariables(url, pathVariables));
     }
 
-    public String build(Class handlerClass, String methodName, Map<String, String> pathVariables) {
+    public Path build(Class handlerClass, String methodName, Map<String, String> pathVariables) {
         String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, methodName);
-        return servletPath + expandPathVariables(url, pathVariables);
+        return new Path(servletPath + expandPathVariables(url, pathVariables));
     }
 
     private String findHandlerClassMapping(Class handlerClass) {

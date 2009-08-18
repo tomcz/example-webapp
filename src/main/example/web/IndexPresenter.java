@@ -2,6 +2,7 @@ package example.web;
 
 import example.domain.DocumentRepository;
 import example.domain.Identity;
+import example.spring.path.Path;
 import example.spring.path.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
@@ -37,11 +38,11 @@ public class IndexPresenter {
         return template;
     }
 
-    private List<Pair<String, String>> createMappings(final PathBuilder builder, List<Identity> identities) {
-        return Lists.map(identities, new Function<Identity, Pair<String, String>>() {
-            public Pair<String, String> execute(Identity item) {
-                String path = builder.httpGet(FormController.class, "documentId", item);
-                return Pair.create(item.getValue(), path);
+    private List<Pair<Identity, Path>> createMappings(final PathBuilder builder, List<Identity> identities) {
+        return Lists.map(identities, new Function<Identity, Pair<Identity, Path>>() {
+            public Pair<Identity, Path> execute(Identity item) {
+                Path path = builder.httpGet(FormController.class, "documentId", item);
+                return Pair.create(item, path);
             }
         });
     }
