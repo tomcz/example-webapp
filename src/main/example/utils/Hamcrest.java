@@ -20,7 +20,7 @@ public class Hamcrest {
                 return matcher.matches(item);
             }
             public void describeTo(Description description) {
-                description.appendText(matcher.getClass().getSimpleName());
+                description.appendText(matcher.toString());
             }
         };
     }
