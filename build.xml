@@ -3,6 +3,7 @@
 
     <property name="src.dir" location="src/main"/>
     <property name="test.dir" location="src/test"/>
+    <property name="itest.dir" location="src/itest"/>
 
     <property name="build.dir" location="build"/>
     <property name="compile.dir" location="${build.dir}/compile"/>
@@ -37,6 +38,7 @@
     <target name="make-jars">
         <compile srcdir="${src.dir}" jarfile="${ant.project.name}.jar"/>
         <compile srcdir="${test.dir}" jarfile="${ant.project.name}-test.jar"/>
+        <compile srcdir="${itest.dir}" jarfile="${ant.project.name}-itest.jar"/>
     </target>
 
     <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
@@ -61,7 +63,7 @@
         <mkdir dir="${dist.dir}"/>
         <war warfile="${dist.dir}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
             <fileset dir="web" excludes="**/web.xml"/>
-            <lib dir="${compile.dir}" excludes="*-test.jar"/>
+            <lib dir="${compile.dir}" excludes="*test.jar"/>
             <lib dir="lib/runtime"/>
         </war>
     </target>
