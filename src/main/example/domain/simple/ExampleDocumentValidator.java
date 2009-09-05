@@ -4,9 +4,9 @@ import example.domain.Document;
 import example.domain.Document.Field;
 import example.domain.DocumentValidator;
 import example.domain.Property;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ExampleDocumentValidator implements DocumentValidator {
 
     public void validate(Document document) {

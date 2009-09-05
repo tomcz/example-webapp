@@ -5,11 +5,11 @@ import example.domain.DocumentRepository;
 import example.domain.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateOperations;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Service
+@Repository
 public class HibernateDocumentRepository implements DocumentRepository {
 
     private final HibernateOperations hibernate;
