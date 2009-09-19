@@ -1,18 +1,16 @@
 package example.spring.path;
 
 import example.utils.Maps;
-import example.utils.Strings;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriTemplate;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class RequestMappingPathBuilder implements PathBuilder {
 
@@ -107,15 +105,7 @@ public class RequestMappingPathBuilder implements PathBuilder {
     }
 
     private String expandPathVariables(String url, Map<String, String> pathVariables) {
-        String result = url;
-        for (Entry<String, String> entry : pathVariables.entrySet()) {
-            String key = "{" + entry.getKey() + "}";
-            String val = Strings.encodeURL(entry.getValue());
-            result = StringUtils.replace(result, key, val);
-        }
-        if (result.contains("{")) {
-            throw new IllegalArgumentException("Missing path variable in " + result);
-        }
-        return result;
+        UriTemplate template = new UriTemplate(url);
+        return template.expand(pathVariables).toString();
     }
 }
