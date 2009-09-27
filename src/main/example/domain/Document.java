@@ -1,6 +1,8 @@
 package example.domain;
 
+import example.utils.Lists;
 import example.utils.Maps;
+import example.utils.Matcher;
 import org.joda.time.LocalDateTime;
 
 import java.util.Arrays;
@@ -57,11 +59,12 @@ public class Document {
     }
 
     public boolean isValid() {
-        for (Property property : properties.values()) {
-            if (!property.isValid()) {
-                return false;
-            }
+        return Lists.count(properties.values(), new InvalidPropertyMatcher()) == 0;
+    }
+
+    private static class InvalidPropertyMatcher implements Matcher<Property> {
+        public boolean matches(Property item) {
+            return !item.isValid();
         }
-        return true;
     }
 }
