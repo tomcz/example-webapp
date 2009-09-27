@@ -1,4 +1,4 @@
-package example.web;
+package example.error;
 
 import example.spring.path.PathBuilder;
 import example.spring.path.RequestMappingPathBuilder;

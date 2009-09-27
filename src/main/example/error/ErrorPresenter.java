@@ -1,4 +1,4 @@
-package example.web;
+package example.error;
 
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;

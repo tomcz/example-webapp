@@ -1,8 +1,8 @@
-package example.web;
+package example.domain.web;
 
 import example.domain.DocumentRepository;
 import example.domain.Identity;
-import example.spring.path.Path;
+import example.spring.Path;
 import example.spring.path.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;

@@ -1,6 +1,6 @@
 package example.spring.template;
 
-import example.spring.path.Path;
+import example.spring.Path;
 
 import javax.servlet.http.HttpServletRequest;
 

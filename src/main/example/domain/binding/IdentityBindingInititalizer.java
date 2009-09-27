@@ -1,4 +1,4 @@
-package example.spring.binding;
+package example.domain.binding;
 
 import example.domain.Identity;
 import org.springframework.web.bind.WebDataBinder;

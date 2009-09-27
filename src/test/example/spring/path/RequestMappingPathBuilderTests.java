@@ -1,5 +1,6 @@
 package example.spring.path;
 
+import example.spring.Path;
 import example.utils.Maps;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

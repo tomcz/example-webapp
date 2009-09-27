@@ -1,4 +1,4 @@
-package example.web;
+package example.spring;
 
 import org.springframework.web.filter.GenericFilterBean;
 

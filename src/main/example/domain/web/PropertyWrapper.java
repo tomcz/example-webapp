@@ -1,4 +1,4 @@
-package example.web;
+package example.domain.web;
 
 import example.domain.Property;
 

@@ -42,7 +42,7 @@
 
     <filter>
         <filter-name>index</filter-name>
-        <filter-class>example.web.RedirectFilter</filter-class>
+        <filter-class>example.spring.RedirectFilter</filter-class>
         <init-param>
             <param-name>redirectPath</param-name>
             <param-value>/page/forms</param-value>

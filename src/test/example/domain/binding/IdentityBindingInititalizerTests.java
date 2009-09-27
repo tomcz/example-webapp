@@ -1,4 +1,4 @@
-package example.spring.binding;
+package example.domain.binding;
 
 import example.domain.Identity;
 import static org.hamcrest.CoreMatchers.instanceOf;

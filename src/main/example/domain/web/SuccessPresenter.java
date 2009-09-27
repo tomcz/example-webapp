@@ -1,11 +1,11 @@
-package example.web;
+package example.domain.web;
 
 import example.domain.DocumentRepository;
 import example.domain.Identity;
+import static example.domain.web.DocumentUtils.createDocumentModel;
 import example.spring.path.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
-import static example.web.DocumentUtils.createDocumentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

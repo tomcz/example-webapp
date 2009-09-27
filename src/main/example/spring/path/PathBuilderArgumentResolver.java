@@ -1,7 +1,5 @@
-package example.spring.binding;
+package example.spring.path;
 
-import example.spring.path.PathBuilder;
-import example.spring.path.RequestMappingPathBuilder;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;

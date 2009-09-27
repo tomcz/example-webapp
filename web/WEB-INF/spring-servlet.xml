@@ -9,7 +9,8 @@
                            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="example.web" />
+    <context:component-scan base-package="example.error" />
+    <context:component-scan base-package="example.domain.web" />
 
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="useDefaultSuffixPattern" value="false" />
@@ -18,10 +19,10 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="cacheSeconds" value="0" />
         <property name="customArgumentResolver">
-            <bean class="example.spring.binding.PathBuilderArgumentResolver" />
+            <bean class="example.spring.path.PathBuilderArgumentResolver" />
         </property>
         <property name="webBindingInitializer">
-            <bean class="example.spring.binding.IdentityBindingInititalizer" />
+            <bean class="example.domain.binding.IdentityBindingInititalizer" />
         </property>
     </bean>
 

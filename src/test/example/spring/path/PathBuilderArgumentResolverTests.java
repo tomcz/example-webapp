@@ -1,6 +1,5 @@
-package example.spring.binding;
+package example.spring.path;
 
-import example.spring.path.PathBuilder;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;

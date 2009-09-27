@@ -1,5 +1,6 @@
 package example.spring.path;
 
+import example.spring.Path;
 import example.utils.Maps;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.core.annotation.AnnotationUtils;

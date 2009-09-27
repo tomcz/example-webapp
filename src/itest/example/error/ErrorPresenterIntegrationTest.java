@@ -1,6 +1,6 @@
-package example.web;
+package example.error;
 
-import example.spring.path.Path;
+import example.spring.Path;
 import example.spring.path.PathBuilder;
 import example.spring.path.RequestMappingPathBuilder;
 import org.apache.commons.lang.RandomStringUtils;

@@ -1,4 +1,4 @@
-package example.spring.path;
+package example.spring;
 
 public class Path {
 

@@ -1,5 +1,6 @@
 package example.spring.path;
 
+import example.spring.Path;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
