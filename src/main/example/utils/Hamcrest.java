@@ -15,8 +15,7 @@ public class Hamcrest {
 
     public static <T> org.hamcrest.Matcher<T> convert(final Matcher<T> matcher) {
         return new TypeSafeMatcher<T>() {
-            @Override
-            protected boolean matchesSafely(T item) {
+            public boolean matchesSafely(T item) {
                 return matcher.matches(item);
             }
             public void describeTo(Description description) {
