@@ -18,9 +18,6 @@
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="cacheSeconds" value="0" />
-        <property name="customArgumentResolver">
-            <bean class="example.spring.path.PathBuilderArgumentResolver" />
-        </property>
         <property name="webBindingInitializer">
             <bean class="example.domain.binding.IdentityBindingInititalizer" />
         </property>

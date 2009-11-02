@@ -27,8 +27,13 @@ public class PathRenderer implements Renderer {
     private String render(Object obj) {
         Path path = (Path) obj;
         String uri = path.getUri();
-        if (path.isContextRelative()) {
-            uri = request.getContextPath() + uri;
+        if (uri.startsWith("/")) {
+            if (path.isServletRelative()) {
+                uri = request.getServletPath() + uri;
+            }
+            if (path.isContextRelative()) {
+                uri = request.getContextPath() + uri;
+            }
         }
         return uri;
     }

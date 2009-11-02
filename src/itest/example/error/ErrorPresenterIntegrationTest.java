@@ -1,8 +1,8 @@
 package example.error;
 
 import example.spring.Path;
-import example.spring.path.PathBuilder;
-import example.spring.path.RequestMappingPathBuilder;
+import example.spring.PathBuilder;
+import example.spring.mapping.RequestMappingPathBuilder;
 import org.apache.commons.lang.RandomStringUtils;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;

@@ -3,7 +3,8 @@ package example.domain.web;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
-import example.spring.path.PathBuilder;
+import example.spring.PathBuilder;
+import example.spring.mapping.RequestMappingPathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import example.utils.Function;
@@ -20,6 +21,8 @@ import java.util.List;
 @Controller
 public class IndexPresenter {
 
+    private final PathBuilder builder = new RequestMappingPathBuilder();
+
     private final DocumentRepository repository;
     private final TemplateViewFactory factory;
 
@@ -30,15 +33,15 @@ public class IndexPresenter {
     }
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
-    public View present(final PathBuilder builder) {
+    public View present() {
         List<Identity> identities = repository.getIDs();
         TemplateView template = factory.create("example", "index");
         template.set("newForm", builder.httpGet(FormController.class, "documentId", Identity.NEW));
-        template.set("mappings", createMappings(builder, identities));
+        template.set("mappings", createMappings(identities));
         return template;
     }
 
-    private List<Pair<Identity, Path>> createMappings(final PathBuilder builder, List<Identity> identities) {
+    private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
         return Lists.map(identities, new Function<Identity, Pair<Identity, Path>>() {
             public Pair<Identity, Path> execute(Identity item) {
                 Path path = builder.httpGet(FormController.class, "documentId", item);

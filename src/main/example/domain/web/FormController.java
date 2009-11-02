@@ -6,7 +6,8 @@ import example.domain.DocumentValidator;
 import example.domain.Identity;
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.domain.web.DocumentUtils.setProperties;
-import example.spring.path.PathBuilder;
+import example.spring.PathBuilder;
+import example.spring.mapping.RequestMappingPathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/form/{documentId}")
 public class FormController {
+
+    private final PathBuilder builder = new RequestMappingPathBuilder();
 
     private final DocumentRepository repository;
     private final DocumentValidator validator;
@@ -34,7 +36,7 @@ public class FormController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public View present(@PathVariable Identity documentId, PathBuilder builder) {
+    public View present(@PathVariable Identity documentId) {
         TemplateView template = factory.create("example", "form");
         template.set("indexLink", builder.httpGet(IndexPresenter.class));
         template.set("formAction", builder.httpPost(getClass(), "documentId", documentId));
@@ -43,7 +45,7 @@ public class FormController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public RedirectView process(@PathVariable Identity documentId, WebRequest request, PathBuilder builder) {
+    public View process(@PathVariable Identity documentId, WebRequest request) {
         Document document = repository.get(documentId);
 
         setProperties(request, document);

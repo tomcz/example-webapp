@@ -1,18 +1,16 @@
-package example.spring.path;
+package example.spring;
 
-import example.spring.Path;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Map;
 
 public interface PathBuilder {
 
-    RedirectView redirectTo(Class handlerClass);
+    PathRedirectView redirectTo(Class handlerClass);
 
-    RedirectView redirectTo(Class handlerClass, String paramName, Object paramValue);
+    PathRedirectView redirectTo(Class handlerClass, String paramName, Object paramValue);
 
-    RedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables);
+    PathRedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables);
 
     Path httpGet(Class handlerClass);
 

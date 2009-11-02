@@ -3,7 +3,8 @@ package example.domain.web;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import static example.domain.web.DocumentUtils.createDocumentModel;
-import example.spring.path.PathBuilder;
+import example.spring.PathBuilder;
+import example.spring.mapping.RequestMappingPathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.View;
 @Controller
 public class SuccessPresenter {
 
+    private final PathBuilder builder = new RequestMappingPathBuilder();
+
     private final DocumentRepository repository;
     private final TemplateViewFactory factory;
 
@@ -26,7 +29,7 @@ public class SuccessPresenter {
     }
 
     @RequestMapping(value = "/success/{documentId}", method = RequestMethod.GET)
-    public View present(@PathVariable Identity documentId, PathBuilder builder) {
+    public View present(@PathVariable Identity documentId) {
         TemplateView template = factory.create("example", "success");
         template.set("document", createDocumentModel(repository.get(documentId)));
         template.set("oldFormLink", builder.httpGet(FormController.class, "documentId", documentId));
