@@ -14,7 +14,7 @@ import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class ErrorPresenterIntegrationTest {
+public class ErrorPresenterIntegrationTests {
 
     @Test
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
@@ -45,7 +45,7 @@ public class ErrorPresenterIntegrationTest {
 
         String errorRef = RandomStringUtils.randomAlphanumeric(7).toUpperCase();
 
-        Path link = PathBuilder.httpGet(ErrorPresenter.class, "errorRef", errorRef);
+        Path link = PathBuilder.pathToGet(ErrorPresenter.class, "errorRef", errorRef);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", link.getUri());
         MockHttpServletResponse response = new MockHttpServletResponse();

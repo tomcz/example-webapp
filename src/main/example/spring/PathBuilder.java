@@ -14,47 +14,47 @@ import java.util.Map;
 public class PathBuilder {
 
     public static PathRedirectView redirectTo(Class handlerClass) {
-        return redirectTo(handlerClass, Collections.<String, String>emptyMap());
+        return new PathRedirectView(pathToGet(handlerClass));
     }
 
     public static PathRedirectView redirectTo(Class handlerClass, String paramName, Object paramValue) {
-        return redirectTo(handlerClass, Maps.create(paramName, paramValue.toString()));
+        return new PathRedirectView(pathToGet(handlerClass, paramName, paramValue));
     }
 
     public static PathRedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables) {
-        return new PathRedirectView(httpGet(handlerClass, pathVariables));
+        return new PathRedirectView(pathToGet(handlerClass, pathVariables));
     }
 
-    public static Path httpGet(Class handlerClass) {
-        return httpGet(handlerClass, Collections.<String, String>emptyMap());
+    public static Path pathToGet(Class handlerClass) {
+        return pathToGet(handlerClass, Collections.<String, String>emptyMap());
     }
 
-    public static Path httpGet(Class handlerClass, String paramName, Object paramValue) {
-        return httpGet(handlerClass, Maps.create(paramName, paramValue.toString()));
+    public static Path pathToGet(Class handlerClass, String paramName, Object paramValue) {
+        return pathToGet(handlerClass, Maps.create(paramName, paramValue.toString()));
     }
 
-    public static Path httpGet(Class handlerClass, Map<String, String> pathVariables) {
-        return build(RequestMethod.GET, handlerClass, pathVariables);
+    public static Path pathToGet(Class handlerClass, Map<String, String> pathVariables) {
+        return pathTo(RequestMethod.GET, handlerClass, pathVariables);
     }
 
-    public static Path httpPost(Class handlerClass) {
-        return httpPost(handlerClass, Collections.<String, String>emptyMap());
+    public static Path pathToPost(Class handlerClass) {
+        return pathToPost(handlerClass, Collections.<String, String>emptyMap());
     }
 
-    public static Path httpPost(Class handlerClass, String paramName, Object paramValue) {
-        return httpPost(handlerClass, Maps.create(paramName, paramValue.toString()));
+    public static Path pathToPost(Class handlerClass, String paramName, Object paramValue) {
+        return pathToPost(handlerClass, Maps.create(paramName, paramValue.toString()));
     }
 
-    public static Path httpPost(Class handlerClass, Map<String, String> pathVariables) {
-        return build(RequestMethod.POST, handlerClass, pathVariables);
+    public static Path pathToPost(Class handlerClass, Map<String, String> pathVariables) {
+        return pathTo(RequestMethod.POST, handlerClass, pathVariables);
     }
 
-    public static Path build(RequestMethod method, Class handlerClass, Map<String, String> pathVariables) {
+    public static Path pathTo(RequestMethod method, Class handlerClass, Map<String, String> pathVariables) {
         String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, method);
         return new Path(expandPathVariables(url, pathVariables));
     }
 
-    public static Path build(Class handlerClass, String methodName, Map<String, String> pathVariables) {
+    public static Path pathTo(Class handlerClass, String methodName, Map<String, String> pathVariables) {
         String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, methodName);
         return new Path(expandPathVariables(url, pathVariables));
     }

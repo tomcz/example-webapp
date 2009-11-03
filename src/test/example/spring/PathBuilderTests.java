@@ -16,12 +16,12 @@ public class PathBuilderTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailToCreatePostLinkForGetHandler() throws Exception {
-        PathBuilder.httpPost(GetHandler.class, "documentId", "new");
+        PathBuilder.pathToPost(GetHandler.class, "documentId", "new");
     }
 
     @Test
     public void shouldCreateGetLinkForGetHandler() throws Exception {
-        Path path = PathBuilder.httpGet(GetHandler.class, "documentId", "new");
+        Path path = PathBuilder.pathToGet(GetHandler.class, "documentId", "new");
         assertThat(path.getUri(), is("/new/success.go"));
     }
 
@@ -40,14 +40,14 @@ public class PathBuilderTests {
 
     @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
-        Path path = PathBuilder.httpPost(PostHandler.class, "documentId", "old");
+        Path path = PathBuilder.pathToPost(PostHandler.class, "documentId", "old");
         assertThat(path.getUri(), is("/old/error.go"));
     }
 
     @Test
     public void shouldCreateLinkToNamedMethod() throws Exception {
         Map<String, String> params = Maps.create("documentId", "old");
-        Path path = PathBuilder.build(PostHandler.class, "handlePostRequest", params);
+        Path path = PathBuilder.pathTo(PostHandler.class, "handlePostRequest", params);
         assertThat(path.getUri(), is("/old/error.go"));
     }
 

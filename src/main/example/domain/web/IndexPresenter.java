@@ -3,7 +3,7 @@ package example.domain.web;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
-import static example.spring.PathBuilder.httpGet;
+import static example.spring.PathBuilder.pathToGet;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import example.utils.Function;
@@ -24,16 +24,16 @@ public class IndexPresenter {
     private final TemplateViewFactory factory;
 
     @Autowired
-    public IndexPresenter(TemplateViewFactory factory, DocumentRepository repository) {
-        this.factory = factory;
+    public IndexPresenter(DocumentRepository repository, TemplateViewFactory factory) {
         this.repository = repository;
+        this.factory = factory;
     }
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public View present() {
         List<Identity> identities = repository.getIDs();
         TemplateView template = factory.create("example", "index");
-        template.set("newForm", httpGet(FormController.class, "documentId", Identity.NEW));
+        template.set("newForm", pathToGet(FormController.class, "documentId", Identity.NEW));
         template.set("mappings", createMappings(identities));
         return template;
     }
@@ -41,7 +41,7 @@ public class IndexPresenter {
     private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
         return Lists.map(identities, new Function<Identity, Pair<Identity, Path>>() {
             public Pair<Identity, Path> execute(Identity item) {
-                Path path = httpGet(FormController.class, "documentId", item);
+                Path path = pathToGet(FormController.class, "documentId", item);
                 return Pair.create(item, path);
             }
         });
