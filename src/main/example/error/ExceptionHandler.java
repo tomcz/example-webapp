@@ -1,7 +1,6 @@
 package example.error;
 
 import example.spring.PathBuilder;
-import example.spring.mapping.RequestMappingPathBuilder;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -16,9 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ExceptionHandler implements HandlerExceptionResolver {
 
     private final Logger logger = Logger.getLogger(getClass());
-
     private final UrlPathHelper pathHelper = new UrlPathHelper();
-    private final PathBuilder pathBuilder = new RequestMappingPathBuilder();
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
                                          Object handler, Exception ex) {
@@ -26,6 +23,6 @@ public class ExceptionHandler implements HandlerExceptionResolver {
         String lookupPath = pathHelper.getLookupPathForRequest(request);
         String errorRef = RandomStringUtils.randomAlphanumeric(7).toUpperCase();
         logger.error("Unexpected error [" + errorRef + "] for path [" + lookupPath + "]: " + ex, ex);
-        return new ModelAndView(pathBuilder.redirectTo(ErrorPresenter.class, "errorRef", errorRef));
+        return new ModelAndView(PathBuilder.redirectTo(ErrorPresenter.class, "errorRef", errorRef));
     }
 }

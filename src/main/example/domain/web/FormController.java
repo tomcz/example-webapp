@@ -6,8 +6,9 @@ import example.domain.DocumentValidator;
 import example.domain.Identity;
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.domain.web.DocumentUtils.setProperties;
-import example.spring.PathBuilder;
-import example.spring.mapping.RequestMappingPathBuilder;
+import static example.spring.PathBuilder.httpGet;
+import static example.spring.PathBuilder.httpPost;
+import static example.spring.PathBuilder.redirectTo;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ import org.springframework.web.servlet.View;
 @Controller
 @RequestMapping("/form/{documentId}")
 public class FormController {
-
-    private final PathBuilder builder = new RequestMappingPathBuilder();
 
     private final DocumentRepository repository;
     private final DocumentValidator validator;
@@ -38,8 +37,8 @@ public class FormController {
     @RequestMapping(method = RequestMethod.GET)
     public View present(@PathVariable Identity documentId) {
         TemplateView template = factory.create("example", "form");
-        template.set("indexLink", builder.httpGet(IndexPresenter.class));
-        template.set("formAction", builder.httpPost(getClass(), "documentId", documentId));
+        template.set("indexLink", httpGet(IndexPresenter.class));
+        template.set("formAction", httpPost(getClass(), "documentId", documentId));
         template.set("document", createDocumentModel(repository.get(documentId)));
         return template;
     }
@@ -53,8 +52,8 @@ public class FormController {
         repository.set(document);
 
         if (document.isValid()) {
-            return builder.redirectTo(SuccessPresenter.class, "documentId", documentId);
+            return redirectTo(SuccessPresenter.class, "documentId", documentId);
         }
-        return builder.redirectTo(getClass(), "documentId", documentId);
+        return redirectTo(getClass(), "documentId", documentId);
     }
 }

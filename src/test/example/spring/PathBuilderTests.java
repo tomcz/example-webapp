@@ -1,7 +1,5 @@
-package example.spring.mapping;
+package example.spring;
 
-import example.spring.Path;
-import example.spring.PathRedirectView;
 import example.utils.Maps;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -14,22 +12,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Collections;
 import java.util.Map;
 
-public class RequestMappingPathBuilderTests {
+public class PathBuilderTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailToCreatePostLinkForGetHandler() throws Exception {
-        new RequestMappingPathBuilder().httpPost(GetHandler.class, "documentId", "new");
+        PathBuilder.httpPost(GetHandler.class, "documentId", "new");
     }
 
     @Test
     public void shouldCreateGetLinkForGetHandler() throws Exception {
-        Path path = new RequestMappingPathBuilder().httpGet(GetHandler.class, "documentId", "new");
+        Path path = PathBuilder.httpGet(GetHandler.class, "documentId", "new");
         assertThat(path.getUri(), is("/new/success.go"));
     }
 
     @Test
     public void shouldCreateRedirectToGetHandler() throws Exception {
-        PathRedirectView view = new RequestMappingPathBuilder().redirectTo(GetHandler.class, "documentId", "new");
+        PathRedirectView view = PathBuilder.redirectTo(GetHandler.class, "documentId", "new");
 
         Map<String, ?> model = Collections.emptyMap();
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -42,14 +40,14 @@ public class RequestMappingPathBuilderTests {
 
     @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
-        Path path = new RequestMappingPathBuilder().httpPost(PostHandler.class, "documentId", "old");
+        Path path = PathBuilder.httpPost(PostHandler.class, "documentId", "old");
         assertThat(path.getUri(), is("/old/error.go"));
     }
 
     @Test
     public void shouldCreateLinkToNamedMethod() throws Exception {
         Map<String, String> params = Maps.create("documentId", "old");
-        Path path = new RequestMappingPathBuilder().build(PostHandler.class, "handlePostRequest", params);
+        Path path = PathBuilder.build(PostHandler.class, "handlePostRequest", params);
         assertThat(path.getUri(), is("/old/error.go"));
     }
 

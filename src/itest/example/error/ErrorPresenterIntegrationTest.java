@@ -2,7 +2,6 @@ package example.error;
 
 import example.spring.Path;
 import example.spring.PathBuilder;
-import example.spring.mapping.RequestMappingPathBuilder;
 import org.apache.commons.lang.RandomStringUtils;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
@@ -46,8 +45,7 @@ public class ErrorPresenterIntegrationTest {
 
         String errorRef = RandomStringUtils.randomAlphanumeric(7).toUpperCase();
 
-        PathBuilder builder = new RequestMappingPathBuilder();
-        Path link = builder.httpGet(ErrorPresenter.class, "errorRef", errorRef);
+        Path link = PathBuilder.httpGet(ErrorPresenter.class, "errorRef", errorRef);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", link.getUri());
         MockHttpServletResponse response = new MockHttpServletResponse();
