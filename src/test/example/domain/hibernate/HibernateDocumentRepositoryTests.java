@@ -7,8 +7,9 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.mock;
+import static org.mockito.BDDMockito.verifyNoMoreInteractions;
 import org.springframework.orm.hibernate3.HibernateOperations;
 
 public class HibernateDocumentRepositoryTests {
@@ -19,7 +20,7 @@ public class HibernateDocumentRepositoryTests {
         Document doc = new Document(id);
 
         HibernateOperations hibernate = mock(HibernateOperations.class);
-        when(hibernate.get(Document.class, id)).thenReturn(doc);
+        given(hibernate.get(Document.class, id)).willReturn(doc);
 
         HibernateDocumentRepository repository = new HibernateDocumentRepository(hibernate);
 
@@ -35,5 +36,18 @@ public class HibernateDocumentRepositoryTests {
 
         assertThat(document, notNullValue());
         assertThat(document.getIdentity(), is(id));
+    }
+
+    @Test
+    public void shouldNotAttemptToRetrieveDocumentFromDatabaseForNewIdentity() throws Exception {
+        HibernateOperations hibernate = mock(HibernateOperations.class);
+
+        HibernateDocumentRepository repository = new HibernateDocumentRepository(hibernate);
+        Document document = repository.get(Identity.NEW);
+
+        assertThat(document, notNullValue());
+        assertThat(document.getIdentity(), is(Identity.NEW));
+
+        verifyNoMoreInteractions(hibernate);
     }
 }

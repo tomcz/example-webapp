@@ -20,6 +20,9 @@ public class HibernateDocumentRepository implements DocumentRepository {
     }
 
     public Document get(Identity documentId) {
+        if (documentId.isNew()) {
+            return new Document(documentId);
+        }
         Document document = hibernate.get(Document.class, documentId);
         if (document == null) {
             document = new Document(documentId);
