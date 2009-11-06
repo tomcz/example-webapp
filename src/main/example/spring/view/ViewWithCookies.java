@@ -1,4 +1,4 @@
-package example.spring;
+package example.spring.view;
 
 import example.utils.Lists;
 import org.springframework.web.servlet.View;

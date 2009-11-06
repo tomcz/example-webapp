@@ -1,4 +1,4 @@
-package example.spring;
+package example.spring.view;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;

@@ -1,4 +1,4 @@
-package example.spring;
+package example.spring.view;
 
 import org.springframework.web.servlet.View;
 
