@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class ExceptionHandler implements HandlerExceptionResolver {
+public class RedirectingExceptionResolver implements HandlerExceptionResolver {
 
     private final Logger logger = Logger.getLogger(getClass());
     private final UrlPathHelper pathHelper = new UrlPathHelper();
