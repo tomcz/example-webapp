@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-public class CookieSettingView implements View {
+public class ViewWithCookies implements View {
 
     private final View delegate;
     private final List<Cookie> cookies;
 
-    public CookieSettingView(View delegate) {
+    public ViewWithCookies(View delegate) {
         this.cookies = Lists.create();
         this.delegate = delegate;
     }

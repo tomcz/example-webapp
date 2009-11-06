@@ -14,7 +14,7 @@ import javax.servlet.http.Cookie;
 import java.util.Collections;
 import java.util.Map;
 
-public class CookieSettingViewTests {
+public class ViewWithCookiesTests {
 
     @Test
     public void shouldAddCookiesToResponse() throws Exception {
@@ -24,7 +24,7 @@ public class CookieSettingViewTests {
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
 
-        CookieSettingView view = new CookieSettingView(delegate);
+        ViewWithCookies view = new ViewWithCookies(delegate);
         view.addCookie("key1", "test1");
         view.addCookie("key2", "test2");
 
