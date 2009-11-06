@@ -49,9 +49,15 @@
                 <fileset dir="${test.dir}">
                     <include name="**/${testcase}.java" />
                 </fileset>
+                <fileset dir="${itest.dir}">
+                    <include name="**/${testcase}.java" />
+                </fileset>
             </batchtest>
             <batchtest unless="testcase">
                 <fileset dir="${test.dir}">
+                    <include name="**/*Tests.java" />
+                </fileset>
+                <fileset dir="${itest.dir}">
                     <include name="**/*Tests.java" />
                 </fileset>
             </batchtest>
