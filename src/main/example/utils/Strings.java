@@ -18,7 +18,7 @@ public class Strings {
     private static StandardToStringStyle style;
 
     public static String random() {
-        return random(20);
+        return random(22);
     }
 
     public static String random(int characters) {
