@@ -1,6 +1,6 @@
 package example.spring.view;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
@@ -32,11 +32,11 @@ public class ViewWithCookiesTests {
 
         Cookie cookie = response.getCookie("key1");
         assertThat(cookie, notNullValue());
-        assertThat(cookie.getValue(), equalTo("test1"));
+        assertThat(cookie.getValue(), is("test1"));
 
         cookie = response.getCookie("key2");
         assertThat(cookie, notNullValue());
-        assertThat(cookie.getValue(), equalTo("test2"));
+        assertThat(cookie.getValue(), is("test2"));
 
         verify(delegate).render(model, request, response);
     }

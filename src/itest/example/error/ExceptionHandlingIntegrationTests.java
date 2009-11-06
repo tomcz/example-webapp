@@ -2,8 +2,9 @@ package example.error;
 
 import example.spring.Path;
 import static example.spring.PathBuilder.pathToGet;
+import example.utils.XPathParser;
 import org.apache.commons.lang.StringUtils;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
 import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
 import static org.hamcrest.text.pattern.Patterns.exactly;
@@ -45,8 +46,9 @@ public class ExceptionHandlingIntegrationTests {
         servlet.service(request, response);
 
         String html = response.getContentAsString();
+        XPathParser parser = new XPathParser(html);
 
-        assertThat(html, containsString(errorRef));
+        assertThat(parser.getText("//span[@id='errorRef']"), is(errorRef));
     }
 
     private MockServletContext createServletContext() {

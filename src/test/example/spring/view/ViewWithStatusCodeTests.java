@@ -1,6 +1,6 @@
 package example.spring.view;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
@@ -25,7 +25,7 @@ public class ViewWithStatusCodeTests {
         ViewWithStatusCode view = new ViewWithStatusCode(404, delegate);
         view.render(model, request, response);
 
-        assertThat(response.getStatus(), equalTo(404));
+        assertThat(response.getStatus(), is(404));
 
         verify(delegate).render(model, request, response);
     }
