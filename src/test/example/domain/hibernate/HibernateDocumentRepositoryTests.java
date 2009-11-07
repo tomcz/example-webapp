@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
-import static org.mockito.BDDMockito.verifyNoMoreInteractions;
+import static org.mockito.BDDMockito.verifyZeroInteractions;
 import org.springframework.orm.hibernate3.HibernateOperations;
 
 public class HibernateDocumentRepositoryTests {
@@ -48,6 +48,6 @@ public class HibernateDocumentRepositoryTests {
         assertThat(document, notNullValue());
         assertThat(document.getIdentity(), is(Identity.NEW));
 
-        verifyNoMoreInteractions(hibernate);
+        verifyZeroInteractions(hibernate);
     }
 }
