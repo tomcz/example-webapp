@@ -61,6 +61,15 @@ public class Lists {
         return count;
     }
 
+    public static <T> T find(Iterable<T> items, Matcher<T> matcher) {
+        for (T item : items) {
+            if (matcher.matches(item)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public static <T> List<T> select(Iterable<T> items, Matcher<T> matcher) {
         List<T> result = create();
         for (T item : items) {
@@ -103,6 +112,10 @@ public class Lists {
 
     public static <T> int count(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
         return count(items, Hamcrest.convert(matcher));
+    }
+
+    public static <T> T find(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
+        return find(items, Hamcrest.convert(matcher));
     }
 
     public static <T> List<T> select(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
