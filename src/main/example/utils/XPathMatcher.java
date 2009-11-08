@@ -5,8 +5,8 @@ import org.hamcrest.StringDescription;
 
 public class XPathMatcher {
 
-    private final XPathParser parser;
     private final String xml;
+    private final XPathParser parser;
 
     public XPathMatcher(String xml) {
         this.parser = new XPathParser(xml);
