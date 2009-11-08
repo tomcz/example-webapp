@@ -5,8 +5,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
 
 import java.io.IOException;
@@ -20,7 +18,7 @@ public class XPathParser {
     public XPathParser(String xml) {
         try {
             SAXBuilder builder = new SAXBuilder();
-            document = builder.build(new StringReader(xml));
+            this.document = builder.build(new StringReader(xml));
 
         } catch (JDOMException e) {
             throw new UnhandledException(e);
@@ -28,6 +26,10 @@ public class XPathParser {
         } catch (IOException e) {
             throw new UnhandledException(e);
         }
+    }
+
+    public Document getDocument() {
+        return document;
     }
 
     @SuppressWarnings({"unchecked"})
@@ -53,11 +55,5 @@ public class XPathParser {
         } catch (JDOMException e) {
             throw new UnhandledException(e);
         }
-    }
-
-    @Override
-    public String toString() {
-        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-        return outputter.outputString(document);
     }
 }

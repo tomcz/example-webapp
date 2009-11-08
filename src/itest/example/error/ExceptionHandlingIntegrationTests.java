@@ -2,7 +2,7 @@ package example.error;
 
 import example.spring.Path;
 import static example.spring.PathBuilder.pathToGet;
-import example.utils.XPathParser;
+import example.utils.XPathMatcher;
 import org.apache.commons.lang.StringUtils;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
@@ -46,9 +46,9 @@ public class ExceptionHandlingIntegrationTests {
         servlet.service(request, response);
 
         String html = response.getContentAsString();
-        XPathParser parser = new XPathParser(html);
+        XPathMatcher xpath = new XPathMatcher(html);
 
-        assertThat(parser.getText("//span[@id='errorRef']"), is(errorRef));
+        xpath.shouldMatch("//span[@id='errorRef']", is(errorRef));
     }
 
     private MockServletContext createServletContext() {
