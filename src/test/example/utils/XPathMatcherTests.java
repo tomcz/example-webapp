@@ -21,7 +21,7 @@ public class XPathMatcherTests {
         XPathMatcher matcher = new XPathMatcher(xml);
         try {
             matcher.shouldMatch("//error", is("boo"));
-            fail("Should fail to match expression");
+            fail("Should fail to match");
         } catch (AssertionError e) {
             // expected
         }
