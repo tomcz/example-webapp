@@ -93,7 +93,12 @@
         <inspection_tool class="CheckTagEmptyBody" level="WARNING" enabled="false" />
       </profile>
     </profiles>
-    <list size="0" />
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="SERVER PROBLEM" />
+      <item index="1" class="java.lang.String" itemvalue="INFO" />
+      <item index="2" class="java.lang.String" itemvalue="WARNING" />
+      <item index="3" class="java.lang.String" itemvalue="ERROR" />
+    </list>
   </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />
@@ -251,11 +256,7 @@
   <component name="ProjectDetails">
     <option name="projectName" value="example-webapp" />
   </component>
-  <component name="ProjectFileVersion" converted="true">
-    <converter id="javaee-modules" />
-    <converter id="ror-modules" />
-    <converter id="SelenaRunConfToDiana" />
-  </component>
+  <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/example-webapp.iml" filepath="$PROJECT_DIR$/example-webapp.iml" />

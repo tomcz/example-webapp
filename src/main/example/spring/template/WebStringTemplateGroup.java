@@ -35,7 +35,7 @@ public class WebStringTemplateGroup extends StringTemplateGroup {
             return loadTemplate(name, reader);
 
         } catch (Exception e) {
-            logger.error("Cannot load template from " + fileName, e);
+            logger.debug("Cannot load template from " + fileName + " - error is: " + e);
             return null;
 
         } finally {
