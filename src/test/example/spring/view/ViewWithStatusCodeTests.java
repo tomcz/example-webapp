@@ -14,7 +14,7 @@ import java.util.Map;
 public class ViewWithStatusCodeTests {
 
     @Test
-    public void shouldSetStatusCodeIntoResponse() throws Exception {
+    public void shouldSetStatusCodeIntoResponseBeforeInvokingDelegate() throws Exception {
         Map<String, ?> model = Collections.emptyMap();
 
         View delegate = mock(View.class);
