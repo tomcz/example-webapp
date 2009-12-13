@@ -15,8 +15,9 @@ public class ViewWithStatusCodeTests {
 
     @Test
     public void shouldSetStatusCodeIntoResponse() throws Exception {
-        View delegate = mock(View.class);
         Map<String, ?> model = Collections.emptyMap();
+
+        View delegate = mock(View.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 

@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.View;
@@ -41,14 +40,13 @@ public class ViewWithCookiesTests {
         cookie = response.getCookie("key2");
         assertThat(cookie, notNullValue());
         assertThat(cookie.getValue(), is("test2"));
-
-        verify(delegate).render(model, request, response);
     }
 
     @Test
     public void shouldSetCookiesBeforeInvokingDelegate() throws Exception {
-        View delegate = mock(View.class);
         Map<String, ?> model = Collections.emptyMap();
+
+        View delegate = mock(View.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
 
