@@ -33,13 +33,13 @@ public class ViewWithCookiesTests {
 
         view.render(model, request, response);
 
-        Cookie cookie = response.getCookie("key1");
-        assertThat(cookie, notNullValue());
-        assertThat(cookie.getValue(), is("test1"));
+        Cookie cookie1 = response.getCookie("key1");
+        assertThat(cookie1, notNullValue());
+        assertThat(cookie1.getValue(), is("test1"));
 
-        cookie = response.getCookie("key2");
-        assertThat(cookie, notNullValue());
-        assertThat(cookie.getValue(), is("test2"));
+        Cookie cookie2 = response.getCookie("key2");
+        assertThat(cookie2, notNullValue());
+        assertThat(cookie2.getValue(), is("test2"));
     }
 
     @Test
