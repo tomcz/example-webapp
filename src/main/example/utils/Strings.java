@@ -7,26 +7,22 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.security.SecureRandom;
-import java.util.Random;
 
 public class Strings {
 
-    private static final Random RANDOM = new SecureRandom();
-    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
     private static StandardToStringStyle style;
 
-    public static String random() {
-        return random(22);
+    public static ToStringStyle style() {
+        if (style == null) {
+            style = new StandardToStringStyle();
+            style.setUseIdentityHashCode(false);
+            style.setUseShortClassName(true);
+        }
+        return style;
     }
 
-    public static String random(int characters) {
-        StringBuilder buf = new StringBuilder(characters);
-        for (int i = 0; i < characters; i++) {
-            buf.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
-        }
-        return buf.toString();
+    public static String toString(Object obj) {
+        return ToStringBuilder.reflectionToString(obj, style());
     }
 
     public static String encodeURL(String text) {
@@ -57,18 +53,5 @@ public class Strings {
             // this should never happen since UTF-8 is a supported encoding
             throw new RuntimeException(e);
         }
-    }
-
-    public static ToStringStyle style() {
-        if (style == null) {
-            style = new StandardToStringStyle();
-            style.setUseIdentityHashCode(false);
-            style.setUseShortClassName(true);
-        }
-        return style;
-    }
-
-    public static String toString(Object obj) {
-        return ToStringBuilder.reflectionToString(obj, style());
     }
 }

@@ -1,9 +1,9 @@
 package example.domain;
 
-import example.utils.Strings;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public final class Identity implements Serializable {
 
@@ -12,7 +12,7 @@ public final class Identity implements Serializable {
     private final String value;
 
     public Identity() {
-        value = Strings.random();
+        value = UUID.randomUUID().toString();
     }
 
     private Identity(String value) {
