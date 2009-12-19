@@ -11,6 +11,10 @@ public class ViewWithStatusCode implements View {
     private final int statusCode;
     private final View delegate;
 
+    public ViewWithStatusCode(int statusCode) {
+        this(statusCode, new StaticView());
+    }
+
     public ViewWithStatusCode(int statusCode, View delegate) {
         this.statusCode = statusCode;
         this.delegate = delegate;
