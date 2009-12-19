@@ -293,7 +293,7 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.test-sources-3.0.0.M3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.test-sources-3.0.0.RELEASE.jar!/" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/buildtime" recursive="false" />
     </library>
@@ -305,23 +305,23 @@
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/lib/src/stringtemplate-3.1-src.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/commons-collections-3.2.1-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.context.support-sources-3.0.0.M3.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/commons-lang-2.4-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.web-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.context-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.web.servlet-sources-3.0.0.M3.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/joda-time-1.5.2-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.jdbc-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.orm-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.transaction-sources-3.0.0.M3.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/commons-io-1.4-sources.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.beans-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.aop-sources-3.0.0.M3.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/hibernate-3.3.1-src.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.asm-sources-3.0.0.M3.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/sitemesh-2.4.1-src.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.expression-sources-3.0.0.M3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.core-sources-3.0.0.M3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.web-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.web.servlet-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.beans-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.orm-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.context.support-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.jdbc-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.aop-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.transaction-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.expression-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.core-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.context-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.asm-sources-3.0.0.RELEASE.jar!/" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/runtime" recursive="false" />
     </library>
