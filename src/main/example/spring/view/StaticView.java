@@ -13,15 +13,16 @@ public class StaticView implements View {
     private String contentText;
     private byte[] contentBytes;
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public StaticView() {
     }
 
-    public void setContentText(String contentText) {
+    public StaticView(String contentType, String contentText) {
+        this.contentType = contentType;
         this.contentText = contentText;
     }
 
-    public void setContentBytes(byte[] contentBytes) {
+    public StaticView(String contentType, byte[] contentBytes) {
+        this.contentType = contentType;
         this.contentBytes = contentBytes;
     }
 
