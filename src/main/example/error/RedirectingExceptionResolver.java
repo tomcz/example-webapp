@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,10 @@ public class RedirectingExceptionResolver implements HandlerExceptionResolver {
 
         String lookupPath = pathHelper.getLookupPathForRequest(request);
         String errorRef = RandomStringUtils.randomAlphanumeric(7).toUpperCase();
+
         logger.error("Unexpected error [" + errorRef + "] for path [" + lookupPath + "]: " + ex, ex);
-        return new ModelAndView(PathBuilder.redirectTo(ErrorPresenter.class, "errorRef", errorRef));
+
+        View view = new PathBuilder(ErrorPresenter.class).withVar("errorRef", errorRef).redirect();
+        return new ModelAndView(view);
     }
 }

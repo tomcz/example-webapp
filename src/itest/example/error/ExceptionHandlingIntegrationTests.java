@@ -1,15 +1,9 @@
 package example.error;
 
 import example.spring.Path;
-import static example.spring.PathBuilder.pathToGet;
+import example.spring.PathBuilder;
 import example.utils.XPathAssert;
 import org.apache.commons.lang.StringUtils;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
-import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
-import static org.hamcrest.text.pattern.Patterns.exactly;
-import static org.hamcrest.text.pattern.Patterns.sequence;
-import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -18,6 +12,13 @@ import org.springframework.mock.web.MockServletConfig;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
+import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
+import static org.hamcrest.text.pattern.Patterns.exactly;
+import static org.hamcrest.text.pattern.Patterns.sequence;
+import static org.junit.Assert.assertThat;
 
 public class ExceptionHandlingIntegrationTests {
 
@@ -28,7 +29,7 @@ public class ExceptionHandlingIntegrationTests {
         XmlWebApplicationContext controllers = createServletApplicationContext(servletContext, services);
         DispatcherServlet servlet = createDispatcherServlet(servletContext, controllers);
 
-        Path path = pathToGet(BadPresenter.class);
+        Path path = new PathBuilder(BadPresenter.class).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", path.getUri());
         MockHttpServletResponse response = new MockHttpServletResponse();

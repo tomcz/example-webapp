@@ -3,7 +3,7 @@ package example.domain.web;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
-import static example.spring.PathBuilder.pathToGet;
+import example.spring.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import example.utils.Function;
@@ -32,16 +32,19 @@ public class IndexPresenter {
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public View present() {
         List<Identity> identities = repository.getIDs();
+        PathBuilder builder = new PathBuilder(FormController.class);
+
         TemplateView template = factory.create("example", "index");
-        template.set("newForm", pathToGet(FormController.class, "documentId", Identity.NEW));
-        template.set("mappings", createMappings(identities));
+        template.set("newForm", builder.withVar("documentId", Identity.NEW).build());
+        template.set("mappings", createMappings(identities, builder));
+
         return template;
     }
 
-    private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
+    private List<Pair<Identity, Path>> createMappings(List<Identity> identities, final PathBuilder builder) {
         return Lists.map(identities, new Function<Identity, Pair<Identity, Path>>() {
             public Pair<Identity, Path> execute(Identity item) {
-                Path path = pathToGet(FormController.class, "documentId", item);
+                Path path = builder.withVar("documentId", item).build();
                 return Pair.create(item, path);
             }
         });

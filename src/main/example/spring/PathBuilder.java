@@ -2,80 +2,83 @@ package example.spring;
 
 import example.utils.Maps;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriTemplate;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.Map;
 
 public class PathBuilder {
 
-    public static PathRedirectView redirectTo(Class handlerClass) {
-        return new PathRedirectView(pathToGet(handlerClass));
+    private Class handler;
+    private String methodName;
+    private RequestMethod method;
+    private boolean contextRelative;
+    private boolean servletRelative;
+    private Map<String, String> pathVariables;
+
+    public PathBuilder(Class handler) {
+        this.method = RequestMethod.GET;
+        this.contextRelative = true;
+        this.servletRelative = true;
+        this.handler = handler;
     }
 
-    public static PathRedirectView redirectTo(Class handlerClass, String paramName, Object paramValue) {
-        return new PathRedirectView(pathToGet(handlerClass, paramName, paramValue));
+    public PathBuilder post() {
+        return withMethod(RequestMethod.POST);
     }
 
-    public static PathRedirectView redirectTo(Class handlerClass, Map<String, String> pathVariables) {
-        return new PathRedirectView(pathToGet(handlerClass, pathVariables));
+    public PathBuilder withMethod(RequestMethod method) {
+        this.method = method;
+        return this;
     }
 
-    public static Path pathToGet(Class handlerClass) {
-        return pathToGet(handlerClass, Collections.<String, String>emptyMap());
+    public PathBuilder withMethod(String methodName) {
+        this.methodName = methodName;
+        return this;
     }
 
-    public static Path pathToGet(Class handlerClass, String paramName, Object paramValue) {
-        return pathToGet(handlerClass, Maps.create(paramName, paramValue.toString()));
+    public PathBuilder withVar(String name, Object value) {
+        if (pathVariables == null) {
+            pathVariables = Maps.create();
+        }
+        pathVariables.put(name, ObjectUtils.toString(value));
+        return this;
     }
 
-    public static Path pathToGet(Class handlerClass, Map<String, String> pathVariables) {
-        return pathTo(RequestMethod.GET, handlerClass, pathVariables);
+    public PathBuilder contextRelative(boolean contextRelative) {
+        this.contextRelative = contextRelative;
+        return this;
     }
 
-    public static Path pathToPost(Class handlerClass) {
-        return pathToPost(handlerClass, Collections.<String, String>emptyMap());
+    public PathBuilder servletRelative(boolean servletRelative) {
+        this.servletRelative = servletRelative;
+        return this;
     }
 
-    public static Path pathToPost(Class handlerClass, String paramName, Object paramValue) {
-        return pathToPost(handlerClass, Maps.create(paramName, paramValue.toString()));
+    public PathRedirectView redirect() {
+        return new PathRedirectView(build());
     }
 
-    public static Path pathToPost(Class handlerClass, Map<String, String> pathVariables) {
-        return pathTo(RequestMethod.POST, handlerClass, pathVariables);
+    public Path build() {
+        String url = findHandlerClassMapping() + findHandlerMethodMapping();
+        return new Path(expandPathVariables(url), contextRelative, servletRelative);
     }
 
-    public static Path pathTo(RequestMethod method, Class handlerClass, Map<String, String> pathVariables) {
-        String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, method);
-        return new Path(expandPathVariables(url, pathVariables));
-    }
-
-    public static Path pathTo(Class handlerClass, String methodName, Map<String, String> pathVariables) {
-        String url = findHandlerClassMapping(handlerClass) + findHandlerMethodMapping(handlerClass, methodName);
-        return new Path(expandPathVariables(url, pathVariables));
-    }
-
-    private static String findHandlerClassMapping(Class handlerClass) {
-        RequestMapping mapping = AnnotationUtils.findAnnotation(handlerClass, RequestMapping.class);
+    private String findHandlerClassMapping() {
+        RequestMapping mapping = AnnotationUtils.findAnnotation(handler, RequestMapping.class);
         return (mapping != null) ? getFirstPath(mapping) : "";
     }
 
-    private static String findHandlerMethodMapping(Class handlerClass, RequestMethod method) {
-        for (Method classMethod : handlerClass.getMethods()) {
-            RequestMapping mapping = AnnotationUtils.findAnnotation(classMethod, RequestMapping.class);
-            if (mapping != null && ArrayUtils.contains(mapping.method(), method)) {
-                return getFirstPath(mapping);
-            }
-        }
-        throw new IllegalArgumentException(handlerClass.getName() + " cannot handle " + method + " requests");
+    private String findHandlerMethodMapping() {
+        return (methodName != null) ? findMappingForMethodName() : findMappingForRequestMethod();
     }
 
-    private static String findHandlerMethodMapping(Class handlerClass, String methodName) {
-        for (Method classMethod : handlerClass.getMethods()) {
+    private String findMappingForMethodName() {
+        for (Method classMethod : handler.getMethods()) {
             if (classMethod.getName().equals(methodName)) {
                 RequestMapping mapping = AnnotationUtils.findAnnotation(classMethod, RequestMapping.class);
                 if (mapping != null) {
@@ -83,17 +86,30 @@ public class PathBuilder {
                 }
             }
         }
-        throw new IllegalArgumentException(handlerClass.getName() +
+        throw new IllegalArgumentException(handler.getName() +
                 " does not contain an annotated method named '" + methodName + "'");
     }
 
-    private static String getFirstPath(RequestMapping mapping) {
+    private String findMappingForRequestMethod() {
+        for (Method classMethod : handler.getMethods()) {
+            RequestMapping mapping = AnnotationUtils.findAnnotation(classMethod, RequestMapping.class);
+            if (mapping != null && ArrayUtils.contains(mapping.method(), method)) {
+                return getFirstPath(mapping);
+            }
+        }
+        throw new IllegalArgumentException(handler.getName() + " cannot handle " + method + " requests");
+    }
+
+    private String getFirstPath(RequestMapping mapping) {
         String[] paths = mapping.value();
         return (paths.length > 0) ? paths[0] : "";
     }
 
-    private static String expandPathVariables(String url, Map<String, String> pathVariables) {
-        UriTemplate template = new UriTemplate(url);
-        return template.expand(pathVariables).toString();
+    private String expandPathVariables(String url) {
+        if (pathVariables != null) {
+            UriTemplate template = new UriTemplate(url);
+            return template.expand(pathVariables).toString();
+        }
+        return url;
     }
 }

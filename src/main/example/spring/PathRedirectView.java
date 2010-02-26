@@ -10,26 +10,23 @@ import java.util.Map;
 public class PathRedirectView implements View {
 
     private final Path path;
-    private final RedirectView delegate;
+    private final RedirectView redirect;
 
     public PathRedirectView(Path path) {
-        this.delegate = new RedirectView();
-        this.delegate.setContextRelative(path.isContextRelative());
-        this.delegate.setExposeModelAttributes(false);
-        this.delegate.setHttp10Compatible(true);
+        this.redirect = new RedirectView();
         this.path = path;
     }
 
     public void setHttp10Compatible(boolean http10Compatible) {
-        delegate.setHttp10Compatible(http10Compatible);
+        redirect.setHttp10Compatible(http10Compatible);
     }
 
     public void setExposeModelAttributes(boolean exposeModelAttributes) {
-        delegate.setExposeModelAttributes(exposeModelAttributes);
+        redirect.setExposeModelAttributes(exposeModelAttributes);
     }
 
     public String getContentType() {
-        return delegate.getContentType();
+        return redirect.getContentType();
     }
 
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +36,8 @@ public class PathRedirectView implements View {
         if (path.isServletRelative() && uri.startsWith("/")) {
             uri = request.getServletPath() + uri;
         }
-        delegate.setUrl(uri);
-        delegate.render(model, request, response);
+        redirect.setUrl(uri);
+        redirect.setContextRelative(path.isContextRelative());
+        redirect.render(model, request, response);
     }
 }
