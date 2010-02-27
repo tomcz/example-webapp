@@ -53,7 +53,7 @@ public class StringTemplateView implements TemplateView {
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        response.setContentType(getContentType());
+        response.setContentType(contentType);
         response.setCharacterEncoding(charset);
 
         template.setAttribute("model", model);
