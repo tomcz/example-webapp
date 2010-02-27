@@ -27,7 +27,7 @@ public class PathBuilder {
         this.handler = handler;
     }
 
-    public PathBuilder post() {
+    public PathBuilder POST() {
         return withMethod(RequestMethod.POST);
     }
 

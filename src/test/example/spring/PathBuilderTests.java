@@ -16,7 +16,7 @@ public class PathBuilderTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailToCreatePostLinkForGetHandler() throws Exception {
-        new PathBuilder(GetHandler.class).post().withVar("documentId", "new").build();
+        new PathBuilder(GetHandler.class).POST().withVar("documentId", "new").build();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PathBuilderTests {
 
     @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
-        Path path = new PathBuilder(PostHandler.class).post().withVar("documentId", "old").build();
+        Path path = new PathBuilder(PostHandler.class).POST().withVar("documentId", "old").build();
         assertThat(path.getUri(), is("/old/error.go"));
     }
 
