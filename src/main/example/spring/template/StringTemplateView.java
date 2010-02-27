@@ -1,7 +1,6 @@
 package example.spring.template;
 
 import example.utils.Maps;
-import org.antlr.stringtemplate.NoIndentWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +61,7 @@ public class StringTemplateView implements TemplateView {
         template.setAttribute("request", createMapOfRequestAttributes(request));
         template.registerRenderer(new PathRenderer(request));
 
-        template.write(new NoIndentWriter(response.getWriter()));
+        template.write(response.getWriter());
     }
 
     private Map<String, Object> createMapOfRequestAttributes(HttpServletRequest request) {

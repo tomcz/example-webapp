@@ -1,7 +1,11 @@
 package example.spring.template;
 
 import org.antlr.stringtemplate.AttributeRenderer;
+import org.antlr.stringtemplate.NoIndentWriter;
 import org.antlr.stringtemplate.StringTemplate;
+
+import java.io.IOException;
+import java.io.Writer;
 
 public class WebStringTemplate extends StringTemplate {
 
@@ -22,5 +26,9 @@ public class WebStringTemplate extends StringTemplate {
     public AttributeRenderer getAttributeRenderer(Class aClass) {
         AttributeRenderer renderer = super.getAttributeRenderer(aClass);
         return (renderer != null) ? renderer : new WebAttributeRenderer(defaultFormat);
+    }
+
+    public void write(Writer out) throws IOException {
+        write(new NoIndentWriter(out));
     }
 }

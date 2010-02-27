@@ -1,26 +1,48 @@
 package example.spring.template;
 
-import org.springframework.core.io.Resource;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.ResourceLoader;
 
-import java.io.IOException;
+public class WebStringTemplateFactory implements TemplateViewFactory, ResourceLoaderAware {
 
-public class WebStringTemplateFactory implements TemplateViewFactory {
+    private String templateRoot;
+    private ResourceLoader resourceLoader;
+    private String sourceFileCharEncoding;
 
-    private final String templateRoot;
+    public void setTemplateRoot(String templateRoot) {
+        this.templateRoot = templateRoot;
+    }
 
-    public WebStringTemplateFactory(Resource templateRoot) throws IOException {
-        this.templateRoot = templateRoot.getURL().toExternalForm();
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+    public void setSourceFileCharEncoding(String sourceFileCharEncoding) {
+        this.sourceFileCharEncoding = sourceFileCharEncoding;
     }
 
     public StringTemplateView create(String templateName) {
-        WebStringTemplateGroup group = new WebStringTemplateGroup(templateRoot);
+        WebStringTemplateGroup group = new WebStringTemplateGroup(resourceLoader, templateRoot);
+        applySourceFileCharEncoding(group);
         return create(group, templateName);
     }
 
     public StringTemplateView create(String groupName, String templateName) {
-        WebStringTemplateGroup group = new WebStringTemplateGroup(groupName, templateRoot);
-        group.setSuperGroup(new WebStringTemplateGroup("shared", templateRoot));
+        WebStringTemplateGroup group = createGroup(groupName);
+        group.setSuperGroup(createGroup("shared"));
         return create(group, templateName);
+    }
+
+    private WebStringTemplateGroup createGroup(String groupName) {
+        WebStringTemplateGroup group = new WebStringTemplateGroup(resourceLoader, templateRoot, groupName);
+        applySourceFileCharEncoding(group);
+        return group;
+    }
+
+    private void applySourceFileCharEncoding(WebStringTemplateGroup group) {
+        if (sourceFileCharEncoding != null) {
+            group.setFileCharEncoding(sourceFileCharEncoding);
+        }
     }
 
     private StringTemplateView create(WebStringTemplateGroup group, String templateName) {

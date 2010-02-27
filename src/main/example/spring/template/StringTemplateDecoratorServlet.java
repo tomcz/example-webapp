@@ -3,7 +3,8 @@ package example.spring.template;
 import com.opensymphony.module.sitemesh.HTMLPage;
 import com.opensymphony.module.sitemesh.RequestConstants;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.Resource;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HttpServletBean;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -18,9 +19,10 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
     private final UrlPathHelper pathHelper = new UrlPathHelper();
 
     private WebStringTemplateFactory factory;
+    private String rootDir;
 
-    public void setRootDir(Resource rootDir) throws IOException {
-        this.factory = new WebStringTemplateFactory(rootDir);
+    public void setRootDir(String rootDir) {
+        this.rootDir = rootDir;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +30,7 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
 
         String lookupPath = pathHelper.getLookupPathForRequest(request);
         String templateName = FilenameUtils.getBaseName(lookupPath);
-        StringTemplateView template = factory.create(templateName);
+        StringTemplateView template = factory().create(templateName);
 
         HTMLPage htmlPage = (HTMLPage) request.getAttribute(RequestConstants.PAGE);
 
@@ -44,5 +46,15 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
         }
 
         template.render(Collections.<String, Object>emptyMap(), request, response);
+    }
+
+    private WebStringTemplateFactory factory() {
+        if (factory == null) {
+            WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+            factory = new WebStringTemplateFactory();
+            factory.setTemplateRoot(rootDir);
+            factory.setResourceLoader(ctx);
+        }
+        return factory;
     }
 }

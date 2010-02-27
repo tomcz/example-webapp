@@ -3,6 +3,7 @@ package example.spring.template;
 import example.utils.Strings;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.springframework.web.util.HtmlUtils;
 
 public enum WebFormat {
 
@@ -17,10 +18,10 @@ public enum WebFormat {
     }
 
     public String format(Object obj) {
-        String text = ObjectUtils.toString(obj, "");
+        String text = ObjectUtils.toString(obj);
         switch (this) {
             case HTML:
-                return StringEscapeUtils.escapeHtml(text);
+                return HtmlUtils.htmlEscape(text);
             case XML:
                 return StringEscapeUtils.escapeXml(text);
             case URL:

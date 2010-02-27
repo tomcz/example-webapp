@@ -24,7 +24,7 @@
     </bean>
 
     <bean class="example.spring.template.WebStringTemplateFactory">
-        <constructor-arg value="/templates" />
+        <property name="templateRoot" value="/templates" />
     </bean>
 
 </beans>
