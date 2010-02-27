@@ -1,5 +1,6 @@
-package example.spring;
+package example.spring.view;
 
+import example.spring.Path;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 

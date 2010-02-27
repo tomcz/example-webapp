@@ -1,5 +1,6 @@
-package example.spring;
+package example.spring.view;
 
+import example.spring.Path;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;

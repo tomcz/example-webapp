@@ -1,13 +1,8 @@
 package example.spring;
 
 import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Collections;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -26,19 +21,6 @@ public class PathBuilderTests {
     }
 
     @Test
-    public void shouldCreateRedirectToGetHandler() throws Exception {
-        PathRedirectView view = new PathBuilder(GetHandler.class).withVar("documentId", "new").redirect();
-
-        Map<String, ?> model = Collections.emptyMap();
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        MockHttpServletResponse response = new MockHttpServletResponse();
-
-        view.render(model, request, response);
-
-        assertThat(response.getRedirectedUrl(), is("/new/success.go"));
-    }
-
-    @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
         Path path = new PathBuilder(PostHandler.class).POST().withVar("documentId", "old").build();
         assertThat(path.getUri(), is("/old/error.go"));
@@ -52,6 +34,14 @@ public class PathBuilderTests {
                 .build();
 
         assertThat(path.getUri(), is("/old/error.go"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldFailCreateLinkToUnAnnotatedNamedMethod() throws Exception {
+        new PathBuilder(PostHandler.class)
+                .withMethod("test")
+                .withVar("documentId", "old")
+                .build();
     }
 
     @Test
@@ -89,6 +79,10 @@ public class PathBuilderTests {
 
         @RequestMapping(value = "/{documentId}/error.go", method = RequestMethod.POST)
         public String handlePostRequest() {
+            throw new UnsupportedOperationException();
+        }
+
+        public String test() {
             throw new UnsupportedOperationException();
         }
     }

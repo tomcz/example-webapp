@@ -59,10 +59,6 @@ public class PathBuilder {
         return this;
     }
 
-    public PathRedirectView redirect() {
-        return new PathRedirectView(build());
-    }
-
     public Path build() {
         String url = findHandlerClassMapping() + findHandlerMethodMapping();
         return new Path(expandPathVariables(url), contextRelative, servletRelative);

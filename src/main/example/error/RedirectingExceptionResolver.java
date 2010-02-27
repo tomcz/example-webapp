@@ -1,12 +1,11 @@
 package example.error;
 
-import example.spring.PathBuilder;
+import example.spring.view.RedirectBuilder;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ public class RedirectingExceptionResolver implements HandlerExceptionResolver {
 
         logger.error("Unexpected error [" + errorRef + "] for path [" + lookupPath + "]: " + ex, ex);
 
-        View view = new PathBuilder(ErrorPresenter.class).withVar("errorRef", errorRef).redirect();
-        return new ModelAndView(view);
+        return new ModelAndView(new RedirectBuilder(ErrorPresenter.class).withVar("errorRef", errorRef).build());
     }
 }

@@ -7,6 +7,7 @@ import example.domain.Identity;
 import example.spring.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
+import example.spring.view.RedirectBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,8 +51,8 @@ public class FormController {
         repository.set(document);
 
         if (document.isValid()) {
-            return new PathBuilder(SuccessPresenter.class).withVar("documentId", documentId).redirect();
+            return new RedirectBuilder(SuccessPresenter.class).withVar("documentId", documentId).build();
         }
-        return new PathBuilder(getClass()).withVar("documentId", documentId).redirect();
+        return new RedirectBuilder(getClass()).withVar("documentId", documentId).build();
     }
 }
