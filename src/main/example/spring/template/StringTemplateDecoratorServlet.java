@@ -8,6 +8,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HttpServletBean;
 import org.springframework.web.util.UrlPathHelper;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,10 +51,11 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
 
     private WebStringTemplateFactory factory() {
         if (factory == null) {
-            WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+            ServletContext ctx = getServletContext();
+            WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(ctx);
             factory = new WebStringTemplateFactory();
             factory.setTemplateRoot(rootDir);
-            factory.setResourceLoader(ctx);
+            factory.setResourceLoader(wac);
         }
         return factory;
     }
