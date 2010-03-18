@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RedirectFilter extends GenericFilterBean {
+public class ServletRedirectFilter extends GenericFilterBean {
 
     private String redirectPath;
 

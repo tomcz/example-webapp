@@ -42,7 +42,7 @@
 
     <filter>
         <filter-name>index</filter-name>
-        <filter-class>example.spring.filter.RedirectFilter</filter-class>
+        <filter-class>example.spring.filter.ServletRedirectFilter</filter-class>
         <init-param>
             <param-name>redirectPath</param-name>
             <param-value>/page/forms</param-value>
@@ -86,7 +86,7 @@
 
     <servlet>
         <servlet-name>sitemesh</servlet-name>
-        <servlet-class>example.spring.template.StringTemplateDecoratorServlet</servlet-class>
+        <servlet-class>example.spring.template.sitemesh.StringTemplateDecoratorServlet</servlet-class>
         <init-param>
             <param-name>rootDir</param-name>
             <param-value>/decorators</param-value>

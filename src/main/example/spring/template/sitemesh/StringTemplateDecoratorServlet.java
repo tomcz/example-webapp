@@ -1,7 +1,9 @@
-package example.spring.template;
+package example.spring.template.sitemesh;
 
 import com.opensymphony.module.sitemesh.HTMLPage;
 import com.opensymphony.module.sitemesh.RequestConstants;
+import example.spring.template.StringTemplateView;
+import example.spring.template.WebStringTemplateFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
