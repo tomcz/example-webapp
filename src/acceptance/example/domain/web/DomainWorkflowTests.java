@@ -36,10 +36,14 @@ public class DomainWorkflowTests {
     }
 
     @AfterClass
-    public static void teardown() throws Exception {
+    public static void quitDriver() throws Exception {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    @AfterClass
+    public static void stopServer() throws Exception {
         if (server != null) {
             server.stop();
         }
