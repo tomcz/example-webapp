@@ -1,7 +1,6 @@
 package example.domain.web;
 
 import example.jetty.WebServer;
-import org.junit.rules.ExternalResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,17 +10,13 @@ import org.openqa.selenium.support.PageFactory;
 import java.net.ServerSocket;
 import java.util.List;
 
-public class WebDriverRule extends ExternalResource {
+public class WebServerDriver {
 
     private WebServer server;
     private WebDriver driver;
     private int serverPort;
 
-    public WebDriver driver() {
-        return driver;
-    }
-
-    public void get(String url) {
+    public void getURL(String url) {
         driver.get("http://localhost:" + serverPort + url);
     }
 
@@ -41,16 +36,14 @@ public class WebDriverRule extends ExternalResource {
         return PageFactory.initElements(driver, pageClass);
     }
 
-    @Override
-    protected void before() throws Throwable {
+    public void start() throws Exception {
         serverPort = findFreePort();
         server = startServer(serverPort);
         driver = new FirefoxDriver();
     }
 
-    @Override
-    protected void after() {
-        quitDriver();
+    public void stop() {
+        stopDriver();
         stopServer();
     }
 
@@ -67,7 +60,7 @@ public class WebDriverRule extends ExternalResource {
         return port;
     }
 
-    private void quitDriver() {
+    private void stopDriver() {
         if (driver != null) {
             try {
                 driver.quit();

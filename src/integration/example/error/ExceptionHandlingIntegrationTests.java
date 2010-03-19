@@ -4,7 +4,6 @@ import example.spring.Path;
 import example.spring.PathBuilder;
 import example.utils.XPathAssert;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -18,8 +17,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExceptionHandlingIntegrationTests {
 
-    @Rule
-    public DispatcherServletRule servlet = new DispatcherServletRule();
+    private static SpringDispatcherServlet servlet = new SpringDispatcherServlet();
 
     @Test
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {

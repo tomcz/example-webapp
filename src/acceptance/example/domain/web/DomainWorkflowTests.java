@@ -1,7 +1,8 @@
 package example.domain.web;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Rule;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -10,12 +11,22 @@ import static org.junit.Assert.assertThat;
 
 public class DomainWorkflowTests {
 
-    @Rule
-    public WebDriverRule driver = new WebDriverRule();
+    private static WebServerDriver driver;
+
+    @BeforeClass
+    public static void start() throws Exception {
+        driver = new WebServerDriver();
+        driver.start();
+    }
+
+    @AfterClass
+    public static void stop() {
+        driver.stop();
+    }
 
     @Test
     public void shouldStoreFormDetailsCorrectly() {
-        driver.get("/");
+        driver.getURL("/");
         assertThat(bodyClass(), equalTo("index"));
 
         driver.findElement(By.linkText("here")).click();
