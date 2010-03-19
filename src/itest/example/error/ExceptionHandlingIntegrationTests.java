@@ -5,13 +5,8 @@ import example.spring.PathBuilder;
 import example.utils.XPathAssert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
-import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockServletConfig;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
@@ -24,73 +19,23 @@ public class ExceptionHandlingIntegrationTests {
 
     @Test
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
-        MockServletContext servletContext = createServletContext();
-        XmlWebApplicationContext services = createRootApplicationContext(servletContext);
-        XmlWebApplicationContext controllers = createServletApplicationContext(servletContext, services);
-        DispatcherServlet servlet = createDispatcherServlet(servletContext, controllers);
+        SpringDispatcherServlet servlet = new SpringDispatcherServlet();
 
         Path path = new PathBuilder(BadPresenter.class).build();
 
-        MockHttpServletRequest request = new MockHttpServletRequest("GET", path.getUri());
-        MockHttpServletResponse response = new MockHttpServletResponse();
-
-        servlet.service(request, response);
+        MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path.getUri()));
 
         String redirectedUrl = response.getRedirectedUrl();
         assertThat(redirectedUrl, matchesPattern(sequence("/error/", exactly(7, anyCharacterIn("A-Z0-9")))));
 
         String errorRef = StringUtils.substringAfterLast(redirectedUrl, "/");
 
-        request = new MockHttpServletRequest("GET", redirectedUrl);
-        response = new MockHttpServletResponse();
-
-        servlet.service(request, response);
+        response = servlet.process(new MockHttpServletRequest("GET", redirectedUrl));
 
         String html = response.getContentAsString();
         XPathAssert xpath = new XPathAssert(html);
 
         xpath.matchesText("count(//span[@id='errorRef'])", is("1"));
         xpath.matchesText("//span[@id='errorRef']", is(errorRef));
-    }
-
-    private MockServletContext createServletContext() {
-        MockServletContext context = new MockServletContext("web", new FileSystemResourceLoader());
-        context.addInitParameter("database.driver.class", "org.hsqldb.jdbcDriver");
-        context.addInitParameter("database.driver.url", "jdbc:hsqldb:mem:webapp-template");
-        context.addInitParameter("database.driver.username", "sa");
-        context.addInitParameter("database.driver.password", "");
-        context.addInitParameter("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-        context.addInitParameter("hibernate.cache.provider_class", "org.hibernate.cache.NoCacheProvider");
-        context.addInitParameter("hibernate.hbm2ddl.auto", "create");
-        return context;
-    }
-
-    private XmlWebApplicationContext createRootApplicationContext(MockServletContext servletContext) {
-        XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
-        applicationContext.setServletContext(servletContext);
-        applicationContext.refresh();
-        return applicationContext;
-    }
-
-    private XmlWebApplicationContext createServletApplicationContext(
-            MockServletContext servletContext, XmlWebApplicationContext parentContext) {
-
-        XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
-        applicationContext.setConfigLocation("/WEB-INF/spring-servlet.xml");
-        applicationContext.setParent(parentContext);
-        applicationContext.setServletContext(servletContext);
-        applicationContext.refresh();
-        return applicationContext;
-    }
-
-    private DispatcherServlet createDispatcherServlet(
-            MockServletContext servletContext, XmlWebApplicationContext applicationContext)
-            throws Exception {
-
-        servletContext.setAttribute(getClass().getName(), applicationContext);
-        DispatcherServlet servlet = new DispatcherServlet();
-        servlet.setContextAttribute(getClass().getName());
-        servlet.init(new MockServletConfig(servletContext));
-        return servlet;
     }
 }
