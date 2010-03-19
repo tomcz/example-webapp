@@ -2,14 +2,15 @@ package example.spring.view;
 
 import org.junit.Test;
 import org.mockito.InOrder;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Map;
+
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
 
 public class ViewWithStatusCodeTests {
 

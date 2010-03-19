@@ -2,8 +2,9 @@
 <project name="example" default="build" basedir=".">
 
     <property name="src.dir" location="src/main" />
-    <property name="test.dir" location="src/test" />
-    <property name="itest.dir" location="src/itest" />
+    <property name="test.dir" location="src/unit" />
+    <property name="itest.dir" location="src/integration" />
+    <property name="atest.dir" location="src/acceptance" />
 
     <property name="build.dir" location="build" />
     <property name="compile.dir" location="${build.dir}/compile" />
@@ -15,6 +16,7 @@
         <fileset dir="lib/runtime" />
         <fileset dir="lib/spring" />
         <fileset dir="lib/hibernate" />
+        <fileset dir="lib/webdriver" />
     </path>
 
     <macrodef name="compile">
@@ -39,8 +41,9 @@
 
     <target name="make-jars">
         <compile srcdir="${src.dir}" jarfile="${ant.project.name}.jar" />
-        <compile srcdir="${test.dir}" jarfile="${ant.project.name}-test.jar" />
-        <compile srcdir="${itest.dir}" jarfile="${ant.project.name}-itest.jar" />
+        <compile srcdir="${test.dir}" jarfile="${ant.project.name}-unit-test.jar" />
+        <compile srcdir="${itest.dir}" jarfile="${ant.project.name}-integration-test.jar" />
+        <compile srcdir="${atest.dir}" jarfile="${ant.project.name}-acceptance-test.jar" />
     </target>
 
     <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
@@ -54,12 +57,18 @@
                 <fileset dir="${itest.dir}">
                     <include name="**/${testcase}.java" />
                 </fileset>
+                <fileset dir="${atest.dir}">
+                    <include name="**/${testcase}.java" />
+                </fileset>
             </batchtest>
             <batchtest unless="testcase">
                 <fileset dir="${test.dir}">
                     <include name="**/*Tests.java" />
                 </fileset>
                 <fileset dir="${itest.dir}">
+                    <include name="**/*Tests.java" />
+                </fileset>
+                <fileset dir="${atest.dir}">
                     <include name="**/*Tests.java" />
                 </fileset>
             </batchtest>

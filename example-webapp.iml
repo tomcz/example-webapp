@@ -25,6 +25,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/itest" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/acpt" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -33,6 +34,7 @@
     <orderEntry type="library" name="runtime" level="project" />
     <orderEntry type="library" name="spring" level="project" />
     <orderEntry type="library" name="hibernate" level="project" />
+    <orderEntry type="library" name="webdriver" level="project" />
   </component>
 </module>
 

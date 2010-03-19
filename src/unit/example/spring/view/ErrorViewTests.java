@@ -1,9 +1,10 @@
 package example.spring.view;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ErrorViewTests {
 

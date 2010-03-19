@@ -326,6 +326,14 @@
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/hibernate" recursive="false" />
     </library>
+    <library name="webdriver">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/webdriver" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/webdriver" recursive="false" />
+    </library>
   </component>
 </project>
 

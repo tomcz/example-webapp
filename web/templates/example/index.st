@@ -2,7 +2,7 @@
 <head>
     <title>Current Forms</title>
 </head>
-<body>
+<body class="index">
 $if(!mappings.empty)$
 <ul>
 $mappings:{ mapping |

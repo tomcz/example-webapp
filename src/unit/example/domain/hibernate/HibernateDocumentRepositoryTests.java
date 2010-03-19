@@ -2,15 +2,16 @@ package example.domain.hibernate;
 
 import example.domain.Document;
 import example.domain.Identity;
+import org.junit.Test;
+import org.springframework.orm.hibernate3.HibernateOperations;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import org.junit.Test;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.verifyZeroInteractions;
-import org.springframework.orm.hibernate3.HibernateOperations;
 
 public class HibernateDocumentRepositoryTests {
 

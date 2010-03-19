@@ -1,12 +1,13 @@
 package example.utils;
 
-import static org.hamcrest.CoreMatchers.is;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.jdom.Element;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 import static org.junit.internal.matchers.StringContains.containsString;
 
 public class XPathAssertTests {

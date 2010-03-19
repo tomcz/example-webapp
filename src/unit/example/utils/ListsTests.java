@@ -1,14 +1,15 @@
 package example.utils;
 
+import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
+
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-import org.junit.Test;
-
-import java.util.Collections;
-import java.util.List;
 
 public class ListsTests {
 

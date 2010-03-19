@@ -1,12 +1,13 @@
 package example.utils;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import org.jdom.Element;
-import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 public class XPathParserTests {
 
