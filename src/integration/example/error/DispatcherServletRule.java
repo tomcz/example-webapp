@@ -1,5 +1,6 @@
 package example.error;
 
+import org.junit.rules.ExternalResource;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -8,24 +9,24 @@ import org.springframework.mock.web.MockServletContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class SpringDispatcherServlet {
+public class DispatcherServletRule extends ExternalResource {
 
     private DispatcherServlet servlet;
 
     public MockHttpServletResponse process(MockHttpServletRequest request) throws Exception {
         MockHttpServletResponse response = new MockHttpServletResponse();
-        servlet().service(request, response);
+        servlet.service(request, response);
         return response;
     }
 
-    private DispatcherServlet servlet() throws Exception {
+    @Override
+    protected void before() throws Throwable {
         if (servlet == null) {
             MockServletContext servletContext = createServletContext();
             XmlWebApplicationContext services = createRootApplicationContext(servletContext);
             XmlWebApplicationContext controllers = createServletApplicationContext(servletContext, services);
             servlet = createDispatcherServlet(servletContext, controllers);
         }
-        return servlet;
     }
 
     private MockServletContext createServletContext() {

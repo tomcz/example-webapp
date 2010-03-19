@@ -22,10 +22,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/itest" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/acpt" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/acceptance" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/integration" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
