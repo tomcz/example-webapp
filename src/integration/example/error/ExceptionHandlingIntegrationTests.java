@@ -17,10 +17,10 @@ import static org.junit.Assert.assertThat;
 
 public class ExceptionHandlingIntegrationTests {
 
-    private static SpringDispatcherServlet servlet = new SpringDispatcherServlet();
-
     @Test
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
+        SpringDispatcherServlet servlet = SpringDispatcherServlet.getInstance();
+
         Path path = new PathBuilder(BadPresenter.class).build();
 
         MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path.getUri()));

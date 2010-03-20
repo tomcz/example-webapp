@@ -10,7 +10,16 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class SpringDispatcherServlet {
 
+    private static SpringDispatcherServlet instance;
+
     private DispatcherServlet servlet;
+
+    public static SpringDispatcherServlet getInstance() {
+        if (instance == null) {
+            instance = new SpringDispatcherServlet();
+        }
+        return instance;
+    }
 
     public MockHttpServletResponse process(MockHttpServletRequest request) throws Exception {
         MockHttpServletResponse response = new MockHttpServletResponse();
