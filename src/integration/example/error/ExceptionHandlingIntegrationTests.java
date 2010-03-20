@@ -35,7 +35,7 @@ public class ExceptionHandlingIntegrationTests {
         String html = response.getContentAsString();
         XPathAssert xpath = new XPathAssert(html);
 
-        xpath.matchesText("count(//span[@id='errorRef'])", is("1"));
-        xpath.matchesText("//span[@id='errorRef']", is(errorRef));
+        xpath.matches("count(//span[@id='errorRef'])", is("1"));
+        xpath.matches("//span[@id='errorRef']", is(errorRef));
     }
 }

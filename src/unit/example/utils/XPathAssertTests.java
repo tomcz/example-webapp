@@ -1,8 +1,5 @@
 package example.utils;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
-import org.jdom.Element;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +13,7 @@ public class XPathAssertTests {
     public void shouldNotFailWhenXPathMatches() {
         String xml = "<errors><error>foo</error></errors>";
         XPathAssert matcher = new XPathAssert(xml);
-        matcher.matchesText("//error", is("foo"));
+        matcher.matches("//error", is("foo"));
     }
 
     @Test
@@ -25,7 +22,7 @@ public class XPathAssertTests {
         XPathAssert matcher = new XPathAssert(xml);
         boolean failed = false;
         try {
-            matcher.matchesText("//error", is("boo"));
+            matcher.matches("//error", is("boo"));
         } catch (AssertionError e) {
             failed = true;
         }
@@ -38,7 +35,7 @@ public class XPathAssertTests {
         XPathAssert matcher = new XPathAssert(xml);
         boolean failed = false;
         try {
-            matcher.matchesText("//error", is("boo"));
+            matcher.matches("//error", is("boo"));
         } catch (AssertionError e) {
             assertThat(e.getMessage(), containsString("\"foo\""));
             assertThat(e.getMessage(), containsString("\"boo\""));
@@ -46,43 +43,5 @@ public class XPathAssertTests {
             failed = true;
         }
         assertTrue("Should have failed", failed);
-    }
-
-    @Test
-    public void shouldNotFailWhenElementMatches() {
-        String xml = "<errors><error>foo</error></errors>";
-        XPathAssert matcher = new XPathAssert(xml);
-        matcher.matchesElement("//error", new ElementValueMatcher("foo"));
-    }
-
-    @Test
-    public void shouldFailWhenXmlDoesNotContainElement() {
-        String xml = "<errors><error>foo</error></errors>";
-        XPathAssert matcher = new XPathAssert(xml);
-        boolean failed = false;
-        try {
-            matcher.matchesElement("//error", new ElementValueMatcher("boo"));
-        } catch (AssertionError e) {
-            failed = true;
-        }
-        assertTrue("Should have failed", failed);
-    }
-
-    private static class ElementValueMatcher extends TypeSafeMatcher<Element> {
-
-        private final String value;
-
-        public ElementValueMatcher(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean matchesSafely(Element element) {
-            return value.equals(element.getText());
-        }
-
-        public void describeTo(Description description) {
-            description.appendText("Element with text '" + value + "'");
-        }
     }
 }
