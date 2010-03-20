@@ -54,6 +54,22 @@ public class DomainWorkflowTests {
         assertThat(form.getDate(), equalTo("10/03/2010"));
     }
 
+    @Test
+    public void shouldRedisplayFormWithErrorMessages() {
+        driver.getURL("/");
+        assertThat(bodyClass(), equalTo("index"));
+
+        driver.findElement(By.linkText("here")).click();
+        assertThat(bodyClass(), equalTo("form"));
+
+        FormPage form = driver.initPage(FormPage.class);
+        form.submitForm("homer", "error", "10/03/2010");
+        assertThat(bodyClass(), equalTo("form"));
+
+        form = driver.initPage(FormPage.class);
+        assertThat(form.getMessageTwo(), equalTo("Oops - <error> was provided"));
+    }
+
     private String bodyClass() {
         return driver.findElement(By.tagName("body")).getAttribute("class");
     }

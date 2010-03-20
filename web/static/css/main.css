@@ -3,6 +3,10 @@ form .error {
     color: #ff6666;
 }
 
+form .field {
+    margin-bottom: 10px;
+}
+
 body.error {
     text-align: center;
 }
