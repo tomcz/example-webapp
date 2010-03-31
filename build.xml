@@ -2,9 +2,9 @@
 <project name="example" default="build" basedir=".">
 
     <property name="src.dir" location="src/main" />
-    <property name="test.dir" location="src/unit" />
-    <property name="itest.dir" location="src/integration" />
-    <property name="atest.dir" location="src/acceptance" />
+    <property name="unit.test.dir" location="src/unit-tests" />
+    <property name="integration.test.dir" location="src/integration-tests" />
+    <property name="system.test.dir" location="src/system-tests" />
 
     <property name="build.dir" location="build" />
     <property name="compile.dir" location="${build.dir}/compile" />
@@ -33,6 +33,26 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="unit-test">
+        <attribute name="testdir" />
+        <sequential>
+            <junit fork="yes" forkmode="once" haltonfailure="no" failureproperty="unit.tests.failed">
+                <classpath refid="classpath" />
+                <formatter type="brief" usefile="no" />
+                <batchtest if="testcase">
+                    <fileset dir="@{testdir}">
+                        <include name="**/${testcase}.java" />
+                    </fileset>
+                </batchtest>
+                <batchtest unless="testcase">
+                    <fileset dir="@{testdir}">
+                        <include name="**/*Tests.java" />
+                    </fileset>
+                </batchtest>
+            </junit>
+        </sequential>
+    </macrodef>
+
     <target name="build" depends="clean,make-jars,run-tests,make-war" description="Main target to create WAR file." />
 
     <target name="clean">
@@ -41,38 +61,15 @@
 
     <target name="make-jars">
         <compile srcdir="${src.dir}" jarfile="${ant.project.name}.jar" />
-        <compile srcdir="${test.dir}" jarfile="${ant.project.name}-unit-test.jar" />
-        <compile srcdir="${itest.dir}" jarfile="${ant.project.name}-integration-test.jar" />
-        <compile srcdir="${atest.dir}" jarfile="${ant.project.name}-acceptance-test.jar" />
+        <compile srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" />
+        <compile srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" />
+        <compile srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" />
     </target>
 
     <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
-        <junit fork="yes" forkmode="once" haltonfailure="no" failureproperty="unit.tests.failed">
-            <classpath refid="classpath" />
-            <formatter type="brief" usefile="no" />
-            <batchtest if="testcase">
-                <fileset dir="${test.dir}">
-                    <include name="**/${testcase}.java" />
-                </fileset>
-                <fileset dir="${itest.dir}">
-                    <include name="**/${testcase}.java" />
-                </fileset>
-                <fileset dir="${atest.dir}">
-                    <include name="**/${testcase}.java" />
-                </fileset>
-            </batchtest>
-            <batchtest unless="testcase">
-                <fileset dir="${test.dir}">
-                    <include name="**/*Tests.java" />
-                </fileset>
-                <fileset dir="${itest.dir}">
-                    <include name="**/*Tests.java" />
-                </fileset>
-                <fileset dir="${atest.dir}">
-                    <include name="**/*Tests.java" />
-                </fileset>
-            </batchtest>
-        </junit>
+        <unit-test testdir="${unit.test.dir}" />
+        <unit-test testdir="${integration.test.dir}" />
+        <unit-test testdir="${system.test.dir}" />
         <fail if="unit.tests.failed" message="One or more tests failed. Please check the logs for more info." />
     </target>
 
@@ -81,7 +78,7 @@
         <war warfile="${dist.dir}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
             <fileset dir="web" excludes="**/web.xml" />
             <classes dir="${src.dir}" includes="*.properties" />
-            <lib dir="${compile.dir}" excludes="*test.jar" />
+            <lib dir="${compile.dir}" excludes="*-tests.jar" />
             <lib dir="lib/hibernate" />
             <lib dir="lib/runtime" />
             <lib dir="lib/spring" />
