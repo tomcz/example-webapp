@@ -19,7 +19,7 @@
         <fileset dir="lib/webdriver" />
     </path>
 
-    <macrodef name="compile">
+    <macrodef name="make-jar">
         <attribute name="srcdir" />
         <attribute name="jarfile" />
         <sequential>
@@ -60,10 +60,10 @@
     </target>
 
     <target name="make-jars">
-        <compile srcdir="${src.dir}" jarfile="${ant.project.name}.jar" />
-        <compile srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" />
-        <compile srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" />
-        <compile srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" />
+        <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" />
+        <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" />
+        <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" />
+        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" />
     </target>
 
     <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
