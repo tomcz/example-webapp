@@ -65,16 +65,23 @@ public class ListsTests {
     }
 
     @Test
+    public void shouldDetermineIfListOnlyContainsMatches() {
+        List<String> list = Lists.create("b1", "b2");
+        assertThat(Lists.containsOnly(list, startsWith("b")), is(true));
+        assertThat(Lists.containsOnly(list, is("b1")), is(false));
+    }
+
+    @Test
     public void shouldCountMatchesCorrectly() {
         List<String> list = Lists.create("one", "two");
-        assertThat(Lists.count(list, is("one")), is(1));
-        assertThat(Lists.count(list, anyOf(is("one"), is("two"))), is(2));
+        assertThat(Lists.countMatches(list, is("one")), is(1));
+        assertThat(Lists.countMatches(list, anyOf(is("one"), is("two"))), is(2));
     }
 
     @Test
     public void shouldFindFirstMatchingItem() {
         List<String> list = Lists.create("b1", "b2");
-        assertThat(Lists.find(list, startsWith("b")), is("b1"));
+        assertThat(Lists.firstMatch(list, startsWith("b")), is("b1"));
     }
 
     @Test
@@ -90,10 +97,10 @@ public class ListsTests {
     }
 
     @Test
-    public void shouldMapEachItemThroughFunction() {
+    public void shouldMapEachItemThroughConverter() {
         List<String> list = Lists.create("1", "2");
-        List<Integer> result = Lists.map(list, new Function<String, Integer>() {
-            public Integer execute(String item) {
+        List<Integer> result = Lists.map(list, new Converter<String, Integer>() {
+            public Integer convert(String item) {
                 return Integer.parseInt(item);
             }
         });
@@ -104,8 +111,8 @@ public class ListsTests {
     public void shouldPassAllItemsThroughReducer() {
         List<Integer> list = Lists.create(1, 2);
         int result = Lists.reduce(list, 3, new Reducer<Integer, Integer>() {
-            public Integer reduce(Integer item, Integer previous) {
-                return item + previous;
+            public Integer reduce(Integer item, Integer memo) {
+                return item + memo;
             }
         });
         assertThat(result, is(6));

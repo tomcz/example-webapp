@@ -2,12 +2,15 @@ package example.domain;
 
 import example.utils.Lists;
 import example.utils.Maps;
-import example.utils.Matcher;
+import org.hamcrest.Matcher;
 import org.joda.time.LocalDateTime;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
 
 public class Document {
 
@@ -59,12 +62,10 @@ public class Document {
     }
 
     public boolean isValid() {
-        return Lists.count(properties.values(), new InvalidPropertyMatcher()) == 0;
+        return Lists.containsOnly(properties.values(), validProperties());
     }
 
-    private static class InvalidPropertyMatcher implements Matcher<Property> {
-        public boolean matches(Property item) {
-            return !item.isValid();
-        }
+    private Matcher<Property> validProperties() {
+        return hasProperty("valid", equalTo(true));
     }
 }

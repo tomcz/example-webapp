@@ -6,7 +6,7 @@ import example.spring.Path;
 import example.spring.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
-import example.utils.Function;
+import example.utils.Converter;
 import example.utils.Lists;
 import example.utils.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ public class IndexPresenter {
     }
 
     private List<Pair<Identity, Path>> createMappings(List<Identity> identities, final PathBuilder builder) {
-        return Lists.map(identities, new Function<Identity, Pair<Identity, Path>>() {
-            public Pair<Identity, Path> execute(Identity item) {
+        return Lists.map(identities, new Converter<Identity, Pair<Identity, Path>>() {
+            public Pair<Identity, Path> convert(Identity item) {
                 Path path = builder.withVar("documentId", item).build();
                 return Pair.create(item, path);
             }

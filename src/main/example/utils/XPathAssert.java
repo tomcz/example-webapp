@@ -1,6 +1,7 @@
 package example.utils;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
 public class XPathAssert {
@@ -14,17 +15,13 @@ public class XPathAssert {
     }
 
     public void matches(String xpathExpression, Matcher<String> expectedValue) {
-        matches(xpathExpression, Hamcrest.convert(expectedValue));
-    }
-
-    public void matches(String xpathExpression, org.hamcrest.Matcher<String> expectedValue) {
         String actualValue = parser.getText(xpathExpression);
         if (!expectedValue.matches(actualValue)) {
             fail(xpathExpression, expectedValue, actualValue);
         }
     }
 
-    public void fail(String xpathExpression, org.hamcrest.Matcher expectedValue, String actualValue) {
+    public void fail(String xpathExpression, Matcher expectedValue, String actualValue) {
         Description description = new StringDescription();
         description.appendText(xpathExpression);
         description.appendText("\nExpected: ");

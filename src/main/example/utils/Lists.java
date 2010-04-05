@@ -1,6 +1,9 @@
 package example.utils;
 
+import org.hamcrest.Matcher;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,12 +13,12 @@ public class Lists {
         return new ArrayList<T>();
     }
 
-    public static <T> List<T> create(int size) {
+    public static <T> List<T> createWithSize(int size) {
         return new ArrayList<T>(size);
     }
 
     public static <T> List<T> create(T... items) {
-        List<T> list = create(items.length);
+        List<T> list = createWithSize(items.length);
         Collections.addAll(list, items);
         return list;
     }
@@ -36,13 +39,13 @@ public class Lists {
         return !isEmpty(list);
     }
 
-    public static <T> void each(Iterable<T> items, Closure<T> closure) {
+    public static <T> void each(Collection<T> items, Closure<T> closure) {
         for (T item : items) {
             closure.execute(item);
         }
     }
 
-    public static <T> boolean contains(Iterable<T> items, Matcher<T> matcher) {
+    public static <T> boolean contains(Collection<T> items, Matcher<T> matcher) {
         for (T item : items) {
             if (matcher.matches(item)) {
                 return true;
@@ -51,7 +54,11 @@ public class Lists {
         return false;
     }
 
-    public static <T> int count(Iterable<T> items, Matcher<T> matcher) {
+    public static <T> boolean containsOnly(Collection<T> items, Matcher<T> matcher) {
+        return countMatches(items, matcher) == items.size();
+    }
+
+    public static <T> int countMatches(Collection<T> items, Matcher<T> matcher) {
         int count = 0;
         for (T item : items) {
             if (matcher.matches(item)) {
@@ -61,7 +68,7 @@ public class Lists {
         return count;
     }
 
-    public static <T> T find(Iterable<T> items, Matcher<T> matcher) {
+    public static <T> T firstMatch(Collection<T> items, Matcher<T> matcher) {
         for (T item : items) {
             if (matcher.matches(item)) {
                 return item;
@@ -70,7 +77,7 @@ public class Lists {
         return null;
     }
 
-    public static <T> List<T> select(Iterable<T> items, Matcher<T> matcher) {
+    public static <T> List<T> select(Collection<T> items, Matcher<T> matcher) {
         List<T> result = create();
         for (T item : items) {
             if (matcher.matches(item)) {
@@ -80,7 +87,7 @@ public class Lists {
         return result;
     }
 
-    public static <T> List<T> reject(Iterable<T> items, Matcher<T> matcher) {
+    public static <T> List<T> reject(Collection<T> items, Matcher<T> matcher) {
         List<T> result = create();
         for (T item : items) {
             if (!matcher.matches(item)) {
@@ -90,39 +97,19 @@ public class Lists {
         return result;
     }
 
-    public static <T, U> List<U> map(Iterable<T> items, Function<T, U> function) {
-        List<U> result = create();
+    public static <T, U> List<U> map(Collection<T> items, Converter<T, U> function) {
+        List<U> result = createWithSize(items.size());
         for (T item : items) {
-            result.add(function.execute(item));
+            result.add(function.convert(item));
         }
         return result;
     }
 
-    public static <T, U> U reduce(Iterable<T> items, U initial, Reducer<T, U> reducer) {
-        U result = initial;
+    public static <T, U> U reduce(Collection<T> items, U initial, Reducer<T, U> reducer) {
+        U memo = initial;
         for (T item : items) {
-            result = reducer.reduce(item, result);
+            memo = reducer.reduce(item, memo);
         }
-        return result;
-    }
-
-    public static <T> boolean contains(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
-        return contains(items, Hamcrest.convert(matcher));
-    }
-
-    public static <T> int count(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
-        return count(items, Hamcrest.convert(matcher));
-    }
-
-    public static <T> T find(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
-        return find(items, Hamcrest.convert(matcher));
-    }
-
-    public static <T> List<T> select(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
-        return select(items, Hamcrest.convert(matcher));
-    }
-
-    public static <T> List<T> reject(Iterable<T> items, org.hamcrest.Matcher<T> matcher) {
-        return reject(items, Hamcrest.convert(matcher));
+        return memo;
     }
 }
