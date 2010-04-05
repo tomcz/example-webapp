@@ -8,9 +8,11 @@ public interface TemplateView extends View {
 
     void setAggregate(String aggrSpec, Object... values);
 
-    void setContentType(String contentType, String charset);
-
     void setDefaultFormat(WebFormat defaultFormat);
 
     void registerRenderer(Renderer renderer);
+
+    void setContentType(String contentType);
+
+    void setCharset(String charset);
 }

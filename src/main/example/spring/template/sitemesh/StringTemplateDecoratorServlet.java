@@ -3,7 +3,7 @@ package example.spring.template.sitemesh;
 import com.opensymphony.module.sitemesh.HTMLPage;
 import com.opensymphony.module.sitemesh.RequestConstants;
 import example.spring.template.StringTemplateView;
-import example.spring.template.WebStringTemplateFactory;
+import example.spring.template.StringTemplateViewFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -21,7 +21,7 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
 
     private final UrlPathHelper pathHelper = new UrlPathHelper();
 
-    private WebStringTemplateFactory factory;
+    private StringTemplateViewFactory factory;
     private String rootDir;
 
     public void setRootDir(String rootDir) {
@@ -51,11 +51,11 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
         template.render(Collections.<String, Object>emptyMap(), request, response);
     }
 
-    private WebStringTemplateFactory factory() {
+    private StringTemplateViewFactory factory() {
         if (factory == null) {
             ServletContext ctx = getServletContext();
             WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(ctx);
-            factory = new WebStringTemplateFactory();
+            factory = new StringTemplateViewFactory();
             factory.setTemplateRoot(rootDir);
             factory.setResourceLoader(wac);
         }

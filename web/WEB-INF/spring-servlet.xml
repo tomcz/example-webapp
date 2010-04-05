@@ -23,7 +23,7 @@
         </property>
     </bean>
 
-    <bean class="example.spring.template.WebStringTemplateFactory">
+    <bean class="example.spring.template.StringTemplateViewFactory">
         <property name="templateRoot" value="/templates" />
     </bean>
 

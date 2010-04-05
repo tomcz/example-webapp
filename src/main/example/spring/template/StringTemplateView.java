@@ -12,25 +12,22 @@ public class StringTemplateView implements TemplateView {
 
     private final WebStringTemplate template;
 
-    private String contentType;
-    private String charset;
+    private String contentType = "text/html";
+    private String charset = "UTF-8";
 
     public StringTemplateView(WebStringTemplate template) {
-        this(template, "text/html", "UTF-8");
-    }
-
-    public StringTemplateView(WebStringTemplate template, String contentType, String charset) {
         this.template = template;
-        this.contentType = contentType;
-        this.charset = charset;
     }
 
     public String getContentType() {
-        return contentType + ";charset=" + charset;
+        return null;
     }
 
-    public void setContentType(String contentType, String charset) {
+    public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public void setCharset(String charset) {
         this.charset = charset;
     }
 
@@ -53,23 +50,39 @@ public class StringTemplateView implements TemplateView {
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
+        set("base", request.getContextPath());
+        registerRenderer(new PathRenderer(request));
+
+        addRequestAttributesToTemplate(request);
+        addModelAttributesToTemplate(model);
+
         response.setContentType(contentType);
         response.setCharacterEncoding(charset);
-
-        template.setAttribute("model", model);
-        template.setAttribute("base", request.getContextPath());
-        template.setAttribute("request", createMapOfRequestAttributes(request));
-        template.registerRenderer(new PathRenderer(request));
 
         template.write(response.getWriter());
     }
 
-    private Map<String, Object> createMapOfRequestAttributes(HttpServletRequest request) {
+    private void addRequestAttributesToTemplate(HttpServletRequest request) {
         Map<String, Object> attributes = Maps.create();
         for (Enumeration names = request.getAttributeNames(); names.hasMoreElements();) {
             String name = (String) names.nextElement();
             attributes.put(name, request.getAttribute(name));
         }
-        return attributes;
+        set("request", attributes);
+    }
+
+    private void addModelAttributesToTemplate(Map<String, ?> model) {
+        Map<String, Object> attributes = Maps.create();
+        for (Map.Entry<String, ?> entry : model.entrySet()) {
+            String key = entry.getKey();
+            if (key.contains(".")) {
+                attributes.put(key, entry.getValue());
+            } else {
+                set(key, entry.getValue());
+            }
+        }
+        if (attributes.size() > 0) {
+            set("model", attributes);
+        }
     }
 }
