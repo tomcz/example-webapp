@@ -1,13 +1,15 @@
 package example.spring.view;
 
-import example.spring.Path;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collections;
 import java.util.Map;
 
+import static example.spring.view.RedirectBuilder.redirectTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -15,7 +17,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateUrlWithContextAndServletPaths() throws Exception {
-        PathRedirectView view = new PathRedirectView(new Path("/path", true, true));
+        PathRedirectView view = redirectTo(GetHandler.class).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
@@ -31,7 +33,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateContextRelativeUrl() throws Exception {
-        PathRedirectView view = new PathRedirectView(new Path("/path", true, false));
+        PathRedirectView view = redirectTo(GetHandler.class).contextRelative(true).servletRelative(false).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
@@ -47,7 +49,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateServletRelativeUrl() throws Exception {
-        PathRedirectView view = new PathRedirectView(new Path("/path", false, true));
+        PathRedirectView view = redirectTo(GetHandler.class).contextRelative(false).servletRelative(true).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
@@ -59,5 +61,13 @@ public class PathRedirectViewTests {
         view.render(model, request, response);
 
         assertThat(response.getRedirectedUrl(), is("/servlet/path"));
+    }
+
+    private class GetHandler {
+
+        @RequestMapping(value = "/path", method = RequestMethod.GET)
+        public String handleGetRequest() {
+            throw new UnsupportedOperationException();
+        }
     }
 }

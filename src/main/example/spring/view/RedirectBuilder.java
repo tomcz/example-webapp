@@ -1,7 +1,6 @@
 package example.spring.view;
 
 import example.spring.PathBuilder;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import static example.spring.PathBuilder.pathTo;
 
@@ -15,11 +14,6 @@ public class RedirectBuilder {
 
     public static RedirectBuilder redirectTo(Class handler) {
         return new RedirectBuilder(pathTo(handler));
-    }
-
-    public RedirectBuilder withMethod(RequestMethod method) {
-        builder.withMethod(method);
-        return this;
     }
 
     public RedirectBuilder withMethod(String methodName) {
