@@ -1,13 +1,13 @@
 package example.error;
 
 import example.spring.Path;
-import example.spring.PathBuilder;
 import example.utils.XPathAssert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import static example.spring.PathBuilder.pathTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
 import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
@@ -21,7 +21,7 @@ public class ExceptionHandlingIntegrationTests {
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
         SpringDispatcherServlet servlet = SpringDispatcherServlet.getInstance();
 
-        Path path = new PathBuilder(BadPresenter.class).build();
+        Path path = pathTo(BadPresenter.class).build();
 
         MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path.getUri()));
 

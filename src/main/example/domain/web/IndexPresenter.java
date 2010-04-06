@@ -3,7 +3,6 @@ package example.domain.web;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
-import example.spring.PathBuilder;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
 import example.utils.Converter;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.View;
 
 import java.util.List;
+
+import static example.spring.PathBuilder.pathTo;
 
 @Controller
 public class IndexPresenter {
@@ -31,19 +32,16 @@ public class IndexPresenter {
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public View present() {
-        List<Identity> identities = repository.getIDs();
-        PathBuilder builder = new PathBuilder(FormController.class);
-
         TemplateView view = factory.create("example", "index");
-        view.set("newForm", builder.withVar("documentId", Identity.NEW).build());
-        view.set("mappings", createMappings(identities, builder));
+        view.set("mappings", createMappings(repository.getIDs()));
+        view.set("newForm", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
         return view;
     }
 
-    private List<Pair<Identity, Path>> createMappings(List<Identity> identities, final PathBuilder builder) {
+    private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
         return Lists.map(identities, new Converter<Identity, Pair<Identity, Path>>() {
             public Pair<Identity, Path> convert(Identity item) {
-                Path path = builder.withVar("documentId", item).build();
+                Path path = pathTo(FormController.class).withVar("documentId", item).build();
                 return Pair.create(item, path);
             }
         });
