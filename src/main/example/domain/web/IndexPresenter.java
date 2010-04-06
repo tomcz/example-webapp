@@ -4,6 +4,8 @@ import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
 import example.spring.PathBuilder;
+import example.spring.template.TemplateView;
+import example.spring.template.TemplateViewFactory;
 import example.utils.Converter;
 import example.utils.Lists;
 import example.utils.Pair;
@@ -11,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import java.util.List;
 
@@ -19,21 +21,23 @@ import java.util.List;
 public class IndexPresenter {
 
     private final DocumentRepository repository;
+    private final TemplateViewFactory factory;
 
     @Autowired
-    public IndexPresenter(DocumentRepository repository) {
+    public IndexPresenter(DocumentRepository repository, TemplateViewFactory factory) {
         this.repository = repository;
+        this.factory = factory;
     }
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
-    public ModelAndView present() {
+    public View present() {
         List<Identity> identities = repository.getIDs();
         PathBuilder builder = new PathBuilder(FormController.class);
 
-        ModelAndView mv = new ModelAndView("example/index");
-        mv.addObject("newForm", builder.withVar("documentId", Identity.NEW).build());
-        mv.addObject("mappings", createMappings(identities, builder));
-        return mv;
+        TemplateView view = factory.create("example", "index");
+        view.set("newForm", builder.withVar("documentId", Identity.NEW).build());
+        view.set("mappings", createMappings(identities, builder));
+        return view;
     }
 
     private List<Pair<Identity, Path>> createMappings(List<Identity> identities, final PathBuilder builder) {

@@ -20,14 +20,11 @@ public class StringTemplateView implements TemplateView {
     }
 
     public String getContentType() {
-        return null;
+        return contentType + ";charset=" + charset;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(String contentType, String charset) {
         this.contentType = contentType;
-    }
-
-    public void setCharset(String charset) {
         this.charset = charset;
     }
 
@@ -50,11 +47,11 @@ public class StringTemplateView implements TemplateView {
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
+        set("model", model);
         set("base", request.getContextPath());
-        registerRenderer(new PathRenderer(request));
+        set("request", getRequestAttributes(request));
 
-        addRequestAttributesToTemplate(request);
-        addModelAttributesToTemplate(model);
+        registerRenderer(new PathRenderer(request));
 
         response.setContentType(contentType);
         response.setCharacterEncoding(charset);
@@ -62,27 +59,12 @@ public class StringTemplateView implements TemplateView {
         template.write(response.getWriter());
     }
 
-    private void addRequestAttributesToTemplate(HttpServletRequest request) {
+    private Map<String, Object> getRequestAttributes(HttpServletRequest request) {
         Map<String, Object> attributes = Maps.create();
         for (Enumeration names = request.getAttributeNames(); names.hasMoreElements();) {
             String name = (String) names.nextElement();
             attributes.put(name, request.getAttribute(name));
         }
-        set("request", attributes);
-    }
-
-    private void addModelAttributesToTemplate(Map<String, ?> model) {
-        Map<String, Object> attributes = Maps.create();
-        for (Map.Entry<String, ?> entry : model.entrySet()) {
-            String key = entry.getKey();
-            if (key.contains(".")) {
-                attributes.put(key, entry.getValue());
-            } else {
-                set(key, entry.getValue());
-            }
-        }
-        if (attributes.size() > 0) {
-            set("model", attributes);
-        }
+        return attributes;
     }
 }
