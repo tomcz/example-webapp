@@ -21,8 +21,8 @@ public class ErrorPresenter {
 
     @RequestMapping(value = "/error/{errorRef}", method = RequestMethod.GET)
     public View present(@PathVariable String errorRef) {
-        TemplateView template = factory.create("error", "error");
-        template.set("errorRef", errorRef);
-        return template;
+        TemplateView view = factory.create("error", "error");
+        view.set("errorRef", errorRef);
+        return view;
     }
 }

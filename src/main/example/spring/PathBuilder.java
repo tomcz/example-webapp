@@ -20,11 +20,12 @@ public class PathBuilder {
     private boolean servletRelative;
     private Map<String, String> pathVariables;
 
-    public PathBuilder(Class handler) {
-        this.method = RequestMethod.GET;
-        this.contextRelative = true;
-        this.servletRelative = true;
+    private PathBuilder(Class handler) {
         this.handler = handler;
+    }
+
+    public static PathBuilder pathTo(Class handler) {
+        return new PathBuilder(handler).withMethod(RequestMethod.GET).contextRelative(true).servletRelative(true);
     }
 
     public PathBuilder POST() {

@@ -1,19 +1,19 @@
 package example.spring.view;
 
 import example.spring.PathBuilder;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import static example.spring.PathBuilder.pathTo;
 
 public class RedirectBuilder {
 
     private final PathBuilder builder;
 
-    public RedirectBuilder(Class handler) {
-        builder = new PathBuilder(handler);
+    private RedirectBuilder(PathBuilder builder) {
+        this.builder = builder;
     }
 
-    public RedirectBuilder withMethod(RequestMethod method) {
-        builder.withMethod(method);
-        return this;
+    public static RedirectBuilder redirectTo(Class handler) {
+        return new RedirectBuilder(pathTo(handler));
     }
 
     public RedirectBuilder withMethod(String methodName) {
