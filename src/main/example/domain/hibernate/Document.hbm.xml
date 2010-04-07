@@ -19,10 +19,10 @@
             </composite-element>
         </map>
 
-        <property name="createdDateTime" column="created_timestamp"
+        <property name="createdDateTime" column="created_at"
                   type="example.domain.hibernate.LocalDateTimeUserType" />
 
-        <property name="updatedDateTime" column="updated_timestamp"
+        <property name="updatedDateTime" column="updated_at"
                   type="example.domain.hibernate.LocalDateTimeUserType" />
 
     </class>
