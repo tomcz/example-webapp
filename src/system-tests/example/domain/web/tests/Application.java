@@ -43,9 +43,9 @@ public class Application {
     }
 
     private void start(int port) throws Exception {
+        driver = new PageDriver(port);
         server = new WebServer(port);
         server.start();
-        driver = new PageDriver(port);
     }
 
     private PageDriver get(String url) {
