@@ -7,17 +7,24 @@ public class WebServer {
 
     private Server server;
 
-    public void start(int port) throws Exception {
+    public WebServer(int port) {
         server = new Server(port);
-        server.addHandler(new WebAppContext("web", "/"));
+    }
+
+    public void start() throws Exception {
+        server.addHandler(new WebAppContext("web", "/example"));
         server.start();
     }
 
-    public void stop() throws Exception {
-        server.stop();
+    public void stop() {
+        try {
+            server.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws Exception {
-        new WebServer().start(8080);
+        new WebServer(8080).start();
     }
 }
