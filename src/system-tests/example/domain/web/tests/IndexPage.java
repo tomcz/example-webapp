@@ -6,18 +6,19 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class IndexPage implements Page {
-    private PageDriver driver;
 
-    public void verify(PageDriver driver) {
-        assertThat(driver.getBodyClass(), equalTo("index"));
-        this.driver = driver;
+    private Browser browser;
+
+    public void verify(Browser browser) {
+        assertThat(browser.getBodyClass(), equalTo("index"));
+        this.browser = browser;
     }
 
     public void createNewForm() {
-        driver.findElement(By.linkText("here")).click();
+        browser.findElement(By.linkText("here")).click();
     }
 
     public void navigateToForm(String formId) {
-        driver.findElement(By.linkText(formId)).click();
+        browser.findElement(By.linkText(formId)).click();
     }
 }

@@ -25,8 +25,8 @@ public class FormPage implements Page {
     @FindBy(how = How.NAME, using = "submit")
     private WebElement submit;
 
-    public void verify(PageDriver driver) {
-        assertThat(driver.getBodyClass(), equalTo("form"));
+    public void verify(Browser browser) {
+        assertThat(browser.getBodyClass(), equalTo("form"));
     }
 
     public void submitForm(String valueOne, String valueTwo, String valueDate) {
@@ -42,7 +42,7 @@ public class FormPage implements Page {
         assertThat(date.getValue(), equalTo(valueDate));
     }
 
-    public void showsFieldTwoError(String message) {
+    public void showsErrorForFieldTwo(String message) {
         assertThat(messageTwo.getText(), equalTo(message));
     }
 }

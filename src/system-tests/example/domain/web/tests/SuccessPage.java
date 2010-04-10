@@ -13,11 +13,11 @@ public class SuccessPage implements Page {
     private WebElement two;
     private WebElement date;
 
-    private PageDriver driver;
+    private Browser browser;
 
-    public void verify(PageDriver driver) {
-        assertThat(driver.getBodyClass(), equalTo("success"));
-        this.driver = driver;
+    public void verify(Browser browser) {
+        assertThat(browser.getBodyClass(), equalTo("success"));
+        this.browser = browser;
     }
 
     public void showsValues(String valueOne, String valueTwo, String valueDate) {
@@ -27,10 +27,10 @@ public class SuccessPage implements Page {
     }
 
     public String getFormId() {
-        return StringUtils.substringAfterLast(driver.getCurrentUrl(), "/");
+        return StringUtils.substringAfterLast(browser.getCurrentUrl(), "/");
     }
 
     public void navigateToIndexPage() {
-        driver.findElement(By.xpath("//a[@id='index']")).click();
+        browser.findElement(By.xpath("//a[@id='index']")).click();
     }
 }

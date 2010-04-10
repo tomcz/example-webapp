@@ -10,12 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class PageDriver {
+public class Browser {
 
     private WebDriver driver;
     private int serverPort;
 
-    public PageDriver(int serverPort) {
+    public Browser(int serverPort) {
         this.driver = new FirefoxDriver();
         this.serverPort = serverPort;
     }
@@ -49,7 +49,7 @@ public class PageDriver {
         return waitForElement(By.tagName("body")).getAttribute("class");
     }
 
-    public <T extends Page> T expect(Class<T> pageClass) {
+    public <T extends Page> T shows(Class<T> pageClass) {
         T page = PageFactory.initElements(driver, pageClass);
         page.verify(this);
         return page;

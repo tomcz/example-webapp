@@ -9,9 +9,9 @@ public class Application {
     private static Application instance;
 
     private WebServer server;
-    private PageDriver driver;
+    private Browser browser;
 
-    public static PageDriver open(String url) {
+    public static Browser open(String url) {
         return instance().get(url);
     }
 
@@ -43,19 +43,19 @@ public class Application {
     }
 
     private void start(int port) throws Exception {
-        driver = new PageDriver(port);
+        browser = new Browser(port);
         server = new WebServer(port);
         server.start();
     }
 
-    private PageDriver get(String url) {
-        driver.get(url);
-        return driver;
+    private Browser get(String url) {
+        browser.get(url);
+        return browser;
     }
 
     private void stop() {
-        if (driver != null) {
-            driver.stop();
+        if (browser != null) {
+            browser.stop();
         }
         if (server != null) {
             server.stop();
