@@ -1,6 +1,7 @@
 package example.domain.web.tests;
 
 import example.jetty.WebServer;
+import org.apache.commons.lang.Validate;
 
 import java.net.ServerSocket;
 
@@ -27,7 +28,7 @@ public class Application {
             return instance;
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Application startup failed", e);
         }
     }
 
@@ -43,12 +44,12 @@ public class Application {
     }
 
     private void start(int port) throws Exception {
+        server = new WebServer(port).start();
         browser = new Browser(port);
-        server = new WebServer(port);
-        server.start();
     }
 
     private Browser get(String url) {
+        Validate.notNull(browser, "Application has not started succesfully. Please check earlier failed tests.");
         browser.get(url);
         return browser;
     }

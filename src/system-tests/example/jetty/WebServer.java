@@ -11,9 +11,10 @@ public class WebServer {
         server = new Server(port);
     }
 
-    public void start() throws Exception {
+    public WebServer start() throws Exception {
         server.addHandler(new WebAppContext("web", "/example"));
         server.start();
+        return this;
     }
 
     public void stop() {
