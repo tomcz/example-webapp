@@ -1,6 +1,6 @@
 package example.spring.template;
 
-import example.utils.Maps;
+import com.google.common.collect.Maps;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +60,7 @@ public class StringTemplateView implements TemplateView {
     }
 
     private Map<String, Object> getRequestAttributes(HttpServletRequest request) {
-        Map<String, Object> attributes = Maps.create();
+        Map<String, Object> attributes = Maps.newHashMap();
         for (Enumeration names = request.getAttributeNames(); names.hasMoreElements();) {
             String name = (String) names.nextElement();
             attributes.put(name, request.getAttribute(name));

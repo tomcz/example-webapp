@@ -1,12 +1,12 @@
 package example.domain.web;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
 import example.spring.template.TemplateView;
 import example.spring.template.TemplateViewFactory;
-import example.utils.Converter;
-import example.utils.Lists;
 import example.utils.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +39,8 @@ public class IndexPresenter {
     }
 
     private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
-        return Lists.map(identities, new Converter<Identity, Pair<Identity, Path>>() {
-            public Pair<Identity, Path> convert(Identity item) {
+        return Lists.transform(identities, new Function<Identity, Pair<Identity, Path>>() {
+            public Pair<Identity, Path> apply(Identity item) {
                 Path path = pathTo(FormController.class).withVar("documentId", item).build();
                 return Pair.create(item, path);
             }

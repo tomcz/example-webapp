@@ -291,6 +291,7 @@
         <root url="jar://$PROJECT_DIR$/lib/src/joda-time-1.5.2-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/commons-io-1.4-sources.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/src/sitemesh-2.4.1-src.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/google-collections-1.0-src.jar!/" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/runtime" recursive="false" />
     </library>

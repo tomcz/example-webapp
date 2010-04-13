@@ -1,7 +1,6 @@
 package example.domain;
 
-import example.utils.Lists;
-import example.utils.Maps;
+import com.google.common.collect.Maps;
 import org.hamcrest.Matcher;
 import org.joda.time.LocalDateTime;
 
@@ -9,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static example.utils.PredicateMatcher.with;
+import static org.apache.commons.collections.CollectionUtils.countMatches;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 
@@ -30,7 +31,7 @@ public class Document {
 
     public Document(Identity identity) {
         this.identity = identity;
-        this.properties = Maps.create();
+        this.properties = Maps.newHashMap();
         this.createdDateTime = new LocalDateTime();
         this.updatedDateTime = new LocalDateTime();
     }
@@ -62,7 +63,7 @@ public class Document {
     }
 
     public boolean isValid() {
-        return Lists.containsOnly(properties.values(), validProperties());
+        return countMatches(properties.values(), with(validProperties())) == properties.size();
     }
 
     private Matcher<Property> validProperties() {

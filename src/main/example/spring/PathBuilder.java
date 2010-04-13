@@ -1,6 +1,6 @@
 package example.spring;
 
-import example.utils.Maps;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -44,7 +44,7 @@ public class PathBuilder {
 
     public PathBuilder withVar(String name, Object value) {
         if (pathVariables == null) {
-            pathVariables = Maps.create();
+            pathVariables = Maps.newHashMap();
         }
         pathVariables.put(name, ObjectUtils.toString(value));
         return this;
