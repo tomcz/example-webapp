@@ -45,3 +45,21 @@ input {
 	font-size: 10pt;
 	line-height: normal;
 }
+
+.dataTables_wrapper {
+    text-align: left;
+}
+
+#currentForms {
+    width: 950px;
+}
+
+#currentForms th, #currentForms td {
+    text-align: left;
+    padding: 5px;
+}
+
+.css_right {
+    display: block;
+    float: right;
+}

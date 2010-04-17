@@ -2,6 +2,7 @@ package example.domain.web;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
@@ -33,15 +34,15 @@ public class IndexPresenter {
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public View present() {
         TemplateView view = factory.create("example", "index");
-        view.set("mappings", createMappings(repository.getIDs()));
+        view.set("mappings", createMappings(repository.getDetails()));
         view.set("newForm", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
         return view;
     }
 
-    private List<Pair<Identity, Path>> createMappings(List<Identity> identities) {
-        return Lists.transform(identities, new Function<Identity, Pair<Identity, Path>>() {
-            public Pair<Identity, Path> apply(Identity item) {
-                Path path = pathTo(FormController.class).withVar("documentId", item).build();
+    private List<Pair<DocumentDetails, Path>> createMappings(List<DocumentDetails> details) {
+        return Lists.transform(details, new Function<DocumentDetails, Pair<DocumentDetails, Path>>() {
+            public Pair<DocumentDetails, Path> apply(DocumentDetails item) {
+                Path path = pathTo(FormController.class).withVar("documentId", item.getId()).build();
                 return Pair.create(item, path);
             }
         });

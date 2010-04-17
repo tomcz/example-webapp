@@ -63,10 +63,7 @@ public class Document {
     }
 
     public boolean isValid() {
-        return countMatches(properties.values(), with(validProperties())) == properties.size();
-    }
-
-    private Matcher<Property> validProperties() {
-        return hasProperty("valid", equalTo(true));
+        Matcher<Property> validProperties = hasProperty("valid", equalTo(true));
+        return countMatches(properties.values(), with(validProperties)) == properties.size();
     }
 }

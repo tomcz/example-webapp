@@ -1,6 +1,7 @@
 package example.domain.hibernate;
 
 import example.domain.Document;
+import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@SuppressWarnings({"unchecked"})
 public class HibernateDocumentRepository implements DocumentRepository {
 
     private final HibernateOperations hibernate;
@@ -38,8 +40,8 @@ public class HibernateDocumentRepository implements DocumentRepository {
         hibernate.saveOrUpdate(document);
     }
 
-    @SuppressWarnings({"unchecked"})
-    public List<Identity> getIDs() {
-        return hibernate.find("select identity from Document");
+    public List<DocumentDetails> getDetails() {
+        return hibernate.find("select new example.domain.DocumentDetails(identity, createdDateTime, updatedDateTime)"
+                + " from Document order by updatedDateTime desc");
     }
 }
