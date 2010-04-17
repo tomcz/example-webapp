@@ -5,7 +5,6 @@ $if(field.valid)$
 $else$
 <div class="field error">
     <input type="text" id="$field.name$" name="$field.name$" value="$field.value$" />
-    <br />
-    <span class="$field.name$ message">$field.message$</span>
+    <div class="$field.name$ message">$field.message$</div>
 </div>
 $endif$

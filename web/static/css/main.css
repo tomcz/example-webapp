@@ -1,16 +1,47 @@
-form .error {
-    font-weight: bold;
-    color: #ff6666;
+/* @override http://localhost:8080/example/static/css/main.css */
+
+body {
+	font: 15pt/1.5em "Lucida Grande", Lucida, Verdana, sans-serif;
+	text-align: center;
 }
 
-form .field {
-    margin-bottom: 10px;
+h1 {
+	font-size: 2em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 }
 
-body.error {
-    text-align: center;
+input {
+	font-size: 1em;
 }
 
-p.quote {
-    font-style: italic;
+#container {
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+}
+
+.form-container {
+	width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 1em;
+}
+
+.field {
+	padding-bottom: 0.75em;
+}
+
+.field.error div {
+	color: #7f0c0b;
+	background-color: #ff949a;
+	border: 1px solid #7f0c0b;
+	margin-top: 0.5em;
+	padding: 0.5em;
+}
+
+.ui-datepicker {
+	font-size: 10pt;
+	line-height: normal;
 }
