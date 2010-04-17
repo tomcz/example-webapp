@@ -1,5 +1,6 @@
 package example.domain.web.tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -13,20 +14,14 @@ public class FormPage implements Page {
     private WebElement two;
     private WebElement date;
 
-    @FindBy(how = How.XPATH, using = "//span[contains(@class, 'one')]")
-    private WebElement messageOne;
-
-    @FindBy(how = How.XPATH, using = "//span[contains(@class, 'two')]")
-    private WebElement messageTwo;
-
-    @FindBy(how = How.XPATH, using = "//span[contains(@class, 'date')]")
-    private WebElement messageDate;
-
     @FindBy(how = How.NAME, using = "submit")
     private WebElement submit;
 
+    private Browser browser;
+
     public void verify(Browser browser) {
         assertThat(browser.getBodyClass(), equalTo("form"));
+        this.browser = browser;
     }
 
     public void submitForm(String valueOne, String valueTwo, String valueDate) {
@@ -43,6 +38,7 @@ public class FormPage implements Page {
     }
 
     public void showsErrorForFieldTwo(String message) {
+        WebElement messageTwo = browser.findElement(By.cssSelector("div.two.message"));
         assertThat(messageTwo.getText(), equalTo(message));
     }
 }
