@@ -2,6 +2,7 @@
 
 body {
 	font: 15pt/1.5em "Lucida Grande", Lucida, Verdana, sans-serif;
+    background-color: #305c8e;
 	text-align: center;
 }
 
@@ -11,11 +12,18 @@ h1 {
 	padding-bottom: 0.5em;
 }
 
+p {
+    padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
 input {
 	font-size: 1em;
 }
 
 #container {
+    background-color: white;
+    padding: 10px;
 	width: 950px;
 	margin-left: auto;
 	margin-right: auto;
