@@ -9,7 +9,7 @@
         $input(field=document.one)$
         $input(field=document.two)$
         $input(field=document.date)$
-        <input type="submit" name="submit" value="Submit" />
+        <input type="submit" name="submit" class="submit" value="Submit" />
     </form>
 </div>
 <p>

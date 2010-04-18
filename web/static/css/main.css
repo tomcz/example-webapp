@@ -21,6 +21,10 @@ input {
 	font-size: 1em;
 }
 
+input.submit {
+    font-size: 0.75em;
+}
+
 #container {
     background-color: white;
     padding: 10px;
