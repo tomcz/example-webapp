@@ -1,17 +1,16 @@
 package example.domain;
 
 import com.google.common.collect.Maps;
-import org.hamcrest.Matcher;
 import org.joda.time.LocalDateTime;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static example.utils.PredicateMatcher.with;
-import static org.apache.commons.collections.CollectionUtils.countMatches;
+import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.Lambda.select;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
 
 public class Document {
 
@@ -63,7 +62,6 @@ public class Document {
     }
 
     public boolean isValid() {
-        Matcher<Property> validProperties = hasProperty("valid", equalTo(true));
-        return countMatches(properties.values(), with(validProperties)) == properties.size();
+        return select(properties.values(), having(on(Property.class).isValid(), equalTo(false))).isEmpty();
     }
 }

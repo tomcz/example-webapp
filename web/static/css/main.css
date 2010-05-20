@@ -1,24 +1,24 @@
 /* @override http://localhost:8080/example/static/css/main.css */
 
 body {
-	font: 15pt/1.5em "Lucida Grande", Lucida, Verdana, sans-serif;
+    font: 15pt / 1.5em "Lucida Grande", Lucida, Verdana, sans-serif;
     background-color: #305c8e;
-	text-align: center;
+    text-align: center;
 }
 
 h1 {
-	font-size: 2em;
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
+    font-size: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 p {
     padding-top: 0.5em;
-	padding-bottom: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 input {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 input.submit {
@@ -28,34 +28,34 @@ input.submit {
 #container {
     background-color: white;
     padding: 10px;
-	width: 950px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 2em;
+    width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
 }
 
 .form-container {
-	width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-bottom: 1em;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 1em;
 }
 
 .field {
-	padding-bottom: 0.75em;
+    padding-bottom: 0.75em;
 }
 
 .field.error div {
-	color: #7f0c0b;
-	background-color: #ff949a;
-	border: 1px solid #7f0c0b;
-	margin-top: 0.5em;
-	padding: 0.5em;
+    color: #7f0c0b;
+    background-color: #ff949a;
+    border: 1px solid #7f0c0b;
+    margin-top: 0.5em;
+    padding: 0.5em;
 }
 
 .ui-datepicker {
-	font-size: 10pt;
-	line-height: normal;
+    font-size: 10pt;
+    line-height: normal;
 }
 
 .dataTables_wrapper {
