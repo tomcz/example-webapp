@@ -1,7 +1,7 @@
 package example.domain.web;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import ch.lambdaj.Lambda;
+import ch.lambdaj.function.convert.Converter;
 import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
@@ -40,8 +40,8 @@ public class IndexPresenter {
     }
 
     private List<Pair<DocumentDetails, Path>> createMappings(List<DocumentDetails> details) {
-        return Lists.transform(details, new Function<DocumentDetails, Pair<DocumentDetails, Path>>() {
-            public Pair<DocumentDetails, Path> apply(DocumentDetails item) {
+        return Lambda.convert(details, new Converter<DocumentDetails, Pair<DocumentDetails, Path>>() {
+            public Pair<DocumentDetails, Path> convert(DocumentDetails item) {
                 Path path = pathTo(FormController.class).withVar("documentId", item.getId()).build();
                 return Pair.create(item, path);
             }

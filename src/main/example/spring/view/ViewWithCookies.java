@@ -1,11 +1,11 @@
 package example.spring.view;
 
-import com.google.common.collect.Lists;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class ViewWithCookies implements View {
     private final List<Cookie> cookies;
 
     public ViewWithCookies(View delegate) {
-        this.cookies = Lists.newArrayList();
+        this.cookies = new LinkedList<Cookie>();
         this.delegate = delegate;
     }
 

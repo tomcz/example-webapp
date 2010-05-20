@@ -1,11 +1,11 @@
 package example.spring.view;
 
-import com.google.common.collect.Maps;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class ViewWithHeaders implements View {
     private final View delegate;
 
     public ViewWithHeaders(View delegate) {
-        this.headers = Maps.newHashMap();
+        this.headers = new HashMap<String, List<String>>();
         this.delegate = delegate;
     }
 

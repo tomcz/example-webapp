@@ -1,6 +1,5 @@
 package example.spring;
 
-import com.google.common.collect.Maps;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriTemplate;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PathBuilder {
@@ -18,7 +18,8 @@ public class PathBuilder {
     private RequestMethod method;
     private boolean contextRelative;
     private boolean servletRelative;
-    private Map<String, String> pathVariables;
+
+    private Map<String, String> pathVariables = new HashMap<String, String>();
 
     private PathBuilder(Class handler) {
         this.handler = handler;
@@ -43,9 +44,6 @@ public class PathBuilder {
     }
 
     public PathBuilder withVar(String name, Object value) {
-        if (pathVariables == null) {
-            pathVariables = Maps.newHashMap();
-        }
         pathVariables.put(name, ObjectUtils.toString(value));
         return this;
     }
@@ -103,10 +101,7 @@ public class PathBuilder {
     }
 
     private String expandPathVariables(String url) {
-        if (pathVariables != null) {
-            UriTemplate template = new UriTemplate(url);
-            return template.expand(pathVariables).toString();
-        }
-        return url;
+        UriTemplate template = new UriTemplate(url);
+        return template.expand(pathVariables).toString();
     }
 }

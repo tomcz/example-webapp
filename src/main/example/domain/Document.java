@@ -1,9 +1,9 @@
 package example.domain;
 
-import com.google.common.collect.Maps;
 import org.joda.time.LocalDateTime;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +29,10 @@ public class Document {
     }
 
     public Document(Identity identity) {
-        this.identity = identity;
-        this.properties = Maps.newHashMap();
+        this.properties = new HashMap<Field, Property>();
         this.createdDateTime = new LocalDateTime();
         this.updatedDateTime = new LocalDateTime();
+        this.identity = identity;
     }
 
     public Identity getIdentity() {

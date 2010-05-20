@@ -1,11 +1,11 @@
 package example.domain.web;
 
-import com.google.common.collect.Maps;
 import example.domain.Document;
 import example.domain.Document.Field;
 import example.domain.Property;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class DocumentUtils {
@@ -18,7 +18,7 @@ public class DocumentUtils {
     }
 
     public static Map<String, PropertyWrapper> createDocumentModel(Document document) {
-        Map<String, PropertyWrapper> model = Maps.newHashMap();
+        Map<String, PropertyWrapper> model = new HashMap<String, PropertyWrapper>();
         for (Field field : document.getFields()) {
             model.put(field.name(), new PropertyWrapper(field.name(), document.get(field)));
         }
