@@ -1,53 +1,126 @@
-/* http://meyerweb.com/eric/tools/css/reset/ */
-/* v1.0 | 20080212 */
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	background: transparent;
+/*
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.1.1
+build: 47
+*/
+/*
+    TODO will need to remove settings on HTML since we can't namespace it.
+    TODO with the prefix, should I group by selector or property for weight savings?
+*/
+html{
+    color:#000;
+    background:#FFF;
 }
-body {
-	line-height: 1;
+/*
+    TODO remove settings on BODY since we can't namespace it.
+*/
+/*
+    TODO test putting a class on HEAD.
+        - Fails on FF.
+*/
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin:0;
+    padding:0;
 }
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-
-/* remember to define focus styles! */
-:focus {
-	outline: 0;
-}
-
-/* remember to highlight inserts somehow! */
-ins {
-	text-decoration: none;
-}
-del {
-	text-decoration: line-through;
-}
-
-/* tables still need 'cellspacing="0"' in the markup */
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse:collapse;
+    border-spacing:0;
+}
+fieldset,
+img {
+    border:0;
+}
+/*
+    TODO think about hanlding inheritence differently, maybe letting IE6 fail a bit...
+*/
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+    font-style:normal;
+    font-weight:normal;
+}
+/*
+    TODO Figure out where this list-style rule is best set. Hedger has a request to investigate.
+*/
+li {
+    list-style:none;
+}
+
+caption,
+th {
+    text-align:left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size:100%;
+    font-weight:normal;
+}
+q:before,
+q:after {
+    content:'';
+}
+abbr,
+acronym {
+    border:0;
+    font-variant:normal;
+}
+/* to preserve line-height and selector appearance */
+sup {
+    vertical-align:text-top;
+}
+sub {
+    vertical-align:text-bottom;
+}
+input,
+textarea,
+select {
+    font-family:inherit;
+    font-size:inherit;
+    font-weight:inherit;
+}
+/*to enable resizing for IE*/
+input,
+textarea,
+select {
+    *font-size:100%;
+}
+/*because legend doesn't inherit in IE */
+legend {
+    color:#000;
 }
