@@ -3,7 +3,6 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>$title$</title>
-    <link rel="stylesheet" href="$base$/static/css/reset.css" type="text/css"/>
     <link rel="stylesheet" href="$base$/static/theme/jquery-ui-1.8.custom.css" type="text/css"/>
     <link rel="stylesheet" href="$base$/static/css/main.css" type="text/css"/>
     <script type="text/javascript" src="$base$/static/js/jquery-1.4.2.min.js"></script>
