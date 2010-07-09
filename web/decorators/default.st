@@ -11,7 +11,7 @@
     <script type="text/javascript" src="$base$/static/js/buttons.js?$request.version$"></script>
     $head;format="none"$
 </head>
-<body class="$page.properties.("body.class")$">
+<body class='$page.properties.("body.class")$'>
 <div id="container">
     <div id="header">
         <h1>$title$</h1>

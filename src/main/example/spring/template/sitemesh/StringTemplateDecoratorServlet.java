@@ -5,17 +5,16 @@ import com.opensymphony.module.sitemesh.RequestConstants;
 import example.spring.template.StringTemplateView;
 import example.spring.template.StringTemplateViewFactory;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HttpServletBean;
 import org.springframework.web.util.UrlPathHelper;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+
+import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 
 public class StringTemplateDecoratorServlet extends HttpServletBean {
 
@@ -28,12 +27,19 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
         this.rootDir = rootDir;
     }
 
+    @Override
+    protected void initServletBean() throws ServletException {
+        factory = new StringTemplateViewFactory();
+        factory.setResourceLoader(getRequiredWebApplicationContext(getServletContext()));
+        factory.setTemplateRoot(rootDir);
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String lookupPath = pathHelper.getLookupPathForRequest(request);
         String templateName = FilenameUtils.getBaseName(lookupPath);
-        StringTemplateView template = factory().create(templateName);
+        StringTemplateView template = factory.create(templateName);
 
         HTMLPage htmlPage = (HTMLPage) request.getAttribute(RequestConstants.PAGE);
 
@@ -49,16 +55,5 @@ public class StringTemplateDecoratorServlet extends HttpServletBean {
         }
 
         template.render(Collections.<String, Object>emptyMap(), request, response);
-    }
-
-    private StringTemplateViewFactory factory() {
-        if (factory == null) {
-            ServletContext ctx = getServletContext();
-            WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(ctx);
-            factory = new StringTemplateViewFactory();
-            factory.setTemplateRoot(rootDir);
-            factory.setResourceLoader(wac);
-        }
-        return factory;
     }
 }
