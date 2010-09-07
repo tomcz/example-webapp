@@ -26,6 +26,10 @@ public class WebStringTemplateGroup extends StringTemplateGroup {
         this.resourceLoader = resourceLoader;
     }
 
+    public WebStringTemplate createTemplate(String templateName) {
+        return (WebStringTemplate) getInstanceOf(templateName);
+    }
+
     public StringTemplate createStringTemplate() {
         return new WebStringTemplate();
     }

@@ -1,10 +1,8 @@
 package example.spring.template;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.util.Assert;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
@@ -12,18 +10,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class StringTemplateViewFactory implements TemplateViewFactory, ResourceLoaderAware, ViewResolver, InitializingBean {
+public class StringTemplateViewFactory implements TemplateViewFactory, ResourceLoaderAware, ViewResolver {
 
     public static final String SHARED_GROUP_NAME = "shared";
     public static final String VIEW_NAME_SEPARATOR = "/";
 
-    private String templateRoot;
     private ResourceLoader resourceLoader;
     private String sourceFileCharEncoding;
 
     private String contentType = StringTemplateView.DEFAULT_CONTENT_TYPE;
     private String charset = StringTemplateView.DEFAULT_CHARSET;
     private boolean useModelKey = true;
+    private String templateRoot = "";
 
     private List<Renderer> renderers = Collections.emptyList();
 
@@ -53,10 +51,6 @@ public class StringTemplateViewFactory implements TemplateViewFactory, ResourceL
 
     public void setRenderers(List<Renderer> renderers) {
         this.renderers = renderers;
-    }
-
-    public void afterPropertiesSet() {
-        Assert.notNull(templateRoot, "Cannot create templates without a templateRoot");
     }
 
     public StringTemplateView create(String templateName) {
@@ -93,7 +87,7 @@ public class StringTemplateViewFactory implements TemplateViewFactory, ResourceL
     }
 
     private StringTemplateView create(WebStringTemplateGroup group, String templateName) {
-        WebStringTemplate template = (WebStringTemplate) group.getInstanceOf(templateName);
+        WebStringTemplate template = group.createTemplate(templateName);
         for (Renderer renderer : renderers) {
             template.registerRenderer(renderer);
         }
