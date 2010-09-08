@@ -96,10 +96,10 @@
 
     <servlet>
         <servlet-name>sitemesh</servlet-name>
-        <servlet-class>example.spring.template.sitemesh.StringTemplateDecoratorServlet</servlet-class>
+        <servlet-class>com.watchitlater.spring.sitemesh.StringTemplateDecoratorServlet</servlet-class>
         <init-param>
-            <param-name>rootDir</param-name>
-            <param-value>/decorators</param-value>
+            <param-name>sharedRoot</param-name>
+            <param-value>/shared</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>

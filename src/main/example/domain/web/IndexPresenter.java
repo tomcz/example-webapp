@@ -6,14 +6,12 @@ import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
 import example.spring.Path;
-import example.spring.template.TemplateView;
-import example.spring.template.TemplateViewFactory;
 import example.utils.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -23,20 +21,18 @@ import static example.spring.PathBuilder.pathTo;
 public class IndexPresenter {
 
     private final DocumentRepository repository;
-    private final TemplateViewFactory factory;
 
     @Autowired
-    public IndexPresenter(DocumentRepository repository, TemplateViewFactory factory) {
+    public IndexPresenter(DocumentRepository repository) {
         this.repository = repository;
-        this.factory = factory;
     }
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
-    public View present() {
-        TemplateView view = factory.create("example", "index");
-        view.set("mappings", createMappings(repository.getDetails()));
-        view.set("newForm", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
-        return view;
+    public ModelAndView present() {
+        ModelAndView mv = new ModelAndView("example/index");
+        mv.addObject("mappings", createMappings(repository.getDetails()));
+        mv.addObject("newForm", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
+        return mv;
     }
 
     private List<Pair<DocumentDetails, Path>> createMappings(List<DocumentDetails> details) {

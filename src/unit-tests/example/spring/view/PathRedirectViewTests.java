@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Collections;
 import java.util.Map;
 
-import static example.spring.view.RedirectBuilder.redirectTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,7 +16,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateUrlWithContextAndServletPaths() throws Exception {
-        PathRedirectView view = redirectTo(GetHandler.class).build();
+        PathRedirectView view = RedirectBuilder.redirectTo(GetHandler.class).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
@@ -33,7 +32,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateContextRelativeUrl() throws Exception {
-        PathRedirectView view = redirectTo(GetHandler.class).contextRelative(true).servletRelative(false).build();
+        PathRedirectView view = RedirectBuilder.redirectTo(GetHandler.class).contextRelative(true).servletRelative(false).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
@@ -49,7 +48,7 @@ public class PathRedirectViewTests {
 
     @Test
     public void shouldCreateServletRelativeUrl() throws Exception {
-        PathRedirectView view = redirectTo(GetHandler.class).contextRelative(false).servletRelative(true).build();
+        PathRedirectView view = RedirectBuilder.redirectTo(GetHandler.class).contextRelative(false).servletRelative(true).build();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");

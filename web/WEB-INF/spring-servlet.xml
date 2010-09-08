@@ -2,6 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
@@ -11,20 +12,17 @@
     <context:annotation-config />
     <context:component-scan base-package="example.error" />
     <context:component-scan base-package="example.domain.web" />
+    <context:component-scan base-package="example.domain.binding" />
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-        <property name="useDefaultSuffixPattern" value="false" />
-    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
+          p:useDefaultSuffixPattern="false" />
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="cacheSeconds" value="0" />
-        <property name="webBindingInitializer">
-            <bean class="example.domain.binding.IdentityBindingInititalizer" />
-        </property>
-    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
+          p:webBindingInitializer-ref="identityBindingInititalizer"
+          p:cacheSeconds="0" />
 
-    <bean class="example.spring.template.StringTemplateViewFactory">
-        <property name="templateRoot" value="/templates" />
-    </bean>
+    <bean class="example.spring.view.CustomTemplateViewResolver"
+          p:templateRoot="/templates"
+          p:sharedRoot="/shared" />
 
 </beans>

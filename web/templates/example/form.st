@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Form</title>
-    <script type="text/javascript" src="$base$/static/js/form.js?$request.version$"></script>
+    $javascript(src="static/js/form.js")$
 </head>
 <body class="form">
 <div class="form-container">

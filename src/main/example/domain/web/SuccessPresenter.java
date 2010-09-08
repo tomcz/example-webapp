@@ -2,14 +2,12 @@ package example.domain.web;
 
 import example.domain.DocumentRepository;
 import example.domain.Identity;
-import example.spring.template.TemplateView;
-import example.spring.template.TemplateViewFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.ModelAndView;
 
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.spring.PathBuilder.pathTo;
@@ -18,21 +16,19 @@ import static example.spring.PathBuilder.pathTo;
 public class SuccessPresenter {
 
     private final DocumentRepository repository;
-    private final TemplateViewFactory factory;
 
     @Autowired
-    public SuccessPresenter(DocumentRepository repository, TemplateViewFactory factory) {
+    public SuccessPresenter(DocumentRepository repository) {
         this.repository = repository;
-        this.factory = factory;
     }
 
     @RequestMapping(value = "/success/{documentId}", method = RequestMethod.GET)
-    public View present(@PathVariable Identity documentId) {
-        TemplateView view = factory.create("example", "success");
-        view.set("document", createDocumentModel(repository.get(documentId)));
-        view.set("oldFormLink", pathTo(FormController.class).withVar("documentId", documentId).build());
-        view.set("newFormLink", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
-        view.set("indexLink", pathTo(IndexPresenter.class).build());
-        return view;
+    public ModelAndView present(@PathVariable Identity documentId) {
+        ModelAndView mv = new ModelAndView("example/success");
+        mv.addObject("document", createDocumentModel(repository.get(documentId)));
+        mv.addObject("oldFormLink", pathTo(FormController.class).withVar("documentId", documentId).build());
+        mv.addObject("newFormLink", pathTo(FormController.class).withVar("documentId", Identity.NEW).build());
+        mv.addObject("indexLink", pathTo(IndexPresenter.class).build());
+        return mv;
     }
 }

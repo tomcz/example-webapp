@@ -1,9 +1,9 @@
 <html>
 <head>
     <title>Current Forms</title>
-    <link rel="stylesheet" href="$base$/static/table/table_jui.css" type="text/css">
-    <script type="text/javascript" src="$base$/static/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="$base$/static/js/table.js?$request.version$"></script>
+    $stylesheet(href="static/table/table_jui.css")$
+    $javascript(src="static/js/jquery.dataTables.min.js")$
+    $javascript(src="static/js/table.js")$
 </head>
 <body class="index">
 $if(!mappings.empty)$

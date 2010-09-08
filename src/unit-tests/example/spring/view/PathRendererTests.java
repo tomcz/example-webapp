@@ -1,4 +1,4 @@
-package example.spring.template;
+package example.spring.view;
 
 import example.spring.Path;
 import org.junit.Test;

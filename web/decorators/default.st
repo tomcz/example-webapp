@@ -4,14 +4,14 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>$title$</title>
-    <link rel="stylesheet" href="$base$/static/theme/jquery-ui-1.8.custom.css" type="text/css">
-    <link rel="stylesheet" href="$base$/static/css/main.css?$request.version$" type="text/css">
-    <script type="text/javascript" src="$base$/static/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="$base$/static/js/jquery-ui-1.8.custom.min.js"></script>
-    <script type="text/javascript" src="$base$/static/js/buttons.js?$request.version$"></script>
+    $stylesheet(href="static/theme/jquery-ui-1.8.custom.css")$
+    $stylesheet(href="static/css/main.css")$
+    $javascript(src="static/js/jquery-1.4.2.min.js")$
+    $javascript(src="static/js/jquery-ui-1.8.custom.min.js")$
+    $javascript(src="static/js/buttons.js")$
     $head;format="none"$
 </head>
-<body class='$page.properties.("body.class")$'>
+<body class="$bodyClass()$">
 <div id="container">
     <div id="header">
         <h1>$title$</h1>

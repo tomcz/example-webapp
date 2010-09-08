@@ -1,5 +1,7 @@
-package example.spring.template;
+package example.spring.view;
 
+import com.watchitlater.spring.Renderer;
+import com.watchitlater.spring.WebFormat;
 import example.spring.Path;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ public class PathRenderer implements Renderer {
     }
 
     public String toString(Object obj) {
-        return WebFormat.HTML.format(render(obj));
+        return WebFormat.html.format(render(obj));
     }
 
     public String toString(Object obj, String formatName) {
