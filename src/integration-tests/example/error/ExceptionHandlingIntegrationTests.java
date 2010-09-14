@@ -39,6 +39,7 @@ public class ExceptionHandlingIntegrationTests {
 
         Elements elements = document.select("#errorRef");
         assertThat(elements.size(), equalTo(1));
+
         assertThat(elements.first().text(), equalTo(errorRef));
     }
 }
