@@ -336,6 +336,14 @@
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/lib/webdriver" recursive="false" />
     </library>
+    <library name="logging">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/lib/logging" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/lib/logging" recursive="false" />
+    </library>
   </component>
 </project>
 

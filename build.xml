@@ -3,16 +3,18 @@
 
     <property name="src.dir" location="src/main" />
     <property name="unit.test.dir" location="src/unit-tests" />
-    <property name="integration.test.dir" location="src/integration-tests" />
     <property name="system.test.dir" location="src/system-tests" />
+    <property name="integration.test.dir" location="src/integration-tests" />
 
     <property name="build.dir" location="build" />
-    <property name="compile.dir" location="${build.dir}/compile" />
     <property name="dist.dir" location="${build.dir}/dist" />
+    <property name="report.dir" location="${build.dir}/report" />
+    <property name="compile.dir" location="${build.dir}/compile" />
 
     <path id="classpath">
         <fileset dir="${compile.dir}" />
         <fileset dir="lib/buildtime" />
+        <fileset dir="lib/logging" />
         <fileset dir="lib/runtime" />
         <fileset dir="lib/spring" />
         <fileset dir="lib/hibernate" />
@@ -36,15 +38,17 @@
     <macrodef name="unit-test">
         <attribute name="testdir" />
         <sequential>
-            <junit fork="yes" forkmode="once" haltonfailure="no" failureproperty="unit.tests.failed">
+            <mkdir dir="${report.dir}" />
+            <junit fork="yes" forkmode="once" printsummary="yes"
+                   haltonfailure="no" failureproperty="unit.tests.failed">
                 <classpath refid="classpath" />
-                <formatter type="brief" usefile="no" />
-                <batchtest if="testcase">
+                <formatter type="xml" />
+                <batchtest if="testcase" todir="${report.dir}">
                     <fileset dir="@{testdir}">
                         <include name="**/${testcase}.java" />
                     </fileset>
                 </batchtest>
-                <batchtest unless="testcase">
+                <batchtest unless="testcase" todir="${report.dir}">
                     <fileset dir="@{testdir}">
                         <include name="**/*Tests.java" />
                     </fileset>
@@ -53,7 +57,13 @@
         </sequential>
     </macrodef>
 
-    <target name="build" depends="clean,make-jars,run-tests,make-war" description="Main target to create WAR file." />
+    <target name="build"
+            depends="clean,run-tests,make-war"
+            description="Main target to create WAR file." />
+
+    <target name="run-tests"
+            depends="make-jars,run-unit-tests,check-tests"
+            description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test." />
 
     <target name="clean">
         <delete dir="${build.dir}" />
@@ -66,20 +76,28 @@
         <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" />
     </target>
 
-    <target name="run-tests" description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
+    <target name="run-unit-tests">
         <unit-test testdir="${unit.test.dir}" />
         <unit-test testdir="${integration.test.dir}" />
         <unit-test testdir="${system.test.dir}" />
-        <fail if="unit.tests.failed" message="One or more tests failed. Please check the logs for more info." />
     </target>
 
-    <target name="make-war">
+    <target name="check-tests" if="unit.tests.failed">
+        <junitreport todir="${report.dir}">
+            <fileset dir="${report.dir}" includes="TEST-*.xml" />
+            <report todir="${report.dir}/html" />
+        </junitreport>
+        <fail message="One or more tests failed. Please check the logs for more info." />
+    </target>
+
+    <target name="make-war" depends="make-jars">
         <mkdir dir="${dist.dir}" />
         <war warfile="${dist.dir}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
             <fileset dir="web" excludes="**/web.xml" />
             <classes dir="${src.dir}" includes="*.properties" />
             <lib dir="${compile.dir}" excludes="*-tests.jar" />
             <lib dir="lib/hibernate" />
+            <lib dir="lib/logging" />
             <lib dir="lib/runtime" />
             <lib dir="lib/spring" />
         </war>
@@ -89,7 +107,7 @@
         <java classname="example.jetty.WebServer" classpathref="classpath" fork="true" failonerror="true" />
     </target>
 
-    <target name="package-src" depends="clean" description="Create zip of the source code for distribution">
+    <target name="package-src" depends="clean" description="Create zip of the source code for distribution.">
         <mkdir dir="${build.dir}" />
         <zip basedir="${basedir}" destfile="${build.dir}/${ant.project.name}.zip">
             <exclude name="**/.DS_Store" />
