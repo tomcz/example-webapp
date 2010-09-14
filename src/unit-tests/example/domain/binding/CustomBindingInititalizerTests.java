@@ -13,14 +13,14 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class IdentityBindingInititalizerTests {
+public class CustomBindingInititalizerTests {
 
     @Test
     public void shouldBindNewIdentityForGetRequestsWhenTextValueIsNew() throws Exception {
         WebDataBinder binder = new WebDataBinder(new Object());
         NativeWebRequest request = new ServletWebRequest(new MockHttpServletRequest("GET", "/foo.go"));
 
-        IdentityBindingInititalizer initialiser = new IdentityBindingInititalizer();
+        CustomBindingInititalizer initialiser = new CustomBindingInititalizer();
         initialiser.initBinder(binder, request);
 
         PropertyEditor customEditor = binder.findCustomEditor(Identity.class, "");
@@ -36,7 +36,7 @@ public class IdentityBindingInititalizerTests {
         WebDataBinder binder = new WebDataBinder(new Object());
         NativeWebRequest request = new ServletWebRequest(new MockHttpServletRequest("POST", "/foo.go"));
 
-        IdentityBindingInititalizer initialiser = new IdentityBindingInititalizer();
+        CustomBindingInititalizer initialiser = new CustomBindingInititalizer();
         initialiser.initBinder(binder, request);
 
         PropertyEditor customEditor = binder.findCustomEditor(Identity.class, "");

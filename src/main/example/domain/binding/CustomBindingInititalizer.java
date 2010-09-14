@@ -11,12 +11,15 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class IdentityBindingInititalizer implements WebBindingInitializer {
+public class CustomBindingInititalizer implements WebBindingInitializer {
 
-    public void initBinder(WebDataBinder binder, WebRequest request) {
-        HttpServletRequest servletRequest = (HttpServletRequest) request.resolveReference(WebRequest.REFERENCE_REQUEST);
-        boolean createOnNew = RequestMethod.POST.equals(RequestMethod.valueOf(servletRequest.getMethod()));
-        binder.registerCustomEditor(Identity.class, new IdentityPropertyEditor(createOnNew));
+    public void initBinder(WebDataBinder binder, WebRequest webRequest) {
+        binder.registerCustomEditor(Identity.class, new IdentityPropertyEditor(shouldCreateOnNew(webRequest)));
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    private boolean shouldCreateOnNew(WebRequest webRequest) {
+        HttpServletRequest request = (HttpServletRequest) webRequest.resolveReference(WebRequest.REFERENCE_REQUEST);
+        return RequestMethod.POST.equals(RequestMethod.valueOf(request.getMethod()));
     }
 }
