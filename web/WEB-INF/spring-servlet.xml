@@ -18,7 +18,7 @@
           p:useDefaultSuffixPattern="false" />
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
-          p:webBindingInitializer-ref="identityBindingInititalizer"
+          p:webBindingInitializer-ref="customBindingInititalizer"
           p:cacheSeconds="0" />
 
     <bean class="example.spring.view.CustomTemplateViewResolver"

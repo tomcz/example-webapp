@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.domain.web.DocumentUtils.setProperties;
@@ -40,7 +40,7 @@ public class FormController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public View process(@PathVariable Identity documentId, WebRequest request) {
+    public RedirectView process(@PathVariable Identity documentId, WebRequest request) {
         Document document = repository.get(documentId);
 
         setProperties(request, document);
