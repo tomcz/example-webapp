@@ -278,6 +278,7 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/lib/src/org.springframework.test-sources-3.0.0.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/src/jsoup-1.3.2-sources.jar!/" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/buildtime" recursive="false" />
     </library>

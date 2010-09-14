@@ -4,10 +4,10 @@
 </head>
 <body class="success">
 <p>
-    You submitted:<br />
-    <span id="one">$document.one.value$</span><br />
-    <span id="two">$document.two.value$</span><br />
-    <span id="date">$document.date.value$</span><br />
+    You submitted:<br>
+    <span id="one">$document.one.value$</span><br>
+    <span id="two">$document.two.value$</span><br>
+    <span id="date">$document.date.value$</span><br>
 </p>
 <p>
     Click <a id="back" href="$oldFormLink$">here</a> to go back to the form.

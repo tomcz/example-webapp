@@ -1,14 +1,16 @@
 package example.error;
 
 import example.spring.Path;
-import example.utils.XPathAssert;
 import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import static example.spring.PathBuilder.pathTo;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
 import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
 import static org.hamcrest.text.pattern.Patterns.exactly;
@@ -33,9 +35,10 @@ public class ExceptionHandlingIntegrationTests {
         response = servlet.process(new MockHttpServletRequest("GET", redirectedUrl));
 
         String html = response.getContentAsString();
-        XPathAssert xpath = new XPathAssert(html);
+        Document document = Jsoup.parse(html);
 
-        xpath.matches("count(//span[@id='errorRef'])", is("1"));
-        xpath.matches("//span[@id='errorRef']", is(errorRef));
+        Elements elements = document.select("#errorRef");
+        assertThat(elements.size(), equalTo(1));
+        assertThat(elements.first().text(), equalTo(errorRef));
     }
 }
