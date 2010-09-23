@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Form</title>
-    $javascript(src="static/js/form.js")$
+    $javascript(src="/static/js/form.js")$
 </head>
 <body class="form">
 <div class="form-container">

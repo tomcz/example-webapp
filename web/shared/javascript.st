@@ -1,1 +1,1 @@
-<script type="text/javascript" src="$base$/$src$?$request.version$"></script>
+<script type="text/javascript" src="$base$$src$?$request.version$"></script>
