@@ -10,7 +10,7 @@ public class CustomTemplateView extends StringTemplateView {
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        template.register(new PathRenderer(request));
+        template.register(new PathRenderer(request, response));
         super.render(model, request, response);
     }
 }
