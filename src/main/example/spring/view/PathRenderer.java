@@ -1,12 +1,12 @@
 package example.spring.view;
 
 import com.watchitlater.spring.Renderer;
-import com.watchitlater.spring.WebFormat;
+import com.watchitlater.spring.WebAttributeRenderer;
 import example.spring.Path;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class PathRenderer implements Renderer {
+public class PathRenderer extends WebAttributeRenderer implements Renderer {
 
     private final HttpServletRequest request;
 
@@ -19,11 +19,11 @@ public class PathRenderer implements Renderer {
     }
 
     public String toString(Object obj) {
-        return WebFormat.html.format(render(obj));
+        return super.toString(render(obj));
     }
 
     public String toString(Object obj, String formatName) {
-        return WebFormat.fromName(formatName).format(render(obj));
+        return super.toString(render(obj), formatName);
     }
 
     private String render(Object obj) {
