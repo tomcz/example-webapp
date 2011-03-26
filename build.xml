@@ -11,22 +11,24 @@
     <property name="report.dir" location="${build.dir}/report" />
     <property name="compile.dir" location="${build.dir}/compile" />
 
-    <path id="classpath">
+    <path id="main.classpath">
         <fileset dir="${compile.dir}" />
-        <fileset dir="lib/buildtime" />
-        <fileset dir="lib/logging" />
         <fileset dir="lib/runtime" />
-        <fileset dir="lib/spring" />
-        <fileset dir="lib/hibernate" />
-        <fileset dir="lib/webdriver" />
+        <fileset dir="lib/provided" />
+    </path>
+
+    <path id="test.classpath">
+        <path refid="main.classpath" />
+        <fileset dir="lib/buildtime" />
     </path>
 
     <macrodef name="make-jar">
         <attribute name="srcdir" />
         <attribute name="jarfile" />
+        <attribute name="classpath" />
         <sequential>
             <mkdir dir="${compile.dir}/classes" />
-            <javac srcdir="@{srcdir}" destdir="${compile.dir}/classes" classpathref="classpath" debug="yes" />
+            <javac srcdir="@{srcdir}" destdir="${compile.dir}/classes" classpathref="@{classpath}" includeantruntime="no" debug="yes" />
             <copy todir="${compile.dir}/classes" includeemptydirs="no">
                 <fileset dir="@{srcdir}" excludes="**/*.java" />
             </copy>
@@ -41,7 +43,7 @@
             <mkdir dir="${report.dir}" />
             <junit fork="yes" forkmode="once" printsummary="yes"
                    haltonfailure="no" failureproperty="unit.tests.failed">
-                <classpath refid="classpath" />
+                <classpath refid="test.classpath" />
                 <formatter type="xml" />
                 <batchtest if="testcase" todir="${report.dir}">
                     <fileset dir="@{testdir}">
@@ -70,10 +72,10 @@
     </target>
 
     <target name="make-jars">
-        <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" />
-        <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" />
-        <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" />
-        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" />
+        <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" classpath="main.classpath" />
+        <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" classpath="test.classpath" />
+        <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" classpath="test.classpath" />
+        <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" classpath="test.classpath" />
     </target>
 
     <target name="run-unit-tests">
@@ -96,10 +98,7 @@
             <fileset dir="web" excludes="**/web.xml" />
             <classes dir="${src.dir}" includes="*.properties" />
             <lib dir="${compile.dir}" excludes="*-tests.jar" />
-            <lib dir="lib/hibernate" />
-            <lib dir="lib/logging" />
             <lib dir="lib/runtime" />
-            <lib dir="lib/spring" />
         </war>
     </target>
 
