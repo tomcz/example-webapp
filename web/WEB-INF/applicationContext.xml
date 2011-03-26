@@ -23,8 +23,19 @@
         <property name="url" value="${database.driver.url}" />
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+    <bean id="jdbcTemplateSource" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
         <constructor-arg ref="dataSource" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetClass" value="org.springframework.jdbc.core.JdbcOperations" />
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName">
+                    <idref local="jdbcTemplateSource" />
+                </property>
+            </bean>
+        </property>
     </bean>
 
     <bean id="sessionFactorySource" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" lazy-init="true">
@@ -65,7 +76,7 @@
         <constructor-arg ref="sessionFactory" />
     </bean>
 
-    <bean class="example.domain.hibernate.DbDeployer">
+    <bean id="deployer" class="example.domain.hibernate.DbDeployer">
         <constructor-arg ref="jdbcTemplate" />
         <constructor-arg value="/WEB-INF/create_changelog.sql" />
         <constructor-arg value="/WEB-INF/deltas" />

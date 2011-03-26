@@ -29,12 +29,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="buildtime" level="project" />
+    <orderEntry type="library" scope="TEST" name="buildtime" level="project" />
     <orderEntry type="library" name="runtime" level="project" />
-    <orderEntry type="library" name="spring" level="project" />
-    <orderEntry type="library" name="hibernate" level="project" />
-    <orderEntry type="library" name="webdriver" level="project" />
-    <orderEntry type="library" name="logging" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="provided" level="project" />
   </component>
 </module>
 

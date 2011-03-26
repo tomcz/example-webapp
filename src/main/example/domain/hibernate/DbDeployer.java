@@ -1,18 +1,25 @@
 package example.domain.hibernate;
 
 import com.dbdeploy.DbDeploy;
+import example.spring.ApplicationStatus;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcOperations;
 
-public class DbDeployer implements InitializingBean {
+public class DbDeployer implements InitializingBean, ApplicationStatus {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final JdbcOperations template;
     private final Resource createSql;
     private final Resource deltasDir;
     private final DbDeploy deploy;
+
+    private boolean ready = false;
 
     public DbDeployer(JdbcOperations template, Resource createSql, Resource deltasDir, DbDeploy deploy) {
         this.createSql = createSql;
@@ -21,9 +28,19 @@ public class DbDeployer implements InitializingBean {
         this.deploy = deploy;
     }
 
-    public void afterPropertiesSet() throws Exception {
-        createChangeLogTable();
-        deployDeltas();
+    public void afterPropertiesSet() {
+        try {
+            createChangeLogTable();
+            deployDeltas();
+            ready = true;
+
+        } catch (Exception e) {
+            logger.error("Unable to deploy database updates. Application startup failed!", e);
+        }
+    }
+
+    public boolean ready() {
+        return ready;
     }
 
     private void createChangeLogTable() throws Exception {

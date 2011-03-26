@@ -11,11 +11,18 @@
 
     <context:annotation-config />
     <context:component-scan base-package="example.error" />
+    <context:component-scan base-package="example.spring" />
     <context:component-scan base-package="example.domain.web" />
     <context:component-scan base-package="example.domain.binding" />
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
-          p:useDefaultSuffixPattern="false" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="useDefaultSuffixPattern" value="false" />
+        <property name="interceptors">
+            <list>
+                <ref bean="applicationStatusInterceptor" />
+            </list>
+        </property>
+    </bean>
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
           p:webBindingInitializer-ref="customBindingInititalizer"
