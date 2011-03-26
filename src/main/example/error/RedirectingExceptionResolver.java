@@ -1,7 +1,8 @@
 package example.error;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ import static example.spring.view.RedirectBuilder.redirectTo;
 @Component
 public class RedirectingExceptionResolver implements HandlerExceptionResolver {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final UrlPathHelper pathHelper = new UrlPathHelper();
 
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,

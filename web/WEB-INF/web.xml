@@ -35,11 +35,6 @@
         <param-value>org.hibernate.cache.NoCacheProvider</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>hibernate.hbm2ddl.auto</param-name>
-        <param-value>create</param-value>
-    </context-param>
-
     <filter>
         <filter-name>index</filter-name>
         <filter-class>example.spring.filter.ServletRedirectFilter</filter-class>
@@ -55,11 +50,6 @@
     </filter>
 
     <filter>
-        <filter-name>logging</filter-name>
-        <filter-class>org.springframework.web.filter.Log4jNestedDiagnosticContextFilter</filter-class>
-    </filter>
-
-    <filter>
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
     </filter>
@@ -71,11 +61,6 @@
 
     <filter-mapping>
         <filter-name>version</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>logging</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

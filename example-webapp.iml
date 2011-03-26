@@ -12,7 +12,6 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main" />
         </sourceRoots>
-        <context-artifact name="example-webapp:Web exploded" />
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">

@@ -23,6 +23,10 @@
         <property name="url" value="${database.driver.url}" />
     </bean>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
     <bean id="sessionFactorySource" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" lazy-init="true">
         <property name="dataSource" ref="dataSource" />
         <property name="mappingResources">
@@ -34,7 +38,6 @@
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
             </props>
         </property>
     </bean>
@@ -43,7 +46,9 @@
         <property name="targetClass" value="org.hibernate.SessionFactory" />
         <property name="targetSource">
             <bean class="org.springframework.aop.target.LazyInitTargetSource">
-                <property name="targetBeanName" value="sessionFactorySource" />
+                <property name="targetBeanName">
+                    <idref local="sessionFactorySource" />
+                </property>
             </bean>
         </property>
     </bean>
@@ -58,6 +63,20 @@
 
     <bean id="hibernateOperations" class="org.springframework.orm.hibernate3.HibernateTemplate">
         <constructor-arg ref="sessionFactory" />
+    </bean>
+
+    <bean class="example.domain.hibernate.DbDeployer">
+        <constructor-arg ref="jdbcTemplate" />
+        <constructor-arg value="/WEB-INF/create_changelog.sql" />
+        <constructor-arg value="/WEB-INF/deltas" />
+        <constructor-arg>
+            <bean class="com.dbdeploy.DbDeploy">
+                <property name="url" value="${database.driver.url}" />
+                <property name="driver" value="${database.driver.class}" />
+                <property name="userid" value="${database.driver.username}" />
+                <property name="password" value="${database.driver.password}" />
+            </bean>
+        </constructor-arg>
     </bean>
 
 </beans>
