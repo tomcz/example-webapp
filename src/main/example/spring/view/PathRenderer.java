@@ -1,9 +1,7 @@
 package example.spring.view;
 
 import com.watchitlater.spring.Renderer;
-import com.watchitlater.spring.ResponseUrlEncoder;
 import com.watchitlater.spring.WebAttributeRenderer;
-import com.watchitlater.spring.WebFormat;
 import example.spring.Path;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +12,6 @@ public class PathRenderer extends WebAttributeRenderer implements Renderer {
     private final HttpServletRequest request;
 
     public PathRenderer(HttpServletRequest request, HttpServletResponse response) {
-        setEncoder(WebFormat.url, new ResponseUrlEncoder(response));
         this.request = request;
     }
 

@@ -1,6 +1,5 @@
 package example.spring;
 
-import com.google.common.collect.Sets;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
 import static org.springframework.util.StringUtils.arrayToCommaDelimitedString;
@@ -40,7 +40,7 @@ public class EndpointsPresenter implements ApplicationContextAware {
     }
 
     private String getMappings() {
-        Set<String> mappings = Sets.newTreeSet();
+        Set<String> mappings = new TreeSet<String>();
         Map mapOfHandlers = getMapOfHandlers();
         for (Object handler : mapOfHandlers.values()) {
             if (handler instanceof Class) {

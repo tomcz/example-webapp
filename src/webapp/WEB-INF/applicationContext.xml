@@ -16,7 +16,7 @@
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
     </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" lazy-init="true" destroy-method="close">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="true">
         <property name="driverClassName" value="${database.driver.class}" />
         <property name="username" value="${database.driver.username}" />
         <property name="password" value="${database.driver.password}" />

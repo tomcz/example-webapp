@@ -65,6 +65,7 @@
             <fileset dir="lib/compile/jar" includes="*.jar" />
         </path>
         <path id="test.classpath">
+            <fileset dir="${compile.dir}" />
             <fileset dir="lib/test/jar" includes="*.jar" />
             <path refid="compile.classpath" />
         </path>
@@ -83,7 +84,7 @@
         <unit-test testdir="${system.test.dir}" />
     </target>
 
-    <target name="run-tests" depends="unit-tests" if="unit.tests.failed" 
+    <target name="run-tests" depends="unit-tests" if="unit.tests.failed"
             description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
         <junitreport todir="${report.dir}">
             <fileset dir="${report.dir}" includes="TEST-*.xml" />
@@ -94,16 +95,16 @@
 
     <target name="make-war" depends="make-jars">
         <mkdir dir="${dist.dir}" />
-        <war warfile="${dist.dir}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
-            <fileset dir="web" excludes="**/web.xml" />
+        <war warfile="${dist.dir}/${ant.project.name}.war" webxml="src/webapp/WEB-INF/web.xml">
+            <fileset dir="src/webapp" excludes="**/web.xml" />
             <classes dir="${src.dir}" includes="*.properties" />
             <lib dir="${compile.dir}" excludes="*-tests.jar" />
-            <lib dir="lib/runtime" />
+            <lib dir="lib/compile/jar" />
         </war>
     </target>
 
     <target name="run-jetty" depends="clean,make-jars" description="Run application in Jetty.">
-        <java classname="example.jetty.WebServer" classpathref="classpath" fork="true" failonerror="true" />
+        <java classname="example.jetty.WebServer" classpathref="test.classpath" fork="true" failonerror="true" />
     </target>
 
     <target name="package-src" depends="clean" description="Create zip of the source code for distribution.">
@@ -113,6 +114,7 @@
             <exclude name="build/" />
             <exclude name="*.iws" />
             <exclude name=".git/" />
+            <exclude name="lib/" />
             <exclude name="out/" />
         </zip>
     </target>
