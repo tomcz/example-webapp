@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="example" default="build" basedir=".">
+<project name="example" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property name="src.dir" location="src/main" />
     <property name="unit.test.dir" location="src/unit-tests" />
@@ -10,17 +10,6 @@
     <property name="dist.dir" location="${build.dir}/dist" />
     <property name="report.dir" location="${build.dir}/report" />
     <property name="compile.dir" location="${build.dir}/compile" />
-
-    <path id="main.classpath">
-        <fileset dir="${compile.dir}" />
-        <fileset dir="lib/runtime" />
-        <fileset dir="lib/provided" />
-    </path>
-
-    <path id="test.classpath">
-        <path refid="main.classpath" />
-        <fileset dir="lib/buildtime" />
-    </path>
 
     <macrodef name="make-jar">
         <attribute name="srcdir" />
@@ -41,8 +30,7 @@
         <attribute name="testdir" />
         <sequential>
             <mkdir dir="${report.dir}" />
-            <junit fork="yes" forkmode="once" printsummary="yes"
-                   haltonfailure="no" failureproperty="unit.tests.failed">
+            <junit fork="yes" forkmode="once" printsummary="yes" haltonfailure="no" failureproperty="unit.tests.failed">
                 <classpath refid="test.classpath" />
                 <formatter type="xml" />
                 <batchtest if="testcase" todir="${report.dir}">
@@ -59,32 +47,44 @@
         </sequential>
     </macrodef>
 
-    <target name="build"
-            depends="clean,run-tests,make-war"
-            description="Main target to create WAR file." />
-
-    <target name="run-tests"
-            depends="make-jars,run-unit-tests,check-tests"
-            description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test." />
+    <target name="build" depends="clean,run-tests,make-war" description="Main target to create WAR file." />
 
     <target name="clean">
         <delete dir="${build.dir}" />
     </target>
 
-    <target name="make-jars">
-        <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" classpath="main.classpath" />
+    <target name="fetch-libs" description="Fetch third-party libraries.">
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+            <classpath location="bootstrap/ivy-2.2.0.jar" />
+        </taskdef>
+        <ivy:configure />
+        <ivy:resolve file="ivy.xml" conf="compile,test,provided" />
+        <ivy:retrieve pattern="lib/[conf]/[type]/[artifact]-[revision].[ext]" sync="true" />
+        <path id="compile.classpath">
+            <fileset dir="lib/provided/jar" includes="*.jar" />
+            <fileset dir="lib/compile/jar" includes="*.jar" />
+        </path>
+        <path id="test.classpath">
+            <fileset dir="lib/test/jar" includes="*.jar" />
+            <path refid="compile.classpath" />
+        </path>
+    </target>
+
+    <target name="make-jars" depends="fetch-libs">
+        <make-jar srcdir="${src.dir}" jarfile="${ant.project.name}.jar" classpath="compile.classpath" />
         <make-jar srcdir="${unit.test.dir}" jarfile="${ant.project.name}-unit-tests.jar" classpath="test.classpath" />
         <make-jar srcdir="${integration.test.dir}" jarfile="${ant.project.name}-integration-tests.jar" classpath="test.classpath" />
         <make-jar srcdir="${system.test.dir}" jarfile="${ant.project.name}-system-tests.jar" classpath="test.classpath" />
     </target>
 
-    <target name="run-unit-tests">
+    <target name="unit-tests" depends="make-jars">
         <unit-test testdir="${unit.test.dir}" />
         <unit-test testdir="${integration.test.dir}" />
         <unit-test testdir="${system.test.dir}" />
     </target>
 
-    <target name="check-tests" if="unit.tests.failed">
+    <target name="run-tests" depends="unit-tests" if="unit.tests.failed" 
+            description="Run all tests. Use -Dtestcase=SomeTestClassName to specify a single test.">
         <junitreport todir="${report.dir}">
             <fileset dir="${report.dir}" includes="TEST-*.xml" />
             <report todir="${report.dir}/html" />

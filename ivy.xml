@@ -1,0 +1,42 @@
+<ivy-module version="2.0">
+
+    <info organisation="example" module="example-webapp" revision="1.0" />
+
+    <configurations>
+        <conf name="compile" visibility="public" />
+        <conf name="provided" visibility="public" />
+        <conf name="test" visibility="private" />
+    </configurations>
+
+    <dependencies>
+
+        <!-- compile -->
+
+        <dependency org="com.watchitlater" name="spring-stringtemplate" rev="1.5.1" conf="compile->default,sources" />
+        <dependency org="joda-time" name="joda-time" rev="1.6.2" transitive="false" conf="compile->default,sources" />
+        <dependency org="org.springframework" name="spring-orm" rev="3.0.5.RELEASE" conf="compile->default,sources" />
+        <dependency org="commons-io" name="commons-io" rev="2.0.1" transitive="false" conf="compile->default,sources" />
+        <dependency org="org.hibernate" name="hibernate-core" rev="3.3.2.GA" conf="compile->default,sources" />
+        <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3" conf="compile->default,sources" />
+        <dependency org="com.dbdeploy" name="dbdeploy-core" rev="3.0M3" conf="compile->default,sources" />
+
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" transitive="false" conf="compile->default,sources" />
+        <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.6.1" transitive="false" conf="compile->default,sources" />
+        <dependency org="ch.qos.logback" name="logback-classic" rev="0.9.27" conf="compile->default,sources" />
+
+        <!-- test -->
+
+        <dependency org="junit" name="junit" rev="4.8.2" transitive="false" conf="test->default,sources" />
+
+        <!-- provided -->
+
+        <dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false" conf="provided->default,sources" />
+
+        <!-- defaults -->
+
+        <exclude artifact="commons-logging" />
+        <exclude artifact="freemarker" />
+
+    </dependencies>
+
+</ivy-module>
