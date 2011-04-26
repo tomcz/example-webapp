@@ -3,10 +3,10 @@ package example.jetty;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.webapp.WebAppContext;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+
+import static ch.lambdaj.collection.LambdaCollections.with;
+import static org.hamcrest.Matchers.endsWith;
 
 public class WebServer {
 
@@ -19,7 +19,6 @@ public class WebServer {
     public WebServer start() throws Exception {
         WebAppContext context = new WebAppContext("src/webapp", "/example");
         context.setConfigurationClasses(removeTagLibConfiguration(context));
-
         server.addHandler(context);
         server.start();
         return this;
@@ -38,14 +37,7 @@ public class WebServer {
     }
 
     private String[] removeTagLibConfiguration(WebAppContext context) {
-        List<String> configurationClasses = new ArrayList<String>();
-        Collections.addAll(configurationClasses, context.getConfigurationClasses());
-        Iterator<String> itr = configurationClasses.iterator();
-        while (itr.hasNext()) {
-            if (itr.next().endsWith("TagLibConfiguration")) {
-                itr.remove();
-            }
-        }
-        return configurationClasses.toArray(new String[configurationClasses.size()]);
+        List<String> configuration = with(context.getConfigurationClasses()).remove(endsWith("TagLibConfiguration"));
+        return configuration.toArray(new String[configuration.size()]);
     }
 }
