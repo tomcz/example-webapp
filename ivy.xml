@@ -19,7 +19,7 @@
         <dependency org="org.hsqldb" name="hsqldb" rev="1.8.0.10" transitive="false" conf="compile->default,sources" />
         <dependency org="javassist" name="javassist" rev="3.12.1.GA" transitive="false" conf="compile->default" />
         <dependency org="org.hibernate" name="hibernate-core" rev="3.3.2.GA" conf="compile->default,sources" />
-        <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3" conf="compile->default,sources" />
+        <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3.1" conf="compile->default,sources" />
         <dependency org="com.dbdeploy" name="dbdeploy-core" rev="3.0M3" conf="compile->default,sources" />
 
         <dependency org="ch.qos.logback" name="logback-classic" rev="0.9.27" conf="compile->default,sources" />
