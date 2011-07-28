@@ -9,6 +9,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -31,6 +32,7 @@ public class HtmlPage {
     }
 
     public void shouldHaveBodyClass(String index) {
+        assertNotNull("Page is not text/html", html);
         assertThat(dom.body().classNames(), hasItem(index));
     }
 
