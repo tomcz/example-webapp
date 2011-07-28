@@ -329,7 +329,9 @@
         <root url="file://$PROJECT_DIR$/lib/test/jar" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/lib/test/source/jsoup-1.5.2.jar!/" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/test/jar" recursive="false" />
     </library>
   </component>

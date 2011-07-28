@@ -1,4 +1,4 @@
-package example.domain.web.tests;
+package example.domain.web.webdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -32,9 +32,9 @@ public class FormPage implements Page {
     }
 
     public void showsValues(String valueOne, String valueTwo, String valueDate) {
-        assertThat(one.getValue(), equalTo(valueOne));
-        assertThat(two.getValue(), equalTo(valueTwo));
-        assertThat(date.getValue(), equalTo(valueDate));
+        assertThat(one.getAttribute("value"), equalTo(valueOne));
+        assertThat(two.getAttribute("value"), equalTo(valueTwo));
+        assertThat(date.getAttribute("value"), equalTo(valueDate));
     }
 
     public void showsErrorForFieldTwo(String message) {

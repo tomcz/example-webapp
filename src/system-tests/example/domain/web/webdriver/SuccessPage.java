@@ -1,4 +1,4 @@
-package example.domain.web.tests;
+package example.domain.web.webdriver;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;

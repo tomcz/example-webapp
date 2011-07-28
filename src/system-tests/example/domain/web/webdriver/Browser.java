@@ -1,9 +1,9 @@
-package example.domain.web.tests;
+package example.domain.web.webdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,7 +16,7 @@ public class Browser {
     private int serverPort;
 
     public Browser(int serverPort) {
-        this.driver = new FirefoxDriver();
+        this.driver = new HtmlUnitDriver();
         this.serverPort = serverPort;
     }
 

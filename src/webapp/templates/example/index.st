@@ -18,7 +18,7 @@ $if(!mappings.empty)$
     <tbody>
         $mappings:{ mapping |
         <tr>
-            <td><a href="$mapping.value$">$mapping.key.id$</a></td>
+            <td><a id="$mapping.key.id$" href="$mapping.value$">$mapping.key.id$</a></td>
             <td>$mapping.key.createdAt$</td>
             <td>$mapping.key.updatedAt$</td>
         </tr>

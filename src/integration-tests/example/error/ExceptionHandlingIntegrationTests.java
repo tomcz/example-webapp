@@ -1,6 +1,7 @@
 package example.error;
 
 import example.spring.Path;
+import example.spring.tests.SpringDispatcherServlet;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +22,7 @@ public class ExceptionHandlingIntegrationTests {
 
     @Test
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
-        SpringDispatcherServlet servlet = SpringDispatcherServlet.getInstance();
+        SpringDispatcherServlet servlet = SpringDispatcherServlet.create();
 
         Path path = pathTo(BadPresenter.class).build();
 

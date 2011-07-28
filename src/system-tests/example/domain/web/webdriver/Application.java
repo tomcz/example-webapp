@@ -1,4 +1,4 @@
-package example.domain.web.tests;
+package example.domain.web.webdriver;
 
 import example.jetty.WebServer;
 import org.apache.commons.lang.Validate;
