@@ -13,6 +13,7 @@ public class DomainWorkflowTests {
 
         SuccessPage successPage = browser.shows(SuccessPage.class);
         successPage.showsValues("homer", "simpson", "10/03/2010");
+
         String formId = successPage.getFormId();
         successPage.navigateToIndexPage();
 
