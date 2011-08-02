@@ -13,18 +13,18 @@ public class Application {
     private Browser browser;
 
     public static Browser open(String url) {
-        return instance().get(url);
+        return application().get(url);
     }
 
-    private static Application instance() {
+    private static Application application() {
         if (instance != null) {
             return instance;
         }
         try {
             int port = findFreePort();
             instance = new Application();
-            registerShutdownHook();
-            instance.start(port);
+            instance.registerShutdownHook();
+            instance.startup(port);
             return instance;
 
         } catch (Exception e) {
@@ -39,11 +39,15 @@ public class Application {
         return port;
     }
 
-    private static void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook()));
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                shutdown();
+            }
+        }));
     }
 
-    private void start(int port) throws Exception {
+    private void startup(int port) throws Exception {
         server = new WebServer(port).start();
         browser = new Browser(port);
     }
@@ -54,18 +58,20 @@ public class Application {
         return browser;
     }
 
-    private void stop() {
+    private void shutdown() {
         if (browser != null) {
-            browser.stop();
+            try {
+                browser.stop();
+            } catch (Exception e) {
+                // ignore
+            }
         }
         if (server != null) {
-            server.stop();
-        }
-    }
-
-    private static class ShutdownHook implements Runnable {
-        public void run() {
-            instance.stop();
+            try {
+                server.stop();
+            } catch (Exception e) {
+                // ignore
+            }
         }
     }
 }
