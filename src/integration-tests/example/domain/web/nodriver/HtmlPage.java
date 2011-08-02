@@ -37,19 +37,17 @@ public class HtmlPage {
     }
 
     public <T> T clickAndExpect(String selector, Class<T> pageClass) {
-        Element link = first(selector);
-        assertThat("Unexpected element", link.tagName(), equalTo("a"));
+        Element link = expect(first(selector), "a");
         String href = link.attr("href");
         if (StringUtils.isEmpty(href)) {
-            fail("Empty href attribute in " + link.outerHtml());
+            fail("Empty 'href' attribute in " + link.outerHtml());
             return null;
         }
         return browser.get(href, pageClass);
     }
 
     public HtmlForm getForm(String selector) {
-        Element form = first(selector);
-        assertThat("Unexpected element", form.tagName(), equalTo("form"));
+        Element form = expect(first(selector), "form");
         return new HtmlForm(form, browser);
     }
 
@@ -60,5 +58,10 @@ public class HtmlPage {
             return null;
         }
         return elements.first();
+    }
+
+    private Element expect(Element tag, String tagName) {
+        assertThat("Unexpected element", tag.tagName(), equalTo(tagName));
+        return tag;
     }
 }
