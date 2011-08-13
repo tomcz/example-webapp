@@ -5,6 +5,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.collection.LambdaCollections.with;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -20,12 +23,29 @@ public class HtmlForm {
         this.form = form;
     }
 
-    public void setInputValue(String selector, String value) {
-        input(selector).val(value);
+    public void setInputValue(String fieldName, String value) {
+        input(fieldName).val(value);
     }
 
-    public void showsInputValue(String selector, String value) {
-        assertThat(input(selector).val(), equalTo(value));
+    public void showsInputValue(String fieldName, String value) {
+        assertThat(fieldName, input(fieldName).val(), equalTo(value));
+    }
+
+    public void selectOptionByValue(String fieldName, String value) {
+        for (Element option : options(fieldName, "option")) {
+            if (option.val().equals(value)) {
+                option.attr("selected", "selected");
+            } else {
+                option.removeAttr("selected");
+            }
+        }
+    }
+
+    public void showsSelectedOptionWithValue(String fieldName, String value) {
+        Elements options = options(fieldName, "option[selected]");
+        if (!with(options).exists(having(on(Element.class).val(), equalTo(value)))) {
+            fail("Select '" + fieldName + "' does not have '" + value + "' selected in " + form.outerHtml());
+        }
     }
 
     public <T> T submitAndExpect(Class<T> pageClass) {
@@ -35,13 +55,34 @@ public class HtmlForm {
         for (Element input : form.select("input")) {
             request.addParameter(input.attr("name"), input.val());
         }
+        for (Element select : form.select("select")) {
+            String name = select.attr("name");
+            Elements selected = select.select("option[selected]");
+            if (selected.isEmpty()) {
+                Elements options = select.select("option");
+                if (options.size() > 0) {
+                    request.addParameter(name, options.first().val());
+                }
+            } else {
+                for (Element option : selected) {
+                    request.addParameter(name, option.val());
+                }
+            }
+        }
         return browser.send(request, pageClass);
     }
 
-    private Element input(String selector) {
-        Element input = first(selector);
-        assertThat(input.tagName(), equalTo("input"));
-        return input;
+    private Element input(String fieldName) {
+        return first("input[name=" + fieldName + "]");
+    }
+
+    private Elements options(String fieldName, String option) {
+        String query = "select[name=" + fieldName + "] " + option;
+        Elements options = form.select(query);
+        if (options.isEmpty()) {
+            fail("Cannot find " + query + " in " + form.outerHtml());
+        }
+        return options;
     }
 
     private Element first(String selector) {

@@ -11,16 +11,16 @@ public class DomainWorkflowTests {
         IndexPage indexPage = browser.get("/forms", IndexPage.class);
 
         FormPage formPage = indexPage.createNewForm();
-        formPage.setValues("homer", "simpson", "10/03/2010");
+        formPage.setValues("homer", "option1", "10/03/2010");
 
         SuccessPage successPage = formPage.submitAndExpect(SuccessPage.class);
-        successPage.showsValues("homer", "simpson", "10/03/2010");
+        successPage.showsValues("homer", "option1", "10/03/2010");
         String formId = successPage.getFormId();
 
         indexPage = successPage.navigateToIndexPage();
         formPage = indexPage.navigateToForm(formId);
 
-        formPage.showsValues("homer", "simpson", "10/03/2010");
+        formPage.showsValues("homer", "option1", "10/03/2010");
     }
 
     @Test

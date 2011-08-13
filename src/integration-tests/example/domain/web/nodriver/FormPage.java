@@ -14,16 +14,16 @@ public class FormPage {
 
     public void showsValues(String valueOne, String valueTwo, String valueDate) {
         HtmlForm form = page.getForm("#documentForm");
-        form.showsInputValue("input[name=one]", valueOne);
-        form.showsInputValue("input[name=two]", valueTwo);
-        form.showsInputValue("input[name=date]", valueDate);
+        form.showsInputValue("one", valueOne);
+        form.showsSelectedOptionWithValue("two", valueTwo);
+        form.showsInputValue("date", valueDate);
     }
 
     public void setValues(String valueOne, String valueTwo, String valueDate) {
         HtmlForm form = page.getForm("#documentForm");
-        form.setInputValue("input[name=one]", valueOne);
-        form.setInputValue("input[name=two]", valueTwo);
-        form.setInputValue("input[name=date]", valueDate);
+        form.setInputValue("one", valueOne);
+        form.selectOptionByValue("two", valueTwo);
+        form.setInputValue("date", valueDate);
     }
 
     public <T> T submitAndExpect(Class<T> pageClass) {
