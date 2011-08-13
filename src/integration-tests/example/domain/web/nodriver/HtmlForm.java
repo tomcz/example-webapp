@@ -52,7 +52,7 @@ public class HtmlForm {
         String method = StringUtils.defaultIfEmpty(form.attr("method"), "post");
         String action = StringUtils.defaultIfEmpty(form.attr("action"), browser.currentURI());
         MockHttpServletRequest request = new MockHttpServletRequest(method.toUpperCase(), action);
-        for (Element input : form.select("input")) {
+        for (Element input : form.select("input[type=text]")) {
             request.addParameter(input.attr("name"), input.val());
         }
         for (Element select : form.select("select")) {
@@ -73,7 +73,7 @@ public class HtmlForm {
     }
 
     private Element input(String fieldName) {
-        return first("input[name=" + fieldName + "]");
+        return first("input[name=" + fieldName + "][type=text]");
     }
 
     private Elements options(String fieldName, String option) {
