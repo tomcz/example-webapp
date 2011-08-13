@@ -1,9 +1,13 @@
 package example.domain.web;
 
+import ch.lambdaj.function.convert.Converter;
 import example.domain.Document;
+import example.domain.Document.Field;
 import example.domain.DocumentRepository;
 import example.domain.DocumentValidator;
 import example.domain.Identity;
+import example.domain.Property;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +17,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static ch.lambdaj.Lambda.convert;
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.domain.web.DocumentUtils.setProperties;
 import static example.spring.PathBuilder.pathTo;
@@ -33,9 +41,11 @@ public class FormController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView present(@PathVariable Identity documentId) {
+        Document document = repository.get(documentId);
         ModelAndView mv = new ModelAndView("example/form");
         mv.addObject("indexLink", pathTo(IndexPresenter.class).build());
-        mv.addObject("document", createDocumentModel(repository.get(documentId)));
+        mv.addObject("document", createDocumentModel(document));
+        mv.addObject("fieldOptions", options(document, Field.two));
         return mv;
     }
 
@@ -51,5 +61,35 @@ public class FormController {
             return redirectTo(SuccessPresenter.class).withVar("documentId", documentId).build();
         }
         return redirectTo(getClass()).withVar("documentId", documentId).build();
+    }
+
+    private List<Option> options(Document document, Field field) {
+        final Property property = document.get(field);
+        List<String> values = Arrays.asList("", "option1", "option2", "error");
+        return convert(values, new Converter<String, Option>() {
+            public Option convert(String value) {
+                boolean selected = StringUtils.equals(property.getValue(), value);
+                return new Option(value, selected);
+            }
+        });
+    }
+
+    public static class Option {
+
+        private final String value;
+        private final boolean selected;
+
+        public Option(String value, boolean selected) {
+            this.selected = selected;
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
     }
 }

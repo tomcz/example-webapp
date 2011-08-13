@@ -18,8 +18,9 @@ p {
     padding-bottom: 0.5em;
 }
 
-input {
+input, select {
     font-size: 1em;
+    width: 10em;
 }
 
 input.submit {

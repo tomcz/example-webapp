@@ -7,7 +7,7 @@
 <div class="form-container">
     <form id="documentForm" method="post">
         $input(field=document.one)$
-        $input(field=document.two)$
+        $select(field=document.two,options=fieldOptions)$
         $input(field=document.date)$
         <input type="submit" name="submit" class="submit" value="Submit">
     </form>
