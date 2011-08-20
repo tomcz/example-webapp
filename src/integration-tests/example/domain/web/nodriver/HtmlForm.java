@@ -51,10 +51,21 @@ public class HtmlForm {
     public <T> T submitAndExpect(Class<T> pageClass) {
         String method = StringUtils.defaultIfEmpty(form.attr("method"), "post");
         String action = StringUtils.defaultIfEmpty(form.attr("action"), browser.currentURI());
+
         MockHttpServletRequest request = new MockHttpServletRequest(method.toUpperCase(), action);
+        addTextFieldValues(request);
+        addSelectedOptions(request);
+
+        return browser.send(request, pageClass);
+    }
+
+    private void addTextFieldValues(MockHttpServletRequest request) {
         for (Element input : form.select("input[type=text]")) {
             request.addParameter(input.attr("name"), input.val());
         }
+    }
+
+    private void addSelectedOptions(MockHttpServletRequest request) {
         for (Element select : form.select("select")) {
             String name = select.attr("name");
             Elements selected = select.select("option[selected]");
@@ -69,7 +80,6 @@ public class HtmlForm {
                 }
             }
         }
-        return browser.send(request, pageClass);
     }
 
     private Element input(String fieldName) {
