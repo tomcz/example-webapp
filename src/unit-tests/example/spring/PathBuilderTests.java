@@ -17,39 +17,25 @@ public class PathBuilderTests {
 
     @Test
     public void shouldCreateGetLinkForGetHandler() throws Exception {
-        Path path = pathTo(GetHandler.class).withVar("documentId", "new").build();
-        assertThat(path.getUri(), is("/new/success.go"));
+        String path = pathTo(GetHandler.class).withVar("documentId", "new").build();
+        assertThat(path, is("/new/success.go"));
     }
 
     @Test
     public void shouldCreatePostLinkToPostHandler() throws Exception {
-        Path path = pathTo(PostHandler.class).POST().withVar("documentId", "old").build();
-        assertThat(path.getUri(), is("/old/error.go"));
+        String path = pathTo(PostHandler.class).POST().withVar("documentId", "old").build();
+        assertThat(path, is("/old/error.go"));
     }
 
     @Test
     public void shouldCreateLinkToNamedMethod() throws Exception {
-        Path path = pathTo(PostHandler.class).withMethod("handlePostRequest").withVar("documentId", "old").build();
-        assertThat(path.getUri(), is("/old/error.go"));
+        String path = pathTo(PostHandler.class).withMethod("handlePostRequest").withVar("documentId", "old").build();
+        assertThat(path, is("/old/error.go"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailCreateLinkToUnAnnotatedNamedMethod() throws Exception {
         pathTo(PostHandler.class).withMethod("test").withVar("documentId", "old").build();
-    }
-
-    @Test
-    public void shouldCreateContextRelativePath() throws Exception {
-        Path path = pathTo(GetHandler.class).withVar("documentId", "old").servletRelative(false).build();
-        assertThat(path.isServletRelative(), is(false));
-        assertThat(path.isContextRelative(), is(true));
-    }
-
-    @Test
-    public void shouldCreateServletRelativePath() throws Exception {
-        Path path = pathTo(GetHandler.class).withVar("documentId", "old").contextRelative(false).build();
-        assertThat(path.isContextRelative(), is(false));
-        assertThat(path.isServletRelative(), is(true));
     }
 
     @RequestMapping("/{documentId}/success.go")

@@ -27,8 +27,15 @@ public class SpringDispatcherServlet {
 
     public MockHttpServletResponse process(MockHttpServletRequest request) throws Exception {
         MockHttpServletResponse response = new MockHttpServletResponse();
-        servlet.service(request, response);
+        servlet.service(withVersionFilterAttributes(request), response);
         return response;
+    }
+
+    private MockHttpServletRequest withVersionFilterAttributes(MockHttpServletRequest request) {
+        request.setAttribute("servletPath", "");
+        request.setAttribute("contextPath", "");
+        request.setAttribute("version", "");
+        return request;
     }
 
     private void startup() throws Exception {

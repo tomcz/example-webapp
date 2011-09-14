@@ -1,6 +1,5 @@
 package example.domain;
 
-import example.domain.Document.Field;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

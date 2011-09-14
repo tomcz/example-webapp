@@ -1,1 +1,0 @@
-$page.properties.("body.class")$

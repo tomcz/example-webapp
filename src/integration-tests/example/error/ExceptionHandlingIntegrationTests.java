@@ -1,6 +1,5 @@
 package example.error;
 
-import example.spring.Path;
 import example.spring.tests.SpringDispatcherServlet;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -24,9 +23,9 @@ public class ExceptionHandlingIntegrationTests {
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
         SpringDispatcherServlet servlet = SpringDispatcherServlet.create();
 
-        Path path = pathTo(BadPresenter.class).build();
+        String path = pathTo(BadPresenter.class).build();
 
-        MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path.getUri()));
+        MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path));
 
         String redirectedUrl = response.getRedirectedUrl();
         assertThat(redirectedUrl, matchesPattern(sequence("/error/", exactly(7, anyCharacterIn("A-Z0-9")))));

@@ -2,9 +2,9 @@ package example.domain.web;
 
 import ch.lambdaj.function.convert.Converter;
 import example.domain.Document;
-import example.domain.Document.Field;
 import example.domain.DocumentRepository;
 import example.domain.DocumentValidator;
+import example.domain.Field;
 import example.domain.Identity;
 import example.domain.Property;
 import org.apache.commons.lang.StringUtils;
@@ -24,7 +24,6 @@ import static ch.lambdaj.Lambda.convert;
 import static example.domain.web.DocumentUtils.createDocumentModel;
 import static example.domain.web.DocumentUtils.setProperties;
 import static example.spring.PathBuilder.pathTo;
-import static example.spring.view.RedirectBuilder.redirectTo;
 
 @Controller
 @RequestMapping("/form/{documentId}")
@@ -58,9 +57,9 @@ public class FormController {
         repository.set(document);
 
         if (document.isValid()) {
-            return redirectTo(SuccessPresenter.class).withVar("documentId", documentId).build();
+            return pathTo(SuccessPresenter.class).withVar("documentId", documentId).redirect();
         }
-        return redirectTo(getClass()).withVar("documentId", documentId).build();
+        return pathTo(getClass()).withVar("documentId", documentId).redirect();
     }
 
     private List<Option> options(Document document, Field field) {

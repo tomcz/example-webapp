@@ -101,10 +101,10 @@
 
     <servlet>
         <servlet-name>sitemesh</servlet-name>
-        <servlet-class>com.watchitlater.spring.sitemesh.StringTemplateDecoratorServlet</servlet-class>
+        <servlet-class>com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet</servlet-class>
         <init-param>
-            <param-name>sharedRoot</param-name>
-            <param-value>/shared</param-value>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
@@ -116,7 +116,7 @@
 
     <servlet-mapping>
         <servlet-name>sitemesh</servlet-name>
-        <url-pattern>*.st</url-pattern>
+        <url-pattern>*.ftl</url-pattern>
     </servlet-mapping>
 
     <error-page>

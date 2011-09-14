@@ -1,8 +1,8 @@
 package example.domain.simple;
 
 import example.domain.Document;
-import example.domain.Document.Field;
 import example.domain.DocumentValidator;
+import example.domain.Field;
 import example.domain.Property;
 import org.springframework.stereotype.Service;
 

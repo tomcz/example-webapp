@@ -14,10 +14,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Document {
 
-    public enum Field {
-        one, two, date
-    }
-
     private Identity identity;
     private Map<Field, Property> properties;
 

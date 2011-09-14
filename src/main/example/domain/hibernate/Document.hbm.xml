@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-access="field">
+
+    <typedef class="org.hibernate.type.EnumType" name="documentFieldKeyType">
+        <param name="enumClass">example.domain.Field</param>
+        <param name="type">12</param><!-- java.sql.Types.VARCHAR -->
+    </typedef>
+
     <class name="example.domain.Document" table="document">
 
         <id name="identity" column="document_id" type="example.domain.hibernate.IdentityUserType">
@@ -12,7 +18,7 @@
 
         <map name="properties" table="document_properties" lazy="false" cascade="all">
             <key column="document_id" />
-            <map-key column="field_key" type="example.domain.hibernate.DocumentFieldUserType" />
+            <map-key column="field_key" type="documentFieldKeyType" />
             <composite-element class="example.domain.Property">
                 <property name="value" column="field_value" type="string" />
                 <property name="message" column="field_message" type="string" />
@@ -20,10 +26,10 @@
         </map>
 
         <property name="createdDateTime" column="created_at"
-                  type="example.domain.hibernate.LocalDateTimeUserType" />
+                  type="org.joda.time.contrib.hibernate.PersistentLocalDateTime" />
 
         <property name="updatedDateTime" column="updated_at"
-                  type="example.domain.hibernate.LocalDateTimeUserType" />
+                  type="org.joda.time.contrib.hibernate.PersistentLocalDateTime" />
 
     </class>
 </hibernate-mapping>

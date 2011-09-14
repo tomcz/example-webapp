@@ -5,7 +5,6 @@ import ch.lambdaj.function.convert.Converter;
 import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
 import example.domain.Identity;
-import example.spring.Path;
 import example.utils.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +34,10 @@ public class IndexPresenter {
         return mv;
     }
 
-    private List<Pair<DocumentDetails, Path>> createMappings(List<DocumentDetails> details) {
-        return Lambda.convert(details, new Converter<DocumentDetails, Pair<DocumentDetails, Path>>() {
-            public Pair<DocumentDetails, Path> convert(DocumentDetails item) {
-                Path path = pathTo(FormController.class).withVar("documentId", item.getId()).build();
+    private List<Pair<DocumentDetails, String>> createMappings(List<DocumentDetails> details) {
+        return Lambda.convert(details, new Converter<DocumentDetails, Pair<DocumentDetails, String>>() {
+            public Pair<DocumentDetails, String> convert(DocumentDetails item) {
+                String path = pathTo(FormController.class).withVar("documentId", item.getId()).build();
                 return Pair.create(item, path);
             }
         });

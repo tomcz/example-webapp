@@ -20,10 +20,18 @@ public class VersionFilter extends OncePerRequestFilter {
     }
 
     @Override
+    protected void initFilterBean() throws ServletException {
+        version = defaultIfEmpty(version, randomAlphanumeric(7));
+        super.initFilterBean();
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        request.setAttribute("version", defaultIfEmpty(version, randomAlphanumeric(7)));
+        request.setAttribute("servletPath", request.getContextPath() + request.getServletPath());
+        request.setAttribute("contextPath", request.getContextPath());
+        request.setAttribute("version", version);
         filterChain.doFilter(request, response);
     }
 }

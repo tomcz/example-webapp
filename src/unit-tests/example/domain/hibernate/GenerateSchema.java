@@ -47,7 +47,7 @@ public class GenerateSchema {
     }
 
     private static MockServletContext createServletContext() {
-        MockServletContext context = new MockServletContext("web", new FileSystemResourceLoader());
+        MockServletContext context = new MockServletContext("src/webapp", new FileSystemResourceLoader());
         context.addInitParameter("database.driver.class", "org.hsqldb.jdbcDriver");
         context.addInitParameter("database.driver.url", "jdbc:hsqldb:mem:webapp-template");
         context.addInitParameter("database.driver.username", "sa");

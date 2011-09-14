@@ -5,6 +5,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriTemplate;
 
 import java.lang.reflect.Method;
@@ -16,8 +17,6 @@ public class PathBuilder {
     private Class handler;
     private String methodName;
     private RequestMethod method;
-    private boolean contextRelative;
-    private boolean servletRelative;
 
     private Map<String, String> pathVariables = new HashMap<String, String>();
 
@@ -26,7 +25,7 @@ public class PathBuilder {
     }
 
     public static PathBuilder pathTo(Class handler) {
-        return new PathBuilder(handler).withMethod(RequestMethod.GET).contextRelative(true).servletRelative(true);
+        return new PathBuilder(handler).withMethod(RequestMethod.GET);
     }
 
     public PathBuilder POST() {
@@ -48,19 +47,12 @@ public class PathBuilder {
         return this;
     }
 
-    public PathBuilder contextRelative(boolean contextRelative) {
-        this.contextRelative = contextRelative;
-        return this;
+    public String build() {
+        return expandPathVariables(findHandlerClassMapping() + findHandlerMethodMapping());
     }
 
-    public PathBuilder servletRelative(boolean servletRelative) {
-        this.servletRelative = servletRelative;
-        return this;
-    }
-
-    public Path build() {
-        String url = findHandlerClassMapping() + findHandlerMethodMapping();
-        return new Path(expandPathVariables(url), contextRelative, servletRelative);
+    public RedirectView redirect() {
+        return new ServletRelativeRedirectView(build());
     }
 
     private String findHandlerClassMapping() {

@@ -1,7 +1,7 @@
 package example.domain.web;
 
 import example.domain.Document;
-import example.domain.Document.Field;
+import example.domain.Field;
 import example.domain.Property;
 import org.springframework.web.context.request.WebRequest;
 

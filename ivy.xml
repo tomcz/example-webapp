@@ -1,6 +1,6 @@
 <ivy-module version="2.0">
 
-    <info organisation="example" module="example-webapp" revision="1.0" />
+    <info organisation="example" module="example-webapp" revision="1.1" />
 
     <configurations>
         <conf name="compile" visibility="public" />
@@ -12,13 +12,18 @@
 
         <!-- compile -->
 
-        <dependency org="com.watchitlater" name="spring-stringtemplate" rev="1.5.1" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-orm" rev="3.0.5.RELEASE" conf="compile->default,sources" />
+        <dependency org="opensymphony" name="sitemesh" rev="2.4.2" conf="compile->default,sources" />
+        <dependency org="org.springframework" name="spring-orm" rev="3.0.6.RELEASE" conf="compile->default,sources" />
+        <dependency org="org.springframework" name="spring-webmvc" rev="3.0.6.RELEASE" conf="compile->default,sources" />
+        <dependency org="org.freemarker" name="freemarker" rev="2.3.18" transitive="false" conf="compile->default,sources" />
+
         <dependency org="joda-time" name="joda-time" rev="1.6.2" transitive="false" conf="compile->default,sources" />
-        <dependency org="commons-io" name="commons-io" rev="2.0.1" transitive="false" conf="compile->default,sources" />
+        <dependency org="joda-time" name="joda-time-hibernate" rev="1.3" transitive="false" conf="compile->default,sources" />
         <dependency org="org.hsqldb" name="hsqldb" rev="1.8.0.10" transitive="false" conf="compile->default,sources" />
+        <dependency org="org.hibernate" name="hibernate-core" rev="3.6.7.Final" conf="compile->default,sources" />
         <dependency org="javassist" name="javassist" rev="3.12.1.GA" transitive="false" conf="compile->default" />
-        <dependency org="org.hibernate" name="hibernate-core" rev="3.3.2.GA" conf="compile->default,sources" />
+
+        <dependency org="commons-io" name="commons-io" rev="2.0.1" transitive="false" conf="compile->default,sources" />
         <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3.1" conf="compile->default,sources" />
         <dependency org="com.dbdeploy" name="dbdeploy-core" rev="3.0M3" conf="compile->default,sources" />
 
@@ -28,13 +33,13 @@
 
         <!-- test -->
 
-        <dependency org="junit" name="junit" rev="4.8.2" transitive="false" conf="test->default,sources" />
-        <dependency org="org.jsoup" name="jsoup" rev="1.5.2" transitive="false" conf="test->default,sources" />
-        <dependency org="org.springframework" name="spring-test" rev="3.0.5.RELEASE" conf="test->default,sources" />
+        <dependency org="junit" name="junit" rev="4.9" transitive="false" conf="test->default,sources" />
+        <dependency org="org.jsoup" name="jsoup" rev="1.6.1" transitive="false" conf="test->default,sources" />
+        <dependency org="org.springframework" name="spring-test" rev="3.0.6.RELEASE" conf="test->default,sources" />
         <dependency org="org.mockito" name="mockito-core" rev="1.8.5" transitive="false" conf="test->default,sources" />
 
-        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.1.0" conf="test->default,sources" />
-        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.1.0" conf="test->default,sources" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.5.0" conf="test->default,sources" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.5.0" conf="test->default,sources" />
 
         <dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" conf="test->default,sources">
             <exclude name="servlet-api" />
@@ -47,7 +52,6 @@
         <!-- defaults -->
 
         <exclude artifact="commons-logging" />
-        <exclude artifact="freemarker" />
 
     </dependencies>
 
