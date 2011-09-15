@@ -9,7 +9,7 @@
     <@javascript "/static/js/jquery-1.4.2.min.js" />
     <@javascript "/static/js/jquery-ui-1.8.custom.min.js" />
     <@javascript "/static/js/buttons.js" />
-    ${head}
+    ${head!?trim}
 </head>
 <body class='${page.getProperty("body.class")}'>
 <div id="container">
@@ -17,7 +17,7 @@
         <h1>${title!?html}</h1>
     </div>
     <div id="content">
-        ${body}
+        ${body!?trim}
     </div>
 </div>
 </body>
