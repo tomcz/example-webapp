@@ -1,5 +1,5 @@
 <#ftl strip_whitespace=true>
-<#macro servletUrl url>${servletPath}${url}</#macro>
+<#macro bodyClass>${page.getProperty("body.class")}</#macro>
 <#macro javascript src>
     <script type="text/javascript" src="${contextPath}${src}?${version}"></script>
 </#macro>

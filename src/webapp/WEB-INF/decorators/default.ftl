@@ -11,7 +11,7 @@
     <@javascript "/static/js/buttons.js" />
     ${head!?trim}
 </head>
-<body class='${page.getProperty("body.class")}'>
+<body class="<@bodyClass />">
 <div id="container">
     <div id="header">
         <h1>${title!?html}</h1>
