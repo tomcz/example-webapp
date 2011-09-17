@@ -36,6 +36,7 @@ table {
     margin: 2em auto;
     padding: 10px;
     width: 950px;
+    border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
 }
