@@ -33,7 +33,7 @@
 
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
           p:contentType="text/html;charset=UTF-8"
-          p:exposeSpringMacroHelpers="true"
+          p:exposeSpringMacroHelpers="false"
           p:exposeRequestAttributes="true"
           p:suffix=".ftl" />
 
