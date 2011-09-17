@@ -37,7 +37,7 @@ public class PathBuilder {
         return this;
     }
 
-    public PathBuilder withMethod(String methodName) {
+    public PathBuilder withMethodName(String methodName) {
         this.methodName = methodName;
         return this;
     }
