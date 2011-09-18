@@ -6,6 +6,7 @@
         <conf name="compile" visibility="public" />
         <conf name="provided" visibility="public" />
         <conf name="test" visibility="private" />
+        <conf name="cobertura" visibility="private" />
     </configurations>
 
     <dependencies>
@@ -48,6 +49,12 @@
         <!-- provided -->
 
         <dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false" conf="provided->default,sources" />
+
+        <!-- cobertura -->
+
+        <dependency org="net.sourceforge.cobertura" name="cobertura" rev="1.9.4.1" conf="cobertura->default">
+            <exclude org="org.apache.ant" />
+        </dependency>
 
         <!-- defaults -->
 

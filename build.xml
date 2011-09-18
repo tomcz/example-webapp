@@ -11,6 +11,11 @@
     <property name="report.dir" location="${build.dir}/report" />
     <property name="compile.dir" location="${build.dir}/compile" />
 
+    <property name="cobertura.dir" location="${build.dir}/cobertura" />
+    <property name="cobertura.report.dir" location="${cobertura.dir}/report" />
+    <property name="cobertura.classes.dir" location="${cobertura.dir}/classes" />
+    <property name="cobertura.datafile" location="${cobertura.dir}/cobertura.ser" />
+
     <macrodef name="make-jar">
         <attribute name="srcdir" />
         <attribute name="jarfile" />
@@ -59,7 +64,7 @@
             <classpath location="bootstrap/ivy-2.2.0.jar" />
         </taskdef>
         <ivy:configure />
-        <ivy:resolve file="ivy.xml" conf="compile,test,provided" />
+        <ivy:resolve file="ivy.xml" />
         <ivy:retrieve pattern="lib/[conf]/[type]/[artifact]-[revision].[ext]" sync="true" />
         <path id="compile.classpath">
             <fileset dir="lib/provided/jar" includes="*.jar" />
@@ -69,6 +74,9 @@
             <fileset dir="${compile.dir}" />
             <fileset dir="lib/test/jar" includes="*.jar" />
             <path refid="compile.classpath" />
+        </path>
+        <path id="cobertura.classpath">
+            <fileset dir="lib/cobertura/jar" includes="*.jar" />
         </path>
     </target>
 
@@ -120,10 +128,48 @@
         </zip>
     </target>
 
-    <target name="ivy-report" depends="fetch-libs" description="Create ivy dependency report">
-        <mkdir dir="${report.dir}/ivy" />
-        <ivy:report todir="${report.dir}/ivy" outputpattern="[conf].[ext]"
+    <target name="ivy-report" depends="fetch-libs" description="Create ivy dependency report.">
+        <mkdir dir="${build.dir}/ivy" />
+        <ivy:report conf="compile,test,provided" todir="${build.dir}/ivy" outputpattern="[conf].[ext]"
                     xsl="true" xml="false" graph="false" dot="false" />
+    </target>
+
+    <target name="coverage-report" depends="make-jars" description="Create cobertura code coverage report.">
+        <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+        <mkdir dir="${cobertura.classes.dir}" />
+        <cobertura-instrument todir="${cobertura.classes.dir}" datafile="${cobertura.datafile}">
+            <fileset dir="${compile.dir}" excludes="*-tests.jar" />
+        </cobertura-instrument>
+
+        <junit fork="yes" forkmode="perBatch" printsummary="yes" haltonfailure="no">
+            <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.datafile}" />
+            <classpath>
+                <fileset dir="${cobertura.classes.dir}" />
+                <fileset dir="${compile.dir}" includes="*.jar" />
+                <path refid="test.classpath" />
+                <path refid="cobertura.classpath" />
+            </classpath>
+            <batchtest>
+                <fileset dir="${unit.test.dir}">
+                    <include name="**/*Tests.java" />
+                </fileset>
+            </batchtest>
+            <batchtest>
+                <fileset dir="${integration.test.dir}">
+                    <include name="**/*Tests.java" />
+                </fileset>
+            </batchtest>
+            <batchtest>
+                <fileset dir="${system.test.dir}">
+                    <include name="**/*Tests.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <mkdir dir="${cobertura.report.dir}" />
+        <cobertura-report format="html" datafile="${cobertura.datafile}"
+                          destdir="${cobertura.report.dir}" srcdir="${src.dir}" />
     </target>
 
 </project>
