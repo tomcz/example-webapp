@@ -22,7 +22,8 @@
         <attribute name="classpath" />
         <sequential>
             <mkdir dir="${compile.dir}/classes" />
-            <javac srcdir="@{srcdir}" destdir="${compile.dir}/classes" classpathref="@{classpath}" includeantruntime="no" debug="yes" />
+            <javac srcdir="@{srcdir}" destdir="${compile.dir}/classes" classpathref="@{classpath}"
+                   source="1.6" target="1.6" includeantruntime="no" debug="yes" />
             <copy todir="${compile.dir}/classes" includeemptydirs="no">
                 <fileset dir="@{srcdir}" excludes="**/*.java" />
             </copy>
