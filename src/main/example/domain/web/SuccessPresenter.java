@@ -17,6 +17,11 @@ public class SuccessPresenter {
 
     private final DocumentRepository repository;
 
+    // for proxy creation
+    public SuccessPresenter() {
+        this(null);
+    }
+
     @Autowired
     public SuccessPresenter(DocumentRepository repository) {
         this.repository = repository;

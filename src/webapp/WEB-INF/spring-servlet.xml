@@ -37,4 +37,20 @@
           p:exposeRequestAttributes="true"
           p:suffix=".ftl" />
 
+    <bean id="webPerformance" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="proxyTargetClass" value="true" />
+        <property name="beanNames">
+            <list>
+                <value>*Presenter</value>
+                <value>*Controller</value>
+                <value>*Command</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <idref bean="statsInterceptor" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

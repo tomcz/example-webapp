@@ -21,6 +21,11 @@ public class IndexPresenter {
 
     private final DocumentRepository repository;
 
+    // for proxy creation
+    public IndexPresenter() {
+        this(null);
+    }
+
     @Autowired
     public IndexPresenter(DocumentRepository repository) {
         this.repository = repository;

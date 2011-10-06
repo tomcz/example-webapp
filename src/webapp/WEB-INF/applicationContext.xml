@@ -90,4 +90,22 @@
         </constructor-arg>
     </bean>
 
+    <bean id="statsInterceptor" class="org.springframework.aop.interceptor.PerformanceMonitorInterceptor">
+        <property name="loggerName" value="STATS" />
+    </bean>
+
+    <bean id="repositoryPerformance" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="proxyTargetClass" value="false" />
+        <property name="beanNames">
+            <list>
+                <value>*Repository</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <idref local="statsInterceptor" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

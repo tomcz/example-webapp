@@ -32,6 +32,11 @@ public class FormController {
     private final DocumentRepository repository;
     private final DocumentValidator validator;
 
+    // for proxy creation
+    public FormController() {
+        this(null, null);
+    }
+
     @Autowired
     public FormController(DocumentRepository repository, DocumentValidator validator) {
         this.repository = repository;
