@@ -39,8 +39,8 @@
         <dependency org="org.springframework" name="spring-test" rev="3.0.6.RELEASE" conf="test->default,sources" />
         <dependency org="org.mockito" name="mockito-core" rev="1.8.5" transitive="false" conf="test->default,sources" />
 
-        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.5.0" conf="test->default,sources" />
-        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.5.0" conf="test->default,sources" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.7.0" conf="test->default,sources" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.7.0" conf="test->default,sources" />
 
         <dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" conf="test->default,sources">
             <exclude name="servlet-api" />
