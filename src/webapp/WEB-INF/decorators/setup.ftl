@@ -1,4 +1,3 @@
-<#ftl strip_whitespace=true>
 <#macro bodyClass>${page.getProperty("body.class")}</#macro>
 <#macro javascript src>
     <script type="text/javascript" src="${contextPath}${src}?${version}"></script>
