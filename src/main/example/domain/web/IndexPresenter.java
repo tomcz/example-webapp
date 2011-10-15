@@ -1,6 +1,5 @@
 package example.domain.web;
 
-import ch.lambdaj.Lambda;
 import ch.lambdaj.function.convert.Converter;
 import example.domain.DocumentDetails;
 import example.domain.DocumentRepository;
@@ -14,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+import static ch.lambdaj.Lambda.convert;
 import static example.spring.PathBuilder.pathTo;
+import static example.utils.Pair.pair;
 
 @Controller
 public class IndexPresenter {
@@ -40,10 +41,10 @@ public class IndexPresenter {
     }
 
     private List<Pair<DocumentDetails, String>> createMappings(List<DocumentDetails> details) {
-        return Lambda.convert(details, new Converter<DocumentDetails, Pair<DocumentDetails, String>>() {
+        return convert(details, new Converter<DocumentDetails, Pair<DocumentDetails, String>>() {
             public Pair<DocumentDetails, String> convert(DocumentDetails item) {
                 String path = pathTo(FormController.class).withVar("documentId", item.getId()).build();
-                return Pair.create(item, path);
+                return pair(item, path);
             }
         });
     }
