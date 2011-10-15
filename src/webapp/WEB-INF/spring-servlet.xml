@@ -28,8 +28,7 @@
           p:webBindingInitializer-ref="customBindingInititalizer"
           p:cacheSeconds="0" />
 
-    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"
-          p:templateLoaderPath="/WEB-INF/templates" />
+    <bean class="example.ftl.HtmlFreeMarkerConfigurer" p:templateLoaderPath="/WEB-INF/templates" />
 
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
           p:contentType="text/html;charset=UTF-8"
