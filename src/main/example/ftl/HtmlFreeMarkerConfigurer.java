@@ -12,4 +12,10 @@ public class HtmlFreeMarkerConfigurer extends FreeMarkerConfigurer {
         logger.info("Using HtmlTemplateLoader to enforce HTML-safe content");
         return new HtmlTemplateLoader(super.getAggregateTemplateLoader(templateLoaders));
     }
+
+    @Override
+    protected void postProcessTemplateLoaders(List<TemplateLoader> templateLoaders) {
+        // spring.ftl from classpath will not work with the HtmlTemplateLoader
+        // use /WEB-INF/templates/spring.ftl instead
+    }
 }
