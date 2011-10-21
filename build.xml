@@ -65,7 +65,7 @@
             <classpath location="bootstrap/ivy-2.2.0.jar" />
         </taskdef>
         <ivy:configure />
-        <ivy:resolve file="ivy.xml" />
+        <ivy:resolve file="ivy.xml" transitive="false" />
         <ivy:retrieve pattern="lib/[conf]/[type]/[artifact]-[revision].[ext]" sync="true" />
         <path id="compile.classpath">
             <fileset dir="lib/provided/jar" includes="*.jar" />
