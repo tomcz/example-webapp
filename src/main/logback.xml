@@ -8,6 +8,7 @@
 
     <logger name="example" level="INFO" />
     <logger name="org.mortbay" level="INFO" />
+    <logger name="freemarker.runtime" level="OFF" />
     <logger name="STATS" level="TRACE" />
 
     <root level="WARN">
