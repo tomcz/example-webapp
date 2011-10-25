@@ -30,11 +30,15 @@ public class HtmlFreeMarkerConfigurer extends FreeMarkerConfigurer {
 
     @Override
     public void afterPropertiesSet() throws IOException, TemplateException {
+        configureFreemarkerLogger();
+        super.afterPropertiesSet();
+    }
+
+    private void configureFreemarkerLogger() {
         try {
             Logger.selectLoggerLibrary(Logger.LIBRARY_SLF4J);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        super.afterPropertiesSet();
     }
 }
