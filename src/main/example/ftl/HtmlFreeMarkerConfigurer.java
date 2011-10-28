@@ -1,7 +1,6 @@
 package example.ftl;
 
 import freemarker.cache.TemplateLoader;
-import freemarker.log.Logger;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -26,19 +25,5 @@ public class HtmlFreeMarkerConfigurer extends FreeMarkerConfigurer {
     @Override
     protected void postProcessConfiguration(Configuration config) throws IOException, TemplateException {
         config.setTemplateExceptionHandler(new HtmlExceptionHandler());
-    }
-
-    @Override
-    public void afterPropertiesSet() throws IOException, TemplateException {
-        configureFreemarkerLogger();
-        super.afterPropertiesSet();
-    }
-
-    private void configureFreemarkerLogger() {
-        try {
-            Logger.selectLoggerLibrary(Logger.LIBRARY_SLF4J);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
