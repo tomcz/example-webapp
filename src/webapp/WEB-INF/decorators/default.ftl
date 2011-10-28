@@ -1,4 +1,4 @@
-<#ftl strip_whitespace=true><#escape x as x?html><#include "setup.ftl" />
+<#include "setup.ftl" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,4 +22,3 @@
 </div>
 </body>
 </html>
-</#escape>

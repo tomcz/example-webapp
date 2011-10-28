@@ -105,7 +105,7 @@
 
     <servlet>
         <servlet-name>sitemesh</servlet-name>
-        <servlet-class>com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet</servlet-class>
+        <servlet-class>example.ftl.SitemeshDecoratorServlet</servlet-class>
         <init-param>
             <param-name>TemplatePath</param-name>
             <param-value>/</param-value>
