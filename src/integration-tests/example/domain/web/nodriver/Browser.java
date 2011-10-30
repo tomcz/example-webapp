@@ -49,26 +49,18 @@ public class Browser {
         return constructor.newInstance(htmlPage);
     }
 
-    private void handleException(Exception ex) {
+    private void handleException(Throwable ex) {
         if (ex instanceof InvocationTargetException) {
-            handleInvocationException((InvocationTargetException) ex);
+            handleException(ex.getCause());
 
         } else if (ex instanceof RuntimeException) {
             throw (RuntimeException) ex;
 
+        } else if (ex instanceof Error) {
+            throw (Error) ex;
+
         } else {
             throw new RuntimeException(ex);
         }
-    }
-
-    private void handleInvocationException(InvocationTargetException ex) {
-        Throwable cause = ex.getCause();
-        if (cause instanceof RuntimeException) {
-            throw (RuntimeException) cause;
-        }
-        if (cause instanceof Error) {
-            throw (Error) cause;
-        }
-        throw new RuntimeException(cause);
     }
 }
