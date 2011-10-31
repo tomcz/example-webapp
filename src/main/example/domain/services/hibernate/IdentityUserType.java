@@ -1,4 +1,4 @@
-package example.domain.hibernate;
+package example.domain.services.hibernate;
 
 import example.domain.Identity;
 import org.hibernate.HibernateException;

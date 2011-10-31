@@ -1,4 +1,4 @@
-package example.error;
+package example.domain.web.error;
 
 import example.spring.tests.SpringDispatcherServlet;
 import org.apache.commons.lang.StringUtils;

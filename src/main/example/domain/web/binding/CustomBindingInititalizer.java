@@ -1,4 +1,4 @@
-package example.domain.binding;
+package example.domain.web.binding;
 
 import example.domain.Identity;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;

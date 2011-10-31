@@ -1,4 +1,4 @@
-package example.error;
+package example.domain.web.error;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;

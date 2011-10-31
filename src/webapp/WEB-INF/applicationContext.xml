@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -9,8 +8,7 @@
                            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="example.domain.hibernate" />
-    <context:component-scan base-package="example.domain.simple" />
+    <context:component-scan base-package="example.domain.services" />
 
     <bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
@@ -42,7 +40,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="mappingResources">
             <list>
-                <value>example/domain/hibernate/Document.hbm.xml</value>
+                <value>example/domain/services/hibernate/Document.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -76,7 +74,7 @@
         <constructor-arg ref="sessionFactory" />
     </bean>
 
-    <bean id="deployer" class="example.domain.hibernate.DbDeployer">
+    <bean id="deployer" class="example.domain.services.hibernate.DbDeployer">
         <constructor-arg ref="jdbcTemplate" />
         <constructor-arg value="/WEB-INF/create_changelog.sql" />
         <constructor-arg value="/WEB-INF/deltas" />

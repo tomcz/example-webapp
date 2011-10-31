@@ -1,4 +1,4 @@
-package example.domain.hibernate;
+package example.domain.services.hibernate;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;

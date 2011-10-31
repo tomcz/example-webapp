@@ -1,4 +1,4 @@
-package example.domain.hibernate;
+package example.domain.services.hibernate;
 
 import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType;

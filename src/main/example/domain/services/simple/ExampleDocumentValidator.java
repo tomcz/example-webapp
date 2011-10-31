@@ -1,4 +1,4 @@
-package example.domain.simple;
+package example.domain.services.simple;
 
 import example.domain.Document;
 import example.domain.DocumentValidator;

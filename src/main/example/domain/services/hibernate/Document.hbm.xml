@@ -7,12 +7,13 @@
 
     <typedef class="org.hibernate.type.EnumType" name="documentFieldKeyType">
         <param name="enumClass">example.domain.Field</param>
-        <param name="type">12</param><!-- java.sql.Types.VARCHAR -->
+        <!-- java.sql.Types.VARCHAR -->
+        <param name="type">12</param>
     </typedef>
 
     <class name="example.domain.Document" table="document">
 
-        <id name="identity" column="document_id" type="example.domain.hibernate.IdentityUserType">
+        <id name="identity" column="document_id" type="example.domain.services.hibernate.IdentityUserType">
             <generator class="assigned" />
         </id>
 

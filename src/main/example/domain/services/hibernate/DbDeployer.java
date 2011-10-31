@@ -1,4 +1,4 @@
-package example.domain.hibernate;
+package example.domain.services.hibernate;
 
 import com.dbdeploy.DbDeploy;
 import example.spring.ApplicationStatus;
