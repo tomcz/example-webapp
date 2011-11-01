@@ -1,4 +1,4 @@
-package example.spring.tests;
+package example.domain.web.nodriver;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockHttpServletRequest;

@@ -1,6 +1,5 @@
-package example.domain.web.error;
+package example.domain.web.nodriver;
 
-import example.spring.tests.SpringDispatcherServlet;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import static example.spring.PathBuilder.pathTo;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.text.pattern.PatternMatcher.matchesPattern;
 import static org.hamcrest.text.pattern.Patterns.anyCharacterIn;
@@ -23,9 +21,7 @@ public class ExceptionHandlingIntegrationTests {
     public void shouldSeeErrorReferenceDisplayedOnThePage() throws Exception {
         SpringDispatcherServlet servlet = SpringDispatcherServlet.create();
 
-        String path = pathTo(BadPresenter.class).build();
-
-        MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", path));
+        MockHttpServletResponse response = servlet.process(new MockHttpServletRequest("GET", "/bad"));
 
         String redirectedUrl = response.getRedirectedUrl();
         assertThat(redirectedUrl, matchesPattern(sequence("/error/", exactly(7, anyCharacterIn("A-Z0-9")))));

@@ -1,6 +1,5 @@
 package example.domain.web.nodriver;
 
-import example.spring.tests.SpringDispatcherServlet;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
