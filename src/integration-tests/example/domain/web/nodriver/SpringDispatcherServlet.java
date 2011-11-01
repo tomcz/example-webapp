@@ -58,6 +58,7 @@ public class SpringDispatcherServlet {
     }
 
     private void initApplicationContext(MockServletContext ctx) {
+        applicationContext.setConfigLocation("WEB-INF/applicationContext.xml");
         applicationContext.setServletContext(ctx);
         applicationContext.refresh();
     }
