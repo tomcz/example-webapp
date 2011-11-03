@@ -20,7 +20,6 @@
     <property name="ivy.default.ivy.user.dir" value="${user.home}/.ivy2" />
     <property name="ivy.jar.file" value="${ivy.default.ivy.user.dir}/ivy-2.2.0.jar" />
     <property name="ivy.jar.source" value="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar" />
-    <available file="${ivy.jar.file}" property="ivy.exists" />
 
     <macrodef name="make-jar">
         <attribute name="srcdir" />
@@ -85,6 +84,8 @@
             <fileset dir="lib/cobertura/jar" includes="*.jar" />
         </path>
     </target>
+
+    <available file="${ivy.jar.file}" property="ivy.exists" />
 
     <target name="fetch-ivy" unless="ivy.exists">
         <mkdir dir="${ivy.default.ivy.user.dir}" />
