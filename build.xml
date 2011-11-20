@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="example" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property name="src.dir" location="src/main" />
