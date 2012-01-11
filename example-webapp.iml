@@ -2,7 +2,10 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="web: application context" profiles="" autodetected="true" />
+        <fileset id="web: spring servlet context" profiles="" autodetected="true" />
+      </configuration>
     </facet>
     <facet type="web" name="Web">
       <configuration>
