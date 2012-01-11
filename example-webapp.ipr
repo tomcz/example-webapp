@@ -326,7 +326,6 @@
         </XML>
       </value>
     </option>
-    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </component>
   <component name="ProjectDetails">
     <option name="projectName" value="example-webapp" />
@@ -367,6 +366,7 @@
         <root url="jar://$PROJECT_DIR$/lib/compile/source/hibernate-core-3.6.7.Final.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/compile/source/spring-webmvc-3.0.6.RELEASE.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/compile/source/spring-context-support-3.0.6.RELEASE.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/compile/source/spring-aop-3.0.6.RELEASE.jar!/" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/lib/compile/jar" recursive="false" />
     </library>
