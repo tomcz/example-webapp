@@ -1,4 +1,7 @@
-<ivy-module version="2.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 
     <info organisation="example" module="example-webapp" revision="1.1" />
 
@@ -9,77 +12,78 @@
         <conf name="cobertura" visibility="private" />
     </configurations>
 
-    <dependencies>
+    <dependencies defaultconfmapping="*->default,sources">
 
         <!-- compile -->
 
-        <dependency org="opensymphony" name="sitemesh" rev="2.4.2" conf="compile->default,sources" />
-        <dependency org="org.freemarker" name="freemarker" rev="2.3.18" conf="compile->default,sources" />
+        <dependency org="opensymphony" name="sitemesh" rev="2.4.2" conf="compile" />
+        <dependency org="org.freemarker" name="freemarker" rev="2.3.18" conf="compile" />
 
-        <dependency org="org.springframework" name="spring-tx" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-asm" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-aop" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-orm" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-web" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-core" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-jdbc" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-beans" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-webmvc" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-context" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-expression" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="org.springframework" name="spring-context-support" rev="3.0.6.RELEASE" conf="compile->default,sources" />
-        <dependency org="aopalliance" name="aopalliance" rev="1.0" conf="compile->default,sources" />
-        <dependency org="javax.transaction" name="jta" rev="1.1" conf="compile->default,sources" />
+        <dependency org="org.springframework" name="spring-tx" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-asm" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-aop" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-orm" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-web" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-core" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-jdbc" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-beans" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-webmvc" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-context" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-expression" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="org.springframework" name="spring-context-support" rev="3.0.6.RELEASE" conf="compile" />
+        <dependency org="aopalliance" name="aopalliance" rev="1.0" conf="compile" />
+        <dependency org="javax.transaction" name="jta" rev="1.1" conf="compile" />
 
-        <dependency org="joda-time" name="joda-time" rev="1.6.2" conf="compile->default,sources" />
-        <dependency org="joda-time" name="joda-time-hibernate" rev="1.3" conf="compile->default,sources" />
+        <dependency org="joda-time" name="joda-time" rev="1.6.2" conf="compile" />
+        <dependency org="joda-time" name="joda-time-hibernate" rev="1.3" conf="compile" />
 
-        <dependency org="org.hibernate" name="hibernate-core" rev="3.6.7.Final" conf="compile->default,sources" />
-        <dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.2.0.Final" conf="compile->default,sources" />
-        <dependency org="org.hibernate.javax.persistence" name="hibernate-jpa-2.0-api" rev="1.0.1.Final" conf="compile->default,sources" />
-        <dependency org="javassist" name="javassist" rev="3.12.1.GA" conf="compile->default" />
-        <dependency org="dom4j" name="dom4j" rev="1.6.1" conf="compile->default" />
-        <dependency org="antlr" name="antlr" rev="2.7.6" conf="compile->default" />
+        <dependency org="org.hibernate" name="hibernate-core" rev="3.6.7.Final" conf="compile" />
+        <dependency org="org.hibernate" name="hibernate-commons-annotations" rev="3.2.0.Final" conf="compile" />
+        <dependency org="org.hibernate.javax.persistence" name="hibernate-jpa-2.0-api" rev="1.0.1.Final" conf="compile" />
+        <dependency org="javassist" name="javassist" rev="3.12.1.GA" conf="compile" />
+        <dependency org="dom4j" name="dom4j" rev="1.6.1" conf="compile" />
+        <dependency org="antlr" name="antlr" rev="2.7.6" conf="compile" />
 
-        <dependency org="org.hsqldb" name="hsqldb" rev="1.8.0.10" conf="compile->default,sources" />
-        <dependency org="com.dbdeploy" name="dbdeploy-core" rev="3.0M3" conf="compile->default,sources" />
+        <dependency org="org.hsqldb" name="hsqldb" rev="1.8.0.10" conf="compile" />
+        <dependency org="com.dbdeploy" name="dbdeploy-core" rev="3.0M3" conf="compile" />
 
-        <dependency org="commons-io" name="commons-io" rev="2.0.1" conf="compile->default,sources" />
-        <dependency org="commons-lang" name="commons-lang" rev="2.6" conf="compile->default,sources" />
-        <dependency org="commons-collections" name="commons-collections" rev="3.1" conf="compile->default,sources" />
+        <dependency org="commons-io" name="commons-io" rev="2.0.1" conf="compile" />
+        <dependency org="commons-lang" name="commons-lang" rev="2.6" conf="compile" />
+        <dependency org="commons-collections" name="commons-collections" rev="3.1" conf="compile" />
 
-        <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3.1" conf="compile->default,sources" />
-        <dependency org="org.hamcrest" name="hamcrest-all" rev="1.1" conf="compile->default,sources" />
-        <dependency org="org.objenesis" name="objenesis" rev="1.2" conf="compile->default,sources" />
-        <dependency org="cglib" name="cglib-nodep" rev="2.2" conf="compile->default,sources" />
+        <dependency org="com.googlecode.lambdaj" name="lambdaj" rev="2.3.1" conf="compile" />
+        <dependency org="org.hamcrest" name="hamcrest-all" rev="1.1" conf="compile" />
+        <dependency org="org.objenesis" name="objenesis" rev="1.2" conf="compile" />
+        <dependency org="cglib" name="cglib-nodep" rev="2.2" conf="compile" />
 
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" conf="compile->default,sources" />
-        <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.6.1" conf="compile->default,sources" />
-        <dependency org="ch.qos.logback" name="logback-core" rev="0.9.27" conf="compile->default,sources" />
-        <dependency org="ch.qos.logback" name="logback-classic" rev="0.9.27" conf="compile->default,sources" />
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" conf="compile" />
+        <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.6.1" conf="compile" />
+        <dependency org="ch.qos.logback" name="logback-core" rev="0.9.27" conf="compile" />
+        <dependency org="ch.qos.logback" name="logback-classic" rev="0.9.27" conf="compile" />
 
         <!-- test -->
 
-        <dependency org="junit" name="junit" rev="4.9" conf="test->default,sources" />
-        <dependency org="org.jsoup" name="jsoup" rev="1.6.1" conf="test->default,sources" />
-        <dependency org="org.springframework" name="spring-test" rev="3.0.6.RELEASE" conf="test->default,sources" />
-        <dependency org="org.mockito" name="mockito-core" rev="1.8.5" conf="test->default,sources" />
+        <dependency org="junit" name="junit" rev="4.9" conf="test" />
+        <dependency org="org.jsoup" name="jsoup" rev="1.6.1" conf="test" />
+        <dependency org="org.springframework" name="spring-test" rev="3.0.6.RELEASE" conf="test" />
+        <dependency org="org.mockito" name="mockito-core" rev="1.8.5" conf="test" />
 
-        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.8.0" conf="test->default,sources" />
-        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.8.0" conf="test->default,sources" />
-        <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.8.0" conf="test->default,sources" />
-        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.8.0" conf="test->default,sources" />
-        <dependency org="org.apache.httpcomponents" name="httpcore" rev="4.1.3" conf="test->default,sources" />
-        <dependency org="org.apache.httpcomponents" name="httpclient" rev="4.1.2" conf="test->default,sources" />
-        <dependency org="com.google.guava" name="guava" rev="r09" conf="test->default,sources" />
-        <dependency org="org.json" name="json" rev="20090211" conf="test->default,sources" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.13.0" conf="test" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.13.0" conf="test" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.13.0" conf="test" />
+        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.13.0" conf="test" />
+        <dependency org="org.apache.httpcomponents" name="httpcore" rev="4.1.3" conf="test" />
+        <dependency org="org.apache.httpcomponents" name="httpclient" rev="4.1.2" conf="test" />
+        <dependency org="org.apache.commons" name="commons-exec" rev="1.1" conf="test" />
+        <dependency org="com.google.guava" name="guava" rev="r09" conf="test" />
+        <dependency org="org.json" name="json" rev="20090211" conf="test" />
 
-        <dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" conf="test->default,sources" />
-        <dependency org="org.mortbay.jetty" name="jetty-util" rev="6.1.26" conf="test->default,sources" />
+        <dependency org="org.mortbay.jetty" name="jetty" rev="6.1.26" conf="test" />
+        <dependency org="org.mortbay.jetty" name="jetty-util" rev="6.1.26" conf="test" />
 
         <!-- provided -->
 
-        <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="provided->default,sources" />
+        <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="provided" />
 
         <!-- cobertura -->
 
