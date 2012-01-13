@@ -97,6 +97,7 @@
     <bean id="statsInterceptor" class="example.spring.StatsdPerformanceMonitorInterceptor">
         <constructor-arg value="localhost" />
         <constructor-arg value="8125" />
+        <property name="loggerName" value="STATS" />
     </bean>
 
     <bean id="repositoryPerformance" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
