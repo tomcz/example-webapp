@@ -22,7 +22,7 @@ public class WebServer {
     }
 
     public WebServer start() throws Exception {
-        WebAppContext context = new WebAppContext("src/webapp", "/example");
+        WebAppContext context = new WebAppContext("src/main/webapp", "/example");
         server.addHandler(withoutTaglibs(context));
         server.start();
         return this;
