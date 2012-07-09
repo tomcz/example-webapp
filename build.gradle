@@ -7,12 +7,12 @@ repositories {
   mavenCentral()
 }
 
-// I prefer to list every library that I use
+// I prefer to pick every library that I use
 configurations.all { transitive = false }
 
 dependencies {
   providedCompile 'javax.servlet:servlet-api:2.5'
-  
+
   compile 'opensymphony:sitemesh:2.4.2'
   compile 'org.freemarker:freemarker:2.3.18'
 
