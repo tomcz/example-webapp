@@ -81,3 +81,7 @@ task(jetty, type: JavaExec, dependsOn: 'testClasses') {
   main = 'example.jetty.WebServer'
   classpath = sourceSets.test.runtimeClasspath
 }
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.0'
+}
