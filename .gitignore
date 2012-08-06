@@ -1,5 +1,7 @@
 .DS_Store
 .gradle
+*.ipr
+*.iml
 *.iws
 *.swp
 build
