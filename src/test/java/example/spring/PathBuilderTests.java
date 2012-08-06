@@ -5,6 +5,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.support.SessionFlashMapManager;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Collections;
@@ -52,6 +54,9 @@ public class PathBuilderTests {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setContextPath("/context");
         request.setServletPath("/servlet");
+
+        // needed by RedirectView.renderMergedOutputModel
+        request.setAttribute(DispatcherServlet.FLASH_MAP_MANAGER_ATTRIBUTE, new SessionFlashMapManager());
 
         Map<String, ?> model = Collections.emptyMap();
         redirect.render(model, request, response);
